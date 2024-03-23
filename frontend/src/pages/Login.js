@@ -18,7 +18,7 @@ const Login = () => {
   };
 
   return (
-    <div>
+    <div className="dark:bg-palenight min-h-screen w-screen">
       <h2>Login</h2>
       <form onSubmit={handleSubmit}>
         <div>

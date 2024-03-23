@@ -18,7 +18,7 @@ const Register = () => {
   };
 
   return (
-    <div>
+    <div className="dark:bg-palenight min-h-screen w-screen">
       <h2>Register</h2>
       <form onSubmit={handleSubmit}>
         <label>

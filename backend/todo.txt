@@ -1,0 +1,20 @@
+added general infrastructure ( router, autoload, httpException handling, etc. )
+
+- structure the project in a way that it is extendable and easy to maintain
+- add a readme file that explains how to run the project
+
+
+-maybe add autoloader
+
+-add database classes
+
+-this is how the database classes should be structured:
+    - A DatabaseConnection Class that will handle the connection to the database ( getConnection() )
+    - A DatabaseQuery Class that will handle the queries to the database ( select(), insert(), update(), delete() )
+    - classes for each table in the database that will extend the DatabaseQuery class and will have the table name as a property
+
+
+
+
+
+

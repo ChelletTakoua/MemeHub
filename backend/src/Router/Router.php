@@ -2,8 +2,10 @@
 
 
 namespace Router;
-require 'Route.php';
-require 'RouterException.php';
+use Exceptions\HttpExceptions\RouterException;
+
+//require 'Route.php';
+//require '../src/Exceptions/HttpExceptions/RouterException.php';
 class Router {
 
     public $url;
@@ -11,7 +13,6 @@ class Router {
 
     public function __construct($url){
         $this->url = $url;
-        echo "this is in router";
     }
 
     public function get($path, $callable){
@@ -36,15 +37,30 @@ class Router {
     }
 
 
-    public function run(){
-        if(!isset($this->routes[$_SERVER['REQUEST_METHOD']])){
-            throw new RouterException('REQUEST_METHOD does not exist');
-        }
-        foreach($this->routes[$_SERVER['REQUEST_METHOD']] as $route){
-            if($route->match($this->url)){
-                return $route->call();
+    public function run()
+    {
+        try {
+
+
+            if (!isset($this->routes[$_SERVER['REQUEST_METHOD']])) {
+                throw new RouterException('REQUEST_METHOD does not exist');
             }
+            foreach ($this->routes[$_SERVER['REQUEST_METHOD']] as $route) {
+                if ($route->match($this->url)) {
+                    return $route->call();
+                }
+            }
+            throw new RouterException("No matching routes for $this->url");
+
+
+        } catch (\Exceptions\HttpExceptions\HttpException $e) {
+            http_response_code($e->getHttpResponseCode());
+            echo $e->getMessage();
+        } catch (\Exception $e) {
+            // For any other exception, set a generic 500 error code
+            http_response_code(500);
+            //echo $e->getMessage();
+            echo 'An error occurred. Please try again later.';
         }
-        throw new RouterException('No matching routes');
     }
 }

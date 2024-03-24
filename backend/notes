@@ -1,0 +1,11 @@
+- when you create a new class, make sure that the namespace is the same as the folder structure for the autoloader to work properly.
+
+
+
+the projects entry point is the index.php file in the public folder. this file is responsible for bootstrapping the application and routing the request to the appropriate controller.
+the routes are defined in the routes.php file in the Routes folder. the routes are defined as an associative array where the key is the route and the value is the controller and method that should be called when the route is matched.
+
+the controllers are located in the Controllers folder and are responsible for handling the request and returning the response.
+use the ExampleController as reference to create new controllers.
+
+The infrastructure code is not yet 100% complete, but it should be enough to get you started. feel free to modify the code as needed to fit your requirements.

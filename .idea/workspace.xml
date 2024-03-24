@@ -4,13 +4,12 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="3e72b0a8-ce53-4796-b8f0-b33e8aaee7f2" name="Changes" comment="deleted the comment">
-      <change afterPath="$PROJECT_DIR$/frontend/src/components/Card.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/frontend/src/components/LikeButton.js" afterDir="false" />
+    <list default="true" id="3e72b0a8-ce53-4796-b8f0-b33e8aaee7f2" name="Changes" comment="btp button + homepage added + card comp modified">
+      <change afterPath="$PROJECT_DIR$/frontend/src/components/BackToTopButton.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/package-lock.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/components/Card.js" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/components/Card.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/frontend/src/pages/Home.js" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/pages/Home.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/tailwind.config.js" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/tailwind.config.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -80,7 +79,7 @@
       <workItem from="1711204477505" duration="102000" />
       <workItem from="1711235566656" duration="980000" />
       <workItem from="1711236678971" duration="6786000" />
-      <workItem from="1711256999460" duration="5620000" />
+      <workItem from="1711256999460" duration="10651000" />
     </task>
     <task id="LOCAL-00001" summary="added comment">
       <option name="closed" value="true" />
@@ -98,7 +97,15 @@
       <option name="project" value="LOCAL" />
       <updated>1711236087307</updated>
     </task>
-    <option name="localTasksCounter" value="3" />
+    <task id="LOCAL-00003" summary="added LikeButton and Card components">
+      <option name="closed" value="true" />
+      <created>1711263074312</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1711263074312</updated>
+    </task>
+    <option name="localTasksCounter" value="4" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -135,6 +142,8 @@
   <component name="VcsManagerConfiguration">
     <MESSAGE value="added comment" />
     <MESSAGE value="deleted the comment" />
-    <option name="LAST_COMMIT_MESSAGE" value="deleted the comment" />
+    <MESSAGE value="added LikeButton and Card components" />
+    <MESSAGE value="btp button + homepage added + card comp modified" />
+    <option name="LAST_COMMIT_MESSAGE" value="btp button + homepage added + card comp modified" />
   </component>
 </project>

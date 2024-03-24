@@ -1,7 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
   <component name="ChangeListManager">
-    <list default="true" id="3e72b0a8-ce53-4796-b8f0-b33e8aaee7f2" name="Changes" comment="added comment" />
+    <list default="true" id="3e72b0a8-ce53-4796-b8f0-b33e8aaee7f2" name="Changes" comment="deleted the comment">
+      <change afterPath="$PROJECT_DIR$/frontend/src/components/Card.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/frontend/src/components/LikeButton.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/package-lock.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/pages/Home.js" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/pages/Home.js" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -9,6 +19,13 @@
   </component>
   <component name="ComposerSettings">
     <execution />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="JavaScript File" />
+      </list>
+    </option>
   </component>
   <component name="Git.Settings">
     <option name="RECENT_BRANCH_BY_REPOSITORY">
@@ -41,13 +58,14 @@
     "node.js.selected.package.eslint": "(autodetect)",
     "node.js.selected.package.tslint": "(autodetect)",
     "nodejs_package_manager_path": "npm",
+    "ts.external.directory.path": "C:\\Program Files\\JetBrains\\PhpStorm 2023.2.3\\plugins\\javascript-impl\\jsLanguageServicesImpl\\external",
     "vue.rearranger.settings.migration": "true"
   }
 }]]></component>
   <component name="SharedIndexes">
     <attachedChunks>
       <set>
-        <option value="bundled-php-predefined-ba97393d7c68-6f8e3395a2b4-com.jetbrains.php.sharedIndexes-PS-233.14015.96" />
+        <option value="bundled-php-predefined-ba97393d7c68-6f8e3395a2b4-com.jetbrains.php.sharedIndexes-PS-233.15026.12" />
       </set>
     </attachedChunks>
   </component>
@@ -60,7 +78,9 @@
       <option name="presentableId" value="Default" />
       <updated>1711204476414</updated>
       <workItem from="1711204477505" duration="102000" />
-      <workItem from="1711235566656" duration="319000" />
+      <workItem from="1711235566656" duration="980000" />
+      <workItem from="1711236678971" duration="6786000" />
+      <workItem from="1711256999460" duration="5620000" />
     </task>
     <task id="LOCAL-00001" summary="added comment">
       <option name="closed" value="true" />
@@ -70,7 +90,15 @@
       <option name="project" value="LOCAL" />
       <updated>1711235683136</updated>
     </task>
-    <option name="localTasksCounter" value="2" />
+    <task id="LOCAL-00002" summary="deleted the comment">
+      <option name="closed" value="true" />
+      <created>1711236087307</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1711236087307</updated>
+    </task>
+    <option name="localTasksCounter" value="3" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -81,7 +109,24 @@
       <map>
         <entry key="MAIN">
           <value>
-            <State />
+            <State>
+              <option name="CUSTOM_BOOLEAN_PROPERTIES">
+                <map>
+                  <entry key="Show.Git.Branches" value="true" />
+                </map>
+              </option>
+              <option name="FILTERS">
+                <map>
+                  <entry key="branch">
+                    <value>
+                      <list>
+                        <option value="main" />
+                      </list>
+                    </value>
+                  </entry>
+                </map>
+              </option>
+            </State>
           </value>
         </entry>
       </map>
@@ -89,6 +134,7 @@
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="added comment" />
-    <option name="LAST_COMMIT_MESSAGE" value="added comment" />
+    <MESSAGE value="deleted the comment" />
+    <option name="LAST_COMMIT_MESSAGE" value="deleted the comment" />
   </component>
 </project>

@@ -48,6 +48,7 @@ module.exports = {
         greens:{
           100: "#039A8C",
           200: "#12A08B",
+          300: "#36816B",
         },
         nightgreen: "#2C6957",
         algae: "#00998D",

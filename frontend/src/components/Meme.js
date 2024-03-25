@@ -2,34 +2,55 @@ import { useEffect, useState } from "react";
 import InputBox from "./InputBox";
 import MemeImg from "./MemeImg";
 import DownloadBtn from "./DownloadBtn";
+import SaveBtn from "./SaveBtn";
+import { FaArrowLeft } from "react-icons/fa";
 
-export default function Meme({ memes, currMeme, setCurrMeme }) {
-  const [Text1, setText1] = useState("Text1");
-  const [Text2, setText2] = useState("Text2");
-  const [Text3, setText3] = useState("Text3");
-  const [Text4, setText4] = useState("Text4");
-  const [Text5, setText5] = useState("Text5");
+export default function Meme({ currMeme, setBrowse }) {
+  const [inputBoxes, setInputBoxes] = useState([]);
+  useEffect(() => {
+    setInputBoxes([{ id: 0, text: "Teeest", x: 0, y: 0 }]);
+  }, [setInputBoxes]);
 
-  let allInputs = [
-    <InputBox text={Text1} setText={setText1} key={1} />,
-    <InputBox text={Text2} setText={setText2} key={2} />,
-    <InputBox text={Text3} setText={setText3} key={3} />,
-    <InputBox text={Text4} setText={setText4} key={4} />,
-    <InputBox text={Text5} setText={setText5} key={5} />,
-  ];
+  useEffect(() => {
+    console.log(inputBoxes);
+  }, [inputBoxes]);
 
-  // useEffect(() => {
-  //   Object.keys(currMeme).length === 0 &&
-  //     setCurrMeme(memes[Math.floor(Math.random() * memes.length + 1)]);
-  // }, [currMeme, memes, setCurrMeme]);
+  function handleAddInputBox(e) {
+    e.preventDefault();
+    setInputBoxes((prev) => [
+      ...prev,
+      {
+        id: new Date().getTime(),
+        text: "",
+        fontSize: 4,
+        x: 0,
+        y: 0,
+      },
+    ]);
+  }
 
   return (
     <section className="py-20 mx-12 flex gap-14 flex-col lg:flex-row-reverse lg:mx-44">
       <div className="flex flex-col gap-8 flex-1">
         <form className="flex flex-col gap-8 h-min">
-          {allInputs.slice(0, currMeme.box_count).map((input) => input)}
+          {inputBoxes.map((inputBox) => (
+            <InputBox
+              key={inputBox.id}
+              inputBox={inputBox}
+              setInputBoxes={setInputBoxes}
+            />
+          ))}
+          <button
+            className="flex items-center gap-2 justify-center w-16 rounded-full bg-white bg-gradient-to-r from-algae to-grass px-4 py-2 text-white text-lg"
+            onClick={handleAddInputBox}
+          >
+            +
+          </button>
         </form>
-        <DownloadBtn />
+        <div className="flex gap-6 w-full">
+          <DownloadBtn />
+          <SaveBtn />
+        </div>
         <p className="text-algae dark:text-white">
           Hint: You can drag and move around the text!
         </p>
@@ -37,14 +58,22 @@ export default function Meme({ memes, currMeme, setCurrMeme }) {
           Another hint: You can break the line by entering double space!
         </p>
       </div>
-      <MemeImg
-        memeData={currMeme}
-        text1={Text1}
-        text2={Text2}
-        text3={Text3}
-        text4={Text4}
-        text5={Text5}
-      />
+      <div className="flex flex-col items-start">
+        <button
+          onClick={() => setBrowse(true)}
+          className="flex items-center gap-2 justify-center w-40 rounded-full bg-white bg-gradient-to-r from-algae to-grass px-4 py-2 text-white mb-2 text-lg"
+        >
+          <FaArrowLeft />
+          <span>Go Back</span>
+        </button>
+        <div>
+          <MemeImg
+            memeData={currMeme}
+            inputBoxes={inputBoxes}
+            setInputBoxes={setInputBoxes}
+          />
+        </div>
+      </div>
     </section>
   );
 }

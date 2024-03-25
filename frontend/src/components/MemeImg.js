@@ -1,14 +1,7 @@
 import Draggable from "react-draggable";
+import DraggableText from "./DraggableText";
 
-export default function MemeImg({
-  memeData,
-  text1,
-  text2,
-  text3,
-  text4,
-  text5,
-}) {
-  const allTexts = [text1, text2, text3, text4, text5];
+export default function MemeImg({ memeData, inputBoxes, setInputBoxes }) {
   return (
     <div id="meme" className="relative flex-1">
       <img
@@ -16,15 +9,14 @@ export default function MemeImg({
         alt={memeData.name}
         className="w-full aspect-square"
       />
-      {allTexts.slice(0, memeData.box_count).map((text) =>
-        text.split("  ").map((t, key) => (
-          <Draggable bounds="parent" key={key}>
-            <div className="bottom-80 left-1/3 cursor-grab meme-text text-4xl font-mono text-white w-fit relative">
-              {t}
-            </div>
-          </Draggable>
-        ))
-      )}
+
+      {inputBoxes.map((inputBox) => (
+        <DraggableText
+          key={inputBox.id}
+          inputBox={inputBox}
+          setInputBoxes={setInputBoxes}
+        />
+      ))}
     </div>
   );
 }

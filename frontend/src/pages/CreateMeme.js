@@ -14,24 +14,15 @@ export default function CreateMeme() {
       .then((data) => data.json())
       .then(({ data }) => {
         setMemes(data.memes);
-        // setCurrMeme(
-        // 	data.memes[Math.floor(Math.random() * data.memes.length + 1)]
-        // );
       });
   }, []);
 
   return (
     <div className="flex flex-col justify-between dark:bg-palenight min-h-screen w-screen">
-      <Header setBrowse={setBrowse} />
       {browse ? (
         <Browse memes={memes} setCurrMeme={setCurrMeme} setBrowse={setBrowse} />
       ) : (
-        <Meme
-          memes={memes}
-          setMemes={setMemes}
-          currMeme={currMeme}
-          setCurrMeme={setCurrMeme}
-        />
+        <Meme currMeme={currMeme} setBrowse={setBrowse} />
       )}
       <Footer />
     </div>

@@ -5,6 +5,7 @@ import Capture from "../images/Capture.PNG";
 
 const Register = () => {
   const [username, setUsername] = useState("");
+  const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
   const handleUsernameChange = (e) => {
@@ -15,9 +16,14 @@ const Register = () => {
     setPassword(e.target.value);
   };
 
+  const handleEmailChange = (e) => {
+    setEmail(e.target.value);
+  };
+
   const handleSubmit = (e) => {
     e.preventDefault();
-    // Add your registration logic here
+    // TODO: Implement registration logic
+    // PHP
   };
 
   return (
@@ -58,7 +64,7 @@ const Register = () => {
                     id="username"
                     className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                     placeholder="Username"
-                    required=""
+                    required
                     value={username}
                     onChange={handleUsernameChange}
                   />
@@ -76,7 +82,9 @@ const Register = () => {
                     id="email"
                     className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                     placeholder="Email address"
-                    required=""
+                    onChange={handleEmailChange}
+                    value={email}
+                    required
                   />
                 </div>
                 <div>
@@ -92,7 +100,7 @@ const Register = () => {
                     id="password"
                     placeholder="••••••••"
                     className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                    required=""
+                    required
                     value={password}
                     onChange={handlePasswordChange}
                   />
@@ -110,7 +118,7 @@ const Register = () => {
                     id="confirm-password"
                     placeholder="••••••••"
                     className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                    required=""
+                    required
                   />
                 </div>
                 <div className="mt-5 flex">

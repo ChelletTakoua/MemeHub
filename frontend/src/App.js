@@ -19,10 +19,8 @@ function App() {
         <Route path="/register" element={<Register />} />
         <Route path="/admin" element={<AdminDashboard />} />
         <Route path="/create" element={<CreateMeme />} />
-        <Route path="/profile" element={<Profile />} />
+        <Route path="/profile/:username" element={<Profile />} />
         <Route path="/contact" element={<Contact />} />
-
-
       </Routes>
     </Router>
   );

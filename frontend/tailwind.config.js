@@ -3,7 +3,6 @@ module.exports = {
   theme: {
     extend: {
       fontFamily: {
-        sans: ["Karla", "sans-serif"],
         mono: ["Oswald", "sans-serif"],
         body: [
           "Inter",
@@ -23,6 +22,8 @@ module.exports = {
           "Noto Color Emoji",
         ],
         sans: [
+          "Karla",
+          "sans-serif" ,
           "Inter",
           "ui-sans-serif",
           "system-ui",
@@ -44,6 +45,11 @@ module.exports = {
         tightest: "-.1em",
       },
       colors: {
+        greens:{
+          100: "#039A8C",
+          200: "#12A08B",
+        },
+        nightgreen: "#2C6957",
         algae: "#00998D",
         grass: "#9EDE7B",
         palenight: "#164e63",

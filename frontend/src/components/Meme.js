@@ -68,10 +68,10 @@ export default function Meme({ currMeme, setBrowse }) {
             <DownloadBtn />
             <SaveBtn />
           </div>
-          <p className="text-algae dark:text-white">
+          <p className="text-white">
             Hint: You can drag and move around the text!
           </p>
-          <p className="text-algae dark:text-white">
+          <p className="text-white">
             Another hint: You can break the line by entering double space!
           </p>
         </div>

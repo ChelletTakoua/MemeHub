@@ -19,6 +19,7 @@ class Route {
      * get('/posts/:id') par exemple
      **/
     public function match($url){
+
         $url = trim($url, '/');
         $path = preg_replace('#:([\w]+)#', '([^/]+)', $this->path);
         $regex = "#^$path$#i";
@@ -31,8 +32,8 @@ class Route {
     }
 
     public function call(){
-
-        if (is_string($this->callable)) {
+        //si $callable est de la forme ExampleController@exemple
+        if (is_string($this->callable) && strpos($this->callable, '@') !== false){
             $params = explode('@', $this->callable);
             $controller = "Controllers\\" . $params[0];
             $controller = new $controller();

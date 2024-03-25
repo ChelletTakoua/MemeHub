@@ -2,8 +2,9 @@
 
 
 namespace Router;
-require 'Route.php';
-require 'RouterException.php';
+use Exceptions\HttpExceptions\RouterException;
+
+
 class Router {
 
     public $url;
@@ -11,7 +12,6 @@ class Router {
 
     public function __construct($url){
         $this->url = $url;
-        echo "this is in router";
     }
 
     public function get($path, $callable){
@@ -36,15 +36,16 @@ class Router {
     }
 
 
-    public function run(){
-        if(!isset($this->routes[$_SERVER['REQUEST_METHOD']])){
+    public function run()
+    {
+        if (!isset($this->routes[$_SERVER['REQUEST_METHOD']])) {
             throw new RouterException('REQUEST_METHOD does not exist');
         }
-        foreach($this->routes[$_SERVER['REQUEST_METHOD']] as $route){
-            if($route->match($this->url)){
+        foreach ($this->routes[$_SERVER['REQUEST_METHOD']] as $route) {
+            if ($route->match($this->url)) {
                 return $route->call();
             }
         }
-        throw new RouterException('No matching routes');
+        throw new RouterException("No matching routes for $this->url");
     }
 }

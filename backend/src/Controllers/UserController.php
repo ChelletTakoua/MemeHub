@@ -7,9 +7,7 @@ class UserController
 
     public function getUserById($id)
     {
-
-        echo "get user called successfully with id $id";
-
+    echo "User with id $id";
         // Handle GET request
     }
 

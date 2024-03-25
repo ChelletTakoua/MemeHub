@@ -1,0 +1,31 @@
+How to work with this project:
+    - to run the project, run the following command in the terminal:
+        `php -S localhost:8000 -t public`  (if you are in the root directory of the project)
+        `php -S localhost:8000` (if you are in the public directory of the project)
+
+    - create a new controller (or use an existing one) by creating a new class in the Controllers folder. (use the ExampleController as reference)
+    - create a new route by adding a new entry in the routes.php file in the Routes folder and link it to the controller and method that should be called when the route is matched.
+    - use ExampleController as reference to create new controllers or controller methods.
+
+
+
+- when you create a new class, make sure that the namespace is the same as the folder structure for the autoloader to work properly.
+
+- no need to require any classfile, the autoloader will do it for u.
+
+- when a certain service needs the user to be logged in, you can call the `requireLogin` method of the Auth class. This method will throw an error if the user is not logged in.
+- same thing goes for the `requireAdmin` method, which will throw an error if the user is not an admin.
+(we can implement roles and other stuff but it will open a 9erbella kbira so let's keep it simple, a user is either an admin or not)
+
+
+when you throw an error and it's not catched by your code, the error will be caught by the error handler and a json response will be returned with the error message and the status code.
+
+
+
+the projects entry point is the index.php file in the public folder. this file is responsible for bootstrapping the application and routing the request to the appropriate controller.
+the routes are defined in the routes.php file in the Routes folder. the routes are defined as an associative array where the key is the route and the value is the controller and method that should be called when the route is matched.
+
+the controllers are located in the Controllers folder and are responsible for handling the request and returning the response.
+use the ExampleController as reference to create new controllers.
+
+The infrastructure code is not yet 100% complete, but it should be enough to get you started. feel free to modify the code as needed to fit your requirements.

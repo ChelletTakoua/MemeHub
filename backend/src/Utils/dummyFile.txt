@@ -1,0 +1,4 @@
+The Utils folder, short for "utilities," should contain files or/and classes that provide general-purpose functionality that is used across your application.
+
+
+This file is only created so that the folder is created in the repository. It may be removed in the next commit.

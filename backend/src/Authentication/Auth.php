@@ -27,5 +27,18 @@ class Auth
         unset($_SESSION['user_id']);
     }
 
+    public static function requireLogin(){
+        if(!self::isLoggedIn()){
+            //TODO: throw a more specific exception
+            throw new \Exceptions\HttpExceptions\HttpException('Unauthorized', 401);
+        }
+    }
+    public static function requireAdminAccess(){
+        if(!self::isLoggedIn() || $_SESSION['user_id'] !== 1){
+            //TODO: throw a more specific exception
+            throw new \Exceptions\HttpExceptions\HttpException('Forbidden', 403);
+        }
+    }
+
 
 }

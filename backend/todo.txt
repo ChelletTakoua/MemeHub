@@ -1,0 +1,42 @@
+
+@everyone:
+
+    - add models (classes metiers)
+
+    - Authentication (login, register, logout)
+
+    - Add database classes
+
+
+
+
+
+- structure the project in a way that it is extendable and easy to maintain
+- add a readme file that explains how to run the project
+
+
+
+-this is how the database classes can be structured:
+    - A DatabaseConnection Class that will handle the connection to the database ( getConnection() )
+    - A DatabaseQuery Class that will handle the queries to the database ( select(), insert(), update(), delete() )
+    - classes for each table in the database that will extend the DatabaseQuery class and will have the table name as a property
+
+- modify the HttpException so it has a title and a message (for displaying the error in a user-friendly way in the frontend
+- tell yassine about the http interceptor in angular that will handle the error messages and if there is such a thing in react
+- propose add modal in react. (report button for example)
+
+- instead of requireLogin, maybe add a property in Route that will be an array of roles that are allowed to access the route (null if no authentication is required for example, ['admin'] if only admins can access the route and ['admin', 'user'] if both admins and users can access the route)
+
+
+DONE:
+    - added general infrastructure ( router, autoload, httpException handling, etc. )
+    - added autoloader
+    - made error handling more robust by adding a custom exception handler that catches all uncaught exceptions and returns a json response with the error message
+    - added some text to explain how the project is structured and how to work with it
+    - cleaned up the code a bit
+
+
+
+
+
+

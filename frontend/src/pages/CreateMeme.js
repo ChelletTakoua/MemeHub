@@ -18,7 +18,7 @@ export default function CreateMeme() {
   }, []);
 
   return (
-    <div className="flex flex-col justify-between dark:bg-palenight min-h-screen w-screen">
+    <div className="flex flex-col justify-between bg-palenight min-h-screen w-screen">
       {browse ? (
         <Browse memes={memes} setCurrMeme={setCurrMeme} setBrowse={setBrowse} />
       ) : (

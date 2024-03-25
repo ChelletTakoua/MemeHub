@@ -1,4 +1,5 @@
 <?php
+// all your routes will go here
 
 global $router;
 function testFunction(){
@@ -11,5 +12,7 @@ $router->get('/test', 'testFunction');
 $router->get('/posts/:id', function($id){ echo "Voila l'article $id"; });
 
 $router->post('/users/:id', "UserController@getUserById" );
+
 $router->get('/example/:exampleParam', "ExampleController@example" );
 $router->get('/users/:id', "UserController@getUserById" );
+

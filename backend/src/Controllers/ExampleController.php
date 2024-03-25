@@ -2,8 +2,6 @@
 
 namespace Controllers;
 
-require_once '../src/Exceptions/HttpExceptions/UnauthorizedException.php';
-require_once '../src/Exceptions/HttpExceptions/HttpException.php';
 use Exception;
 use Exceptions\HttpExceptions\HttpException;
 use Exceptions\HttpExceptions\UnauthorizedException;
@@ -16,22 +14,27 @@ class ExampleController
      */
     public function example($exampleParam)
     {
-        // Handle GET request
+        header('Content-Type: application/json');
 
-        $post = [
+
+        $meme = [
             "id" => 1,
             "title" => "Sample Post",
             "content" => "This is a sample post content.",
             "params" => $exampleParam,
         ];
+        throw new UnauthorizedException();
 
-        header('Content-Type: application/json');
-        throw new HttpException("Unauthorized", 401);
+
+
+        echo json_encode($meme);
+
+
         // Set the Content-Type header
 
 
         // Convert the post data to JSON
-        //echo json_encode($post);
+        echo json_encode($post);
 
         // Handle GET request
 

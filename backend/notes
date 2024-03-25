@@ -1,5 +1,14 @@
 - when you create a new class, make sure that the namespace is the same as the folder structure for the autoloader to work properly.
 
+- no need to require any classfile, the autoloader will do it for u.
+
+- when a certain service needs the user to be logged in, you can call the `requireLogin` method of the Auth class. This method will throw an error if the user is not logged in.
+- same thing goes for the `requireAdmin` method, which will throw an error if the user is not an admin.
+(we can implement roles and other stuff but it will open a 9erbella kbira so let's keep it simple, a user is either an admin or not)
+
+
+when you throw an error and it's not catched by your code, the error will be caught by the error handler and a json response will be returned with the error message and the status code.
+
 
 
 the projects entry point is the index.php file in the public folder. this file is responsible for bootstrapping the application and routing the request to the appropriate controller.

@@ -13,6 +13,14 @@ added general infrastructure ( router, autoload, httpException handling, etc. )
     - A DatabaseQuery Class that will handle the queries to the database ( select(), insert(), update(), delete() )
     - classes for each table in the database that will extend the DatabaseQuery class and will have the table name as a property
 
+- modify the HttpException so it has a title and a message (for displaying the error in a user-friendly way in the frontend
+- tell yassine about the http interceptor in angular that will handle the error messages and if there is such a thing in react
+
+DONE:
+    - made error handling more robust by adding a custom exception handler that catches all uncaught exceptions and returns a json response with the error message
+    - added some text to explain how the project is structured and how to work with it
+    - cleaned up the code a bit
+
 
 
 

@@ -1,28 +1,35 @@
 <?php
 
-class DatabaseConnection {
-    private static $instance = null;
-    private $connection;
 
-    private function __construct($servername, $username, $password, $dbname) {
-        $this->connection = new PDO("mysql:host=$servername;dbname=$dbname", $username, $password);
-        $this->connection->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+// this is not tested. @MariemElFouzi
+class DatabaseConnection
+{
+    private static $connection;
+
+    private function __construct()
+    {
+        // Private constructor to prevent instantiation
     }
 
-    public static function getInstance($config) {
-        if (self::$instance === null) {
-            self::$instance = new DatabaseConnection(
-                $config['servername'],
-                $config['username'],
-                $config['password'],
-                $config['dbname']
-            );
+    public static function getInstance()
+    {
+        if (self::$connection === null) {
+            $config = include 'src/config/database.php';
+            $servername = $config['servername'];
+            $username = $config['username'];
+            $password = $config['password'];
+            $dbname = $config['dbname'];
+
+            var_dump($config);
+            self::$connection = new mysqli($servername, $username, $password, $dbname);
+
+            if (self::$connection->connect_error) {
+                die("Connection failed: " . self::$connection->connect_error);
+            }
         }
-        return self::$instance;
-    }
 
-    public function getConnection() {
-        return $this->connection;
+        return self::$connection;
     }
 }
+
 

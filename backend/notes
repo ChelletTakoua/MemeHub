@@ -1,3 +1,14 @@
+How to work with this project:
+    - to run the project, run the following command in the terminal:
+        `php -S localhost:8000 -t public`  (if you are in the root directory of the project)
+        `php -S localhost:8000` (if you are in the public directory of the project)
+
+    - create a new controller (or use an existing one) by creating a new class in the Controllers folder. (use the ExampleController as reference)
+    - create a new route by adding a new entry in the routes.php file in the Routes folder and link it to the controller and method that should be called when the route is matched.
+    - use ExampleController as reference to create new controllers or controller methods.
+
+
+
 - when you create a new class, make sure that the namespace is the same as the folder structure for the autoloader to work properly.
 
 - no need to require any classfile, the autoloader will do it for u.

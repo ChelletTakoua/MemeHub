@@ -2,6 +2,7 @@
 
 namespace Controllers;
 
+use Authentication\Auth;
 use Exception;
 use Exceptions\HttpExceptions\HttpException;
 use Exceptions\HttpExceptions\UnauthorizedException;
@@ -11,6 +12,8 @@ class ExampleController
 
 public function referenceMethod()
     {
+        Auth::requireAdminAccess(); //if only admin can access this method
+        Auth::requireLogin(); //if only logged in users can access this method
         header('Content-Type: application/json'); // if you want to return json
 
         // your code logic goes here
@@ -32,11 +35,11 @@ public function referenceMethod()
         //  or a more specific exception:
         //      throw new UnauthorizedException();
         // you can create your own exceptions by extending the HttpException class and setting the status code (and message) in the constructor
-
     }
 
-    public function example2($exampleParam)
+    public function example($exampleParam)
     {
+        Auth::requireAdminAccess();
         header('Content-Type: application/json');
 
 
@@ -46,20 +49,9 @@ public function referenceMethod()
             "content" => "This is a sample post content.",
             "params" => $exampleParam,
         ];
-        throw new UnauthorizedException();
-
 
 
         echo json_encode($meme);
-
-
-        // Set the Content-Type header
-
-
-        // Convert the post data to JSON
-        echo json_encode($post);
-
-        // Handle GET request
 
     }
 }

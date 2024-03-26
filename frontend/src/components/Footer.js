@@ -8,8 +8,8 @@ export default function Footer() {
       <p>
         Made with <FontAwesomeIcon icon={faHeart} color="red" /> by GL2
       </p>
-      <p className="w-1/3">© 2023 MemeHub. All rights reserved. </p>
-      <a target="_blank" href="https://github.com/Dharmik48/meme-generator">
+      <p className="w-1/3">© 2024 MemeHub. All rights reserved. </p>
+      <a target="_blank" href="https://github.com/ChelletTakoua/MemeHub/">
         <FontAwesomeIcon icon={faGithub} size="xl" color="white" />
       </a>
     </footer>

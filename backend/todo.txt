@@ -1,6 +1,6 @@
 
 @everyone:
-
+    - add roles to database
     - add models (classes metiers)
      
     - Authentication (login, register, logout)

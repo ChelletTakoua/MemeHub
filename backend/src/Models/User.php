@@ -6,22 +6,22 @@ class User {
     private $password;
     private $email;
     private $registrationDate;
-    private $isAdmin;
+    private $role;
 
-    public function __construct($id, $username, $password, $email, $registrationDate, $isAdmin) {
+    public function __construct($id, $username, $password, $email, $registrationDate, $role) {
         $this->id = $id;
         $this->username = $username;
         $this->password = $password;
         $this->email = $email;
         $this->registrationDate = $registrationDate;
-        $this->isAdmin = $isAdmin;
+        $this->role = $role;
     }
-    public function getIsAdmin() {
-        return $this->isAdmin;
+    public function getRole() {
+        return $this->role;
     }
 
-    public function setIsAdmin($isAdmin) {
-        $this->isAdmin = $isAdmin;
+    public function setRole($role) {
+        $this->role = $role;
     }
     public function getId() {
         return $this->id;
@@ -62,4 +62,7 @@ class User {
     public function setRegistrationDate($registrationDate) {
         $this->registrationDate = $registrationDate;
     }
+    
+    
+
 }

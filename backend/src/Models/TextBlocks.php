@@ -6,16 +6,16 @@ class TextBlocks {
     private $y;
     private $width;
     private $height;
-    private $memeId;
+    private $meme;
 
-    public function __construct($id, $text, $x, $y, $width, $height, $memeId) {
+    public function __construct($id, $text, $x, $y, $width, $height, $meme) {
         $this->id = $id;
         $this->text = $text;
         $this->x = $x;
         $this->y = $y;
         $this->width = $width;
         $this->height = $height;
-        $this->memeId = $memeId;
+        $this->meme = $meme;
     }
 
     public function getId() {
@@ -66,11 +66,8 @@ class TextBlocks {
         $this->height = $height;
     }
 
-    public function getMemeId() {
-        return $this->memeId;
+    public function getMeme() {
+        return $this->meme;
     }
 
-    public function setMemeId($memeId) {
-        $this->memeId = $memeId;
-    }
 }

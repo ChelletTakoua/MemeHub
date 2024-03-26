@@ -3,14 +3,14 @@ class Memes {
     private $id;
     private $templateId;
     private $title;
-    private $userId;
+    private $user;
     private $dateCreation;
 
-    public function __construct($id, $templateId, $title, $userId, $dateCreation) {
+    public function __construct($id, $templateId, $title, $user, $dateCreation) {
         $this->id = $id;
         $this->templateId = $templateId;
         $this->title = $title;
-        $this->userId = $userId;
+        $this->user = $user;
         $this->dateCreation = $dateCreation;
     }
 
@@ -38,12 +38,8 @@ class Memes {
         $this->title = $title;
     }
 
-    public function getUserId() {
+    public function getUser() {
         return $this->userId;
-    }
-
-    public function setUserId($userId) {
-        $this->userId = $userId;
     }
 
     public function getDateCreation() {

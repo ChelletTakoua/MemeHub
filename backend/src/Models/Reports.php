@@ -3,15 +3,15 @@ class Reports {
     private $id;
     private $reason;
     private $reportDate;
-    private $memeId;
-    private $userId;
+    private $meme;
+    private $user;
 
-    public function __construct($id, $reason, $reportDate, $memeId, $userId) {
+    public function __construct($id, $reason, $reportDate, $meme, $user) {
         $this->id = $id;
         $this->reason = $reason;
         $this->reportDate = $reportDate;
-        $this->memeId = $memeId;
-        $this->userId = $userId;
+        $this->meme = $meme;
+        $this->user = $user;
     }
 
     public function getId() {
@@ -26,12 +26,12 @@ class Reports {
         return $this->reportDate;
     }
 
-    public function getMemeId() {
-        return $this->memeId;
+    public function getMeme() {
+        return $this->meme;
     }
 
-    public function getUserId() {
-        return $this->userId;
+    public function getUser() {
+        return $this->user;
     }
 
     public function setId($id) {
@@ -46,11 +46,5 @@ class Reports {
         $this->reportDate = $reportDate;
     }
 
-    public function setMemeId($memeId) {
-        $this->memeId = $memeId;
-    }
-
-    public function setUserId($userId) {
-        $this->userId = $userId;
-    }
+   
 }

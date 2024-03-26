@@ -1,15 +1,15 @@
 <?php
 class BlockedMemes {
     private $id;
-    private $memeId;
-    private $adminId;
-    private $reportId;
+    private $meme;
+    private $admin;
+    private $report;
 
-    public function __construct($id, $memeId, $adminId, $reportId) {
+    public function __construct($id, $meme, $admin, $report) {
         $this->id = $id;
-        $this->memeId = $memeId;
-        $this->adminId = $adminId;
-        $this->reportId = $reportId;
+        $this->memeId = $meme;
+        $this->adminId = $admin;
+        $this->reportId = $report;
     }
 
     public function getId() {
@@ -20,27 +20,20 @@ class BlockedMemes {
         $this->id = $id;
     }
 
-    public function getMemeId() {
-        return $this->memeId;
+    public function getMeme() {
+        return $this->meme;
     }
 
-    public function setMemeId($memeId) {
-        $this->memeId = $memeId;
-    }
 
-    public function getAdminId() {
+
+    public function getAdmin() {
         return $this->adminId;
     }
 
-    public function setAdminId($adminId) {
-        $this->adminId = $adminId;
-    }
 
-    public function getReportId() {
+    public function getReport() {
         return $this->reportId;
     }
 
-    public function setReportId($reportId) {
-        $this->reportId = $reportId;
-    }
+
 }

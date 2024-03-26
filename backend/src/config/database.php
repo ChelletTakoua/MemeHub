@@ -2,7 +2,7 @@
 
 return [
     'servername' => 'localhost',
-    'username' => 'username',
-    'password' => 'password',
-    'dbname' => 'database_name'
+    'username' => 'root',
+    'password' => '',
+    'dbname' => 'test'
 ];

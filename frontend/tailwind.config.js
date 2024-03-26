@@ -2,6 +2,9 @@ module.exports = {
   content: ["./src/**/*.{js,jsx,ts,tsx}"],
   theme: {
     extend: {
+      animation: {
+        'ping-once': 'ping 1s cubic-bezier(0, 0, 0.2, 1) 1',
+      },
       fontFamily: {
         mono: ["Oswald", "sans-serif"],
         body: [

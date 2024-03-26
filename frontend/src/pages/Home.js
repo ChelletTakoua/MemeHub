@@ -7,8 +7,8 @@ const Home = () => {
   return (
       <div className="min-h-screen w-screen bg-palenight">
           <header className="text-center py-20 bg-gradient-to-r from-greens-200 to-palenight shadow-2xl text-white">
-              <h1 className="text-5xl mb-5">Welcome to MemeHub!</h1>
-              <p className="text-xl">Enjoy the best memes from around the world</p>
+              <h1 className="text-5xl mb-5 animate-ping-once ">Welcome to MemeHub!</h1>
+              <p className="text-xl animate-pulse ">Enjoy the best memes from around the world</p>
           </header>
           <BackToTop />
           <Card date={"25 March 2024"} user={"Louey Sioua"} profilePic={"https://source.unsplash.com/random/50x50"} meme={"https://source.unsplash.com/random"} index={1} />

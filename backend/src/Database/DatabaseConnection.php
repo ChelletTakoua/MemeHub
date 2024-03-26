@@ -1,7 +1,10 @@
 <?php
 
-
+namespace Database;
 // this is not tested. @MariemElFouzi
+use PDO;
+use PDOException;
+
 class DatabaseConnection
 {
     private static $connection;
@@ -14,17 +17,18 @@ class DatabaseConnection
     public static function getInstance()
     {
         if (self::$connection === null) {
-            $config = include 'src/config/database.php';
+            $config = include __DIR__ . '/../config/database.php';
             $servername = $config['servername'];
             $username = $config['username'];
             $password = $config['password'];
             $dbname = $config['dbname'];
 
             var_dump($config);
-            self::$connection = new mysqli($servername, $username, $password, $dbname);
-
-            if (self::$connection->connect_error) {
-                die("Connection failed: " . self::$connection->connect_error);
+            try {
+                self::$connection = new PDO("mysql:host=$servername;dbname=$dbname", $username, $password);
+            }
+            catch (PDOException $e) {
+                echo "Connection failed: " . $e->getMessage();
             }
         }
 

@@ -2,7 +2,7 @@
 @everyone:
 
     - add models (classes metiers)
-
+     
     - Authentication (login, register, logout)
 
     - Add database classes

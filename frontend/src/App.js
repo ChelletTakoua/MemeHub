@@ -8,6 +8,7 @@ import AdminDashboard from "./pages/AdminDashboard";
 import CreateMeme from "./pages/CreateMeme";
 import Profile from "./pages/Profile";
 import Contact from "./pages/ContactUs";
+import Footer from "./components/Footer";
 
 function App() {
   return (
@@ -22,6 +23,7 @@ function App() {
         <Route path="/profile/:username" element={<Profile />} />
         <Route path="/contact" element={<Contact />} />
       </Routes>
+      <Footer />
     </Router>
   );
 }

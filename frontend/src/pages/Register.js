@@ -27,7 +27,7 @@ const Register = () => {
   };
 
   return (
-    <section className="bg-palenight min-h-screen w-screen">
+    <section className="bg-palenight">
       <div className="min-h-screen ">
         <div className="flex flex-col items-center justify-center px-6 py-3 mx-auto md:h-screen lg:py-0">
           <Link

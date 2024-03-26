@@ -36,7 +36,7 @@ const Profile = ({ isOwner }) => {
   };
 
   return (
-    <div className="bg-palenight min-h-screen w-screen">
+    <div className="bg-palenight">
       <main className="container mx-auto py-8">
         <div className="flex space-x-8">
           <div className="w-1/4">

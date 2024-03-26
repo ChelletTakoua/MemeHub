@@ -21,7 +21,7 @@ const Login = () => {
   };
 
   return (
-    <section className="bg-palenight min-h-screen w-screen">
+    <section className="bg-palenight">
       <div className="flex flex-col items-center justify-center px-6 py-8 mx-auto md:h-screen lg:py-0">
         <Link
           to="/"

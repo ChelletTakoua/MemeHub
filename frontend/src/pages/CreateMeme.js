@@ -18,13 +18,12 @@ export default function CreateMeme() {
   }, []);
 
   return (
-    <div className="flex flex-col justify-between bg-palenight min-h-screen w-screen">
+    <div className="flex flex-col justify-between bg-palenight">
       {browse ? (
         <Browse memes={memes} setCurrMeme={setCurrMeme} setBrowse={setBrowse} />
       ) : (
         <Meme currMeme={currMeme} setBrowse={setBrowse} />
       )}
-      <Footer />
     </div>
   );
 }

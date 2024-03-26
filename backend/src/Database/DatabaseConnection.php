@@ -3,7 +3,6 @@
 namespace Database;
 // this is not tested. @MariemElFouzi
 use PDO;
-use PDOException;
 
 class DatabaseConnection
 {
@@ -24,12 +23,8 @@ class DatabaseConnection
             $dbname = $config['dbname'];
 
             var_dump($config);
-            try {
-                self::$connection = new PDO("mysql:host=$servername;dbname=$dbname", $username, $password);
-            }
-            catch (PDOException $e) {
-                echo "Connection failed: " . $e->getMessage();
-            }
+            self::$connection = new PDO("mysql:host=$servername;dbname=$dbname;charset=utf8", $username, $password,
+                array(PDO::MYSQL_ATTR_INIT_COMMAND => 'SET NAMES UTF8'));
         }
 
         return self::$connection;

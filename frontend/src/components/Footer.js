@@ -6,7 +6,7 @@ export default function Footer() {
   return (
     <footer className="text-lg flex justify-between py-8 px-12 bg-algae shadow-2xl lg:px-44">
       <p>
-        Made with <FontAwesomeIcon icon={faHeart} color="red" /> by GL2
+        Made with <FontAwesomeIcon icon={faHeart} color="red" /> by ChelletTakoua
       </p>
       <p className="w-1/3">© 2024 MemeHub. All rights reserved. </p>
       <a target="_blank" href="https://github.com/ChelletTakoua/MemeHub/">

@@ -19,22 +19,18 @@ function logError($e)
 
 function errorHandler($e)
 {
-    logError($e);
+
+    if (! $e instanceof \Exceptions\HttpExceptions\HttpException) {
+        logError($e);
+            $e = new \Exceptions\HttpExceptions\InternalServerErrorException();
+    }
 
     $response = [
         'success' => false,
-        'message' => ''
+        'message' => $e->getMessage()
     ];
 
-    if ($e instanceof \Exceptions\HttpExceptions\HttpException) {
-        $response['message'] = $e->getMessage();
-        http_response_code($e->getHttpResponseCode());
-    } else {
-        $response['message'] = 'An error occurred. Please try again later.';
-        http_response_code(500);
-    }
-
-    // Return the response as JSON
     header('Content-Type: application/json');
+    http_response_code($e->getHttpResponseCode());
     echo json_encode($response);
 }

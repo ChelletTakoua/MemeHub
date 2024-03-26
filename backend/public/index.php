@@ -13,6 +13,13 @@ require '../src/Router/routes.php';
 
 $router->run();
 
+$connection = Database\DatabaseConnection::getInstance();
+var_dump($connection);
+$query = new Database\DatabaseQuery();
+$users = $query->executeQuery('SELECT * FROM users');
+var_dump($users);
+
+
 
 
 

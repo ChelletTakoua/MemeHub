@@ -13,7 +13,7 @@ export default function Card({ user, meme, profilePic, date, index }) {
   };
 
   return (
-    <div className="flex justify-center">
+    <div className="flex justify-center mt-10">
       <div className="w-1/2 shadow-lg bg-gray-700 rounded-3xl relative">
         <div className="flex items-center px-6 py-4">
           <img src={profilePic} alt="user" className="rounded-full" />

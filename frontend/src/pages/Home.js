@@ -10,8 +10,6 @@ const Home = () => {
               <h1 className="text-5xl mb-5 animate-ping-once ">Welcome to MemeHub!</h1>
               <p className="text-xl animate-pulse ">Enjoy the best memes from around the world</p>
           </header>
-          <br/>
-          <br/>
           <BackToTop />
           <Card date={"25 March 2024"} user={"Louey Sioua"} profilePic={"https://source.unsplash.com/random/50x50"} meme={"https://source.unsplash.com/random"} index={1} />
           <Card date={"25 March 2024"} user={"Yessine Sellami"} profilePic={"https://source.unsplash.com/random/50x50"} meme={trollFace} index={2}/>

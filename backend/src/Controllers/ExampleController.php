@@ -6,18 +6,18 @@ use Authentication\Auth;
 use Exception;
 use Exceptions\HttpExceptions\HttpException;
 use Exceptions\HttpExceptions\UnauthorizedException;
+use Utils\ApiResponseBuilder;
 
 class ExampleController
 {
 
 public function referenceMethod()
     {
-        Auth::requireAdminAccess(); //if only admin can access this method
-        Auth::requireLogin(); //if only logged in users can access this method
+        //Auth::requireAdminAccess(); //if only admin can access this method
+        //Auth::requireLogin(); //if only logged in users can access this method
         header('Content-Type: application/json'); // if you want to return json
 
         // your code logic goes here
-
 
         $exempleObjectToReturn = [
             "id" => 1,
@@ -25,7 +25,9 @@ public function referenceMethod()
             "content" => "This is a sample post content."
         ];
 
-        echo json_encode($exempleObjectToReturn); // to send the response
+
+        $response = ApiResponseBuilder::buildSuccessResponse($exempleObjectToReturn); // to build the response
+        echo json_encode($response); // to send the response
 
         // any error thrown and not caught will be handled by the error handler
         // HttpException is a custom exception that can be thrown to return a specific HTTP status code

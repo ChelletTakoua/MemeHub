@@ -25,12 +25,8 @@ function errorHandler($e)
             $e = new \Exceptions\HttpExceptions\InternalServerErrorException();
     }
 
-    $response = [
-        'success' => false,
-        'message' => $e->getMessage()
-    ];
-
     header('Content-Type: application/json');
+    $response = \Utils\ApiResponseBuilder::buildErrorResponse($e->getMessage(), $e->getHttpResponseCode());
     http_response_code($e->getHttpResponseCode());
     echo json_encode($response);
 }

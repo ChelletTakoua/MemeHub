@@ -1,4 +1,5 @@
 <?php
+namespace Models;
 class User {
     private $id;
     private $username;

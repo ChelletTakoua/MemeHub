@@ -1,16 +1,17 @@
 <?php
+namespace Models;
 class Memes {
     private $id;
     private $templateId;
     private $title;
-    private $user;
+    private $userId;
     private $dateCreation;
 
-    public function __construct($id, $templateId, $title, $user, $dateCreation) {
+    public function __construct($id, $templateId, $title, $userId, $dateCreation) {
         $this->id = $id;
         $this->templateId = $templateId;
         $this->title = $title;
-        $this->user = $user;
+        $this->userId = $userId;
         $this->dateCreation = $dateCreation;
     }
 
@@ -38,7 +39,7 @@ class Memes {
         $this->title = $title;
     }
 
-    public function getUser() {
+    public function getUserId() {
         return $this->userId;
     }
 

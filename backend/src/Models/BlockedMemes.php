@@ -1,9 +1,10 @@
 <?php
+namespace Models;
 class BlockedMemes {
     private $id;
-    private $meme;
-    private $admin;
-    private $report;
+    private $memeId;
+    private $adminId;
+    private $reportId;
 
     public function __construct($id, $meme, $admin, $report) {
         $this->id = $id;
@@ -21,7 +22,7 @@ class BlockedMemes {
     }
 
     public function getMeme() {
-        return $this->meme;
+        return $this->memeId;
     }
 
 

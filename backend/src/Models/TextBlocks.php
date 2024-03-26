@@ -1,4 +1,5 @@
 <?php
+namespace Models;
 class TextBlocks {
     private $id;
     private $text;
@@ -6,7 +7,7 @@ class TextBlocks {
     private $y;
     private $width;
     private $height;
-    private $meme;
+    private $memeId;
 
     public function __construct($id, $text, $x, $y, $width, $height, $meme) {
         $this->id = $id;
@@ -15,7 +16,7 @@ class TextBlocks {
         $this->y = $y;
         $this->width = $width;
         $this->height = $height;
-        $this->meme = $meme;
+        $this->memeId = $meme;
     }
 
     public function getId() {
@@ -66,8 +67,8 @@ class TextBlocks {
         $this->height = $height;
     }
 
-    public function getMeme() {
-        return $this->meme;
+    public function getMemeId() {
+        return $this->memeId;
     }
 
 }

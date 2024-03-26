@@ -3,7 +3,8 @@
 namespace Exceptions\HttpExceptions;
 
 
-class RouterException extends \HttpException
+
+class RouterException extends HttpException
 {
 
     public function __construct($message = "Router Exception", $httpResponseCode = 500, $code = 0, \Exception $previous = null)

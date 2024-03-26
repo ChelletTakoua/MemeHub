@@ -1,12 +1,18 @@
 <?php
 
 namespace Authentication;
+use Exceptions\HttpExceptions\NotLoggedInException;
+use Exceptions\HttpExceptions\UnauthorizedException;
+use Models\User;
+
 class Auth
 {
     public static function isLoggedIn()
     {
+        return true;// for testing purposes
         // Check if a user is logged in (e.g., check session or token)
         return isset($_SESSION['user_id']);
+
     }
 
     public static function login($username, $password)
@@ -29,15 +35,20 @@ class Auth
 
     public static function requireLogin(){
         if(!self::isLoggedIn()){
-            //TODO: throw a more specific exception
-            throw new \Exceptions\HttpExceptions\HttpException('Unauthorized', 401);
+            throw new NotLoggedInException();
         }
     }
     public static function requireAdminAccess(){
         if(!self::isLoggedIn() || $_SESSION['user_id'] !== 1){
-            //TODO: throw a more specific exception
-            throw new \Exceptions\HttpExceptions\HttpException('Forbidden', 403);
+            throw new UnauthorizedException();
         }
+    }
+
+    public static function getActiveUser()
+    {
+        //return new User($_SESSION['user_id']);
+
+        return new User(1, 'admin', 'password', 'mm', '2021-01-01', 'admin');//for now, return a hardcoded user
     }
 
 

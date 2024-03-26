@@ -5,7 +5,9 @@ function load($className){
     $file = __DIR__ . "/$className.php";
     //echo "loading $file\n";
     if (file_exists($file)) {
+        //echo "start $file\n";
         require_once $file;
+        //echo "end $file\n";
     }
 }
 

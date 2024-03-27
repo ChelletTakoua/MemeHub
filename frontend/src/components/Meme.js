@@ -38,7 +38,7 @@ export default function Meme({ currMeme, setBrowse }) {
         <FaArrowLeft />
         <span>Go Back</span>
       </button>
-      <div className="py-20 mx-12 grid grid grid-cols-2 gap-14 flex-col lg:flex-row-reverse lg:mx-44">
+      <div className="py-20 mx-12 grid grid-cols-2 gap-14 flex-col lg:flex-row-reverse lg:mx-44">
         <div className="flex flex-col items-start">
           <div>
             <MemeImg

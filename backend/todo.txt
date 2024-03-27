@@ -11,8 +11,6 @@
     - Add database classes
 
 
-- add link in error
-
 
 - structure the project in a way that it is extendable and easy to maintain
 - add a readme file that explains how to run the project

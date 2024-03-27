@@ -1,3 +1,9 @@
+For @loueySiwa: (3aytoulou blh)
+    - sayeb el index.php rayedh xd. ahawka famma TestController jarreb fih el code elli thb 3lih.
+    - el errorHandler ylogui el errors fl console, donc tnajjem traj3ou cb, ma3ach hachtek bch tna77ih
+
+
+
 How to work with this project:
     - to run the project, run the following command in the terminal:
         `php -S localhost:8000 -t public`  (if you are in the root directory of the project)

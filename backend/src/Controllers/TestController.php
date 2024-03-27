@@ -5,6 +5,8 @@ namespace Controllers;
 
 
 use Database\UserTableManager;
+use Database\DatabaseConnection;
+use Database\DatabaseQuery;
 use Models\User;
 
 class TestController
@@ -14,8 +16,10 @@ class TestController
     public function testMethod()
     {
 
-        // test anything you want here
-        // this file is in the gitignore, anything you write here will not be pushed to the repository
+        $connection = DatabaseConnection::getInstance();
+        var_dump($connection);
+        $query = new DatabaseQuery();
+        var_dump($query->executeQuery("SELECT * FROM users"));
 
     }
 

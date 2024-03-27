@@ -8,10 +8,11 @@ require_once '../src/Exceptions/ErrorHandler.php';
 $router = new Router\Router($_SERVER['REQUEST_URI']);
 require '../src/Router/routes.php';
 
-//$router->run();
+$router->run();
 
 //if you want to test connection to the database and test the query
 // 1- run xampp , start mysql and apache and select the database test
+// 2-
 // 2- you have to run the schema.sql script located in database directory on the test database of xampp
 // 3- uncomment the following code
 

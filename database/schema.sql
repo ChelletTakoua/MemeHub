@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Mar 26, 2024 at 06:03 AM
+-- Generation Time: Mar 27, 2024 at 08:26 AM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -18,7 +18,7 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Database: `memehub`
+-- Database: `test`
 --
 
 -- --------------------------------------------------------
@@ -37,6 +37,40 @@ CREATE TABLE `blocked_memes` (
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `likes`
+--
+
+CREATE TABLE `likes` (
+  `user_id` int(11) NOT NULL,
+  `meme_id` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
+
+--
+-- Triggers `likes`
+--
+DELIMITER $$
+CREATE TRIGGER `decrement_likes` AFTER DELETE ON `likes` FOR EACH ROW BEGIN
+    UPDATE memes
+    SET nb_likes = CASE 
+                    WHEN (SELECT COUNT(*) FROM likes WHERE likes.meme_id = OLD.meme.id) = 0 THEN 0
+                    ELSE nb_likes - 1
+                END
+    WHERE memes.id = OLD.meme_id;
+END
+$$
+DELIMITER ;
+DELIMITER $$
+CREATE TRIGGER `increment_nb_likes` AFTER INSERT ON `likes` FOR EACH ROW BEGIN
+	UPDATE memes
+    SET memes.nb_likes = memes.nb_likes + 1
+    WHERE memes.id = NEW.meme_id;
+END
+$$
+DELIMITER ;
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `memes`
 --
 
@@ -45,7 +79,8 @@ CREATE TABLE `memes` (
   `custom_title` varchar(50) NOT NULL,
   `user_id` int(11) NOT NULL,
   `template_id` int(11) NOT NULL,
-  `creation_date` datetime NOT NULL
+  `creation_date` datetime NOT NULL DEFAULT current_timestamp(),
+  `nb_likes` int(11) DEFAULT 0
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
@@ -57,7 +92,7 @@ CREATE TABLE `memes` (
 CREATE TABLE `reports` (
   `id` int(11) NOT NULL,
   `reason` varchar(150) NOT NULL,
-  `report_date` datetime NOT NULL,
+  `report_date` datetime NOT NULL DEFAULT current_timestamp(),
   `meme_id` int(11) NOT NULL,
   `user_id` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
@@ -102,9 +137,9 @@ CREATE TABLE `users` (
   `id` int(11) NOT NULL,
   `username` varchar(25) NOT NULL,
   `email` varchar(30) NOT NULL,
-  `password` varchar(50) NOT NULL,
-  `reg_date` datetime NOT NULL,
-  `is_admin` tinyint(1) NOT NULL
+  `password` varchar(255) NOT NULL,
+  `reg_date` datetime NOT NULL DEFAULT current_timestamp(),
+  `role` varchar(15) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
@@ -119,6 +154,13 @@ ALTER TABLE `blocked_memes`
   ADD KEY `admin_id_fk` (`admin_id`),
   ADD KEY `report_id_fk` (`report_id`),
   ADD KEY `meme_id_fk` (`meme_id`);
+
+--
+-- Indexes for table `likes`
+--
+ALTER TABLE `likes`
+  ADD PRIMARY KEY (`user_id`,`meme_id`),
+  ADD KEY `meme_id` (`meme_id`);
 
 --
 -- Indexes for table `memes`
@@ -206,6 +248,13 @@ ALTER TABLE `blocked_memes`
   ADD CONSTRAINT `blocked_memes_ibfk_1` FOREIGN KEY (`admin_id`) REFERENCES `users` (`id`),
   ADD CONSTRAINT `blocked_memes_ibfk_2` FOREIGN KEY (`meme_id`) REFERENCES `memes` (`id`),
   ADD CONSTRAINT `blocked_memes_ibfk_3` FOREIGN KEY (`report_id`) REFERENCES `reports` (`id`);
+
+--
+-- Constraints for table `likes`
+--
+ALTER TABLE `likes`
+  ADD CONSTRAINT `likes_ibfk_1` FOREIGN KEY (`meme_id`) REFERENCES `memes` (`id`),
+  ADD CONSTRAINT `likes_ibfk_2` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`);
 
 --
 -- Constraints for table `memes`

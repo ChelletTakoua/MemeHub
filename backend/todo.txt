@@ -1,6 +1,9 @@
 
 @everyone:
-    - add roles to database
+    - add basic query functions smth like : "Select * from __ where" . implode("AND" , "$primarykey[i]=$value")
+    - add attribute number of likes to the meme and like class to the model
+    - add proxies instead of ids as foreign keys (??)
+    - add roles to users in model
     - add models (classes metiers)
      
     - Authentication (login, register, logout)

@@ -19,4 +19,6 @@ class DatabaseQuery
         $stmt->execute($params);
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
+
+
 }

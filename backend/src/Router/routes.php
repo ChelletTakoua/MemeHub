@@ -21,3 +21,4 @@ $router->get('/example', "ExampleController@referenceMethod", ['user', 'admin'])
 
 
 
+

@@ -22,8 +22,10 @@ class DatabaseConnection
             $password = $config['password'];
             $dbname = $config['dbname'];
 
-            self::$connection = new PDO("mysql:host=$servername;dbname=$dbname;charset=utf8", $username, $password,
-                array(PDO::MYSQL_ATTR_INIT_COMMAND => 'SET NAMES UTF8'));
+            self::$connection = new PDO("mysql:host=$servername;dbname=$dbname;charset=utf8",
+                                            $username,
+                                            $password,
+                                            array(PDO::MYSQL_ATTR_INIT_COMMAND => 'SET NAMES UTF8'));
         }
 
         return self::$connection;

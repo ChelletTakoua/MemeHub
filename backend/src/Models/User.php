@@ -1,6 +1,6 @@
 <?php
 namespace Models;
-class User {
+class User extends Model{
     private $id;
     private $username;
     private $password;

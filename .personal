@@ -1,0 +1,106 @@
+
+// 1. Create a new user
+
+{
+  "status": "success",
+  "code": 200,
+  "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoxMjMsInVzZXJuYW1lIjoiZXhhbXBsZV91c2VyIiwiaWF0IjoxNTE2MjM5MDIyfQ.OF8xR9a8y3Y2rAn9Tt8vANinYX1uR5Yv46k0cREcz4o",
+  "data": {
+    "user_id": 123,
+    "username": "example_user",
+    "email": "email@email.com"
+  }
+}
+
+// 2. Get all users
+
+{
+    "status": "success",
+    "code": 200,
+    "data": [
+        {
+            "user_id": 123,
+            "username": "example_user",
+            "email": "example@example.com"
+        },
+        {
+            "user_id": 456,
+            "username": "another_user",
+            "email": "another@example.com"
+        },
+        {
+            "user_id": 789,
+            "username": "third_user",
+            "email": "third@example.com"
+        }
+    ]
+}
+
+
+// 3. unauthorized access
+
+{
+    "status": "error",
+    "code": 401,
+    "message": "Unauthorized access"
+}
+
+// 4. user not found
+
+{
+    "status": "error",
+    "code": 404,
+    "message": "User not found"
+}
+
+// 5. internal server error
+
+{
+    "status": "error",
+    "code": 500,
+    "message": "Internal server error"
+}
+
+// validation error
+
+{
+    "status": "error",
+    "code": 400,
+    "message": "Validation error",
+    "errors": {
+        "username": "Username is required",
+        "email": "Email is required"
+    }
+}
+
+// 6. user already exists
+
+{
+    "status": "error",
+    "code": 409,
+    "message": "User already exists"
+}
+
+// 7. user created successfully
+
+{
+    "status": "success",
+    "code": 201,
+    "data": {
+        "user_id": 123,
+        "username": "example_user",
+        "email": "example@example.com"
+    }
+}
+
+// 8. user updated successfully
+
+{
+    "status": "success",
+    "code": 200,
+    "data": {
+        "user_id": 123,
+        "username": "example_user",
+        "email": "example@example.com"
+    }
+}

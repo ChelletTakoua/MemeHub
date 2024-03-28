@@ -1,9 +1,11 @@
 <?php
 
-namespace Database;
+namespace Database\TableManagers;
 
 
-class TableManager
+use Database\ModelTableMapper;
+
+abstract class TableManager
 {
     private static $instances = [];
 
@@ -24,5 +26,17 @@ class TableManager
     {
         echo "TableManager save method called";
     }
+
+    public abstract function retrieve($id);
+
+    public function getTableName()
+    {
+        return ModelTableMapper::getTableNameByTableManager(static::class);
+    }
+
+
+
+
+
 
 }

@@ -20,9 +20,11 @@ class TableManager
         }
         return self::$instances[$className];
     }
+
     public function save($model)
     {
         echo "TableManager save method called";
     }
+
 
 }

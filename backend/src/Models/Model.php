@@ -16,10 +16,6 @@ abstract class Model
 
 
 
-
-
-
-
     //TODO: the id is created by the database (maybe other attributes too), so we should retrieve the new object from the database after saving it
     // either return the new object or update the current object with the new values
     /**

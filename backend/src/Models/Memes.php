@@ -6,6 +6,7 @@ class Memes {
     private $title;
     private $userId;
     private $dateCreation;
+    private $nbLikes;
 
     public function __construct($id, $templateId, $title, $userId, $dateCreation) {
         $this->id = $id;
@@ -13,6 +14,7 @@ class Memes {
         $this->title = $title;
         $this->userId = $userId;
         $this->dateCreation = $dateCreation;
+        $this->nbLikes = 0;
     }
 
     public function getMemeId() {

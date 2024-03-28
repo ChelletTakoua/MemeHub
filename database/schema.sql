@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Mar 27, 2024 at 08:26 AM
+-- Generation Time: Mar 28, 2024 at 12:24 AM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -17,10 +17,12 @@ SET time_zone = "+00:00";
 /*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
 /*!40101 SET NAMES utf8mb4 */;
 
---
--- Database: `test`
---
+-- Drop the database if it exists
+DROP DATABASE IF EXISTS memehub;
 
+-- Create the database
+CREATE DATABASE memehub;
+USE memehub;
 -- --------------------------------------------------------
 
 --
@@ -41,6 +43,7 @@ CREATE TABLE `blocked_memes` (
 --
 
 CREATE TABLE `likes` (
+  `id` int(11) NOT NULL,
   `user_id` int(11) NOT NULL,
   `meme_id` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
@@ -159,7 +162,8 @@ ALTER TABLE `blocked_memes`
 -- Indexes for table `likes`
 --
 ALTER TABLE `likes`
-  ADD PRIMARY KEY (`user_id`,`meme_id`),
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `user_id&meme_id` (`user_id`,`meme_id`) USING BTREE,
   ADD KEY `meme_id` (`meme_id`);
 
 --
@@ -205,6 +209,12 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT for table `blocked_memes`
 --
 ALTER TABLE `blocked_memes`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `likes`
+--
+ALTER TABLE `likes`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --

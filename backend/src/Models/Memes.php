@@ -1,5 +1,7 @@
 <?php
 namespace Models;
+use Utils\Proxy;
+
 class Memes {
     private $id;
     private $templateId;
@@ -12,7 +14,7 @@ class Memes {
         $this->id = $id;
         $this->templateId = $templateId;
         $this->title = $title;
-        $this->userId = $userId;
+        $this->userId = new Proxy($userId, User::class);
         $this->dateCreation = $dateCreation;
         $this->nbLikes = 0;
     }
@@ -42,7 +44,10 @@ class Memes {
     }
 
     public function getUserId() {
-        return $this->userId;
+        return $this->userId->getId();
+    }
+    public function getUser() {
+        return $this->userId->getInstance();
     }
 
     public function getDateCreation() {

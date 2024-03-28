@@ -23,7 +23,6 @@ class DatabaseQuery
      * @param $conditions : associative array of columns => values for WHERE clause (pass it empty for INSERT queries)
      * @return array|false
      * @example
-     * DatabaseConnection::getInstance();
      * $query = new DatabaseQuery();
      * $queryObjects = $query->executeQuery("insert","users",["username" => "louey" , "password" => "123456"] ,"email" => "h@gmail.com","role" => "admin"]);
      * $queryObjects = $query->executeQuery("update","users",["username" => "louey"],["username" => "nero"]);

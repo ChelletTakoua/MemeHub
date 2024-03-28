@@ -2,23 +2,27 @@
 
 namespace Models;
 
-use Database\TableManager;
+use Database\ModelTableMapper;
+use Database\TableManagers\TableManager;
+use JsonSerializable;
 
-abstract class Model
+abstract class Model implements JsonSerializable
 {
 
-    //TODO: @MariemELFouzi @LoueySiwa this is just a suggestion
-    // we can add the following properties to the Model class
-    // $primaryKeys: an array to store the primary key column names (@louey fasrelha el faza hedhi)
-    // $attributes: a map to store the attributes of the model (column name => attribute name). This one is optional, but it can be useful.
-    protected static $primaryKeys = []; // The primary key column names
-    protected static $attributes = []; // Array to store the attributes of the model
+
+    //public abstract function getPrimaryKeyColumnName(): string;
 
 
-
-
-
-
+    /**
+     * this method retrieves the model from the database
+     * @param int $id the id of the model
+     * @return Model the model retrieved from the database
+     */
+    public static function retrieve($id)
+    {
+        $tableManager = self::getTableManager();
+        return $tableManager->retrieve($id);
+    }
 
     //TODO: the id is created by the database (maybe other attributes too), so we should retrieve the new object from the database after saving it
     // either return the new object or update the current object with the new values
@@ -42,10 +46,17 @@ abstract class Model
      * this method returns the TableManager class that handles the database operations, the tableManager name is the class name of the model + 'TableManager'
      * @return TableManager the TableManager class that handles the database operations
      */
-    public function getTableManager(): TableManager
+    public static function getTableManager(): TableManager
     {
-        $tableManagerName = 'Database\\' . basename(get_class($this)) . 'TableManager';
-        return  $tableManagerName::GetInstance();
+       return ModelTableMapper::getTableManagerClassByModel(get_called_class())::getInstance();
     }
 
+    /*public static function getTableManager(): TableManager
+    {
+        $tableManagerName = 'Database\\' . basename(get_called_class()) . 'TableManager';
+        if (class_exists($tableManagerName) && is_subclass_of($tableManagerName, TableManager::class)) {
+            return $tableManagerName::GetInstance();
+        }
+        throw new \Exception("Class $tableManagerName does not exist or does not extend TableManager");
+    }*/
 }

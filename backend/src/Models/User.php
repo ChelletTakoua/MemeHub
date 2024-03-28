@@ -62,7 +62,17 @@ class User extends Model{
     public function setRegistrationDate($registrationDate) {
         $this->registrationDate = $registrationDate;
     }
-    
-    
 
+
+    public function jsonSerialize()
+    {
+        return [
+            'id' => $this->id,
+            'username' => $this->username,
+            //'password' => $this->password,
+            'email' => $this->email,
+            'registrationDate' => $this->registrationDate,
+            'role' => $this->role
+        ];
+    }
 }

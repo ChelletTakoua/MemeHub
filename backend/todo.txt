@@ -1,14 +1,111 @@
 
+@everyone. These are the tasks that need to be done:
+
+-----@Sallemi + @everyone
+|    - implement Controllers and routes:
+|        - bch naamlou el routes elli yest7a9hom el front lkol, lezemna donc el lista mtaa el requests elli hachtou behom lfront @Sallemi
+|        - brainstormiw el hajet elli inajmou yest7a9hom el front en attendant si Sallemi (check file brainstorming.txt)
+_______________________________________________________________
+
+
+-----@takoua or @chidhi
+|    - mailing system:
+|        1. search how to send an email (maanaarech si mawjouda fl cours wala bch naamloha wahadna)
+|            - est ce que famma faza b php direct
+|            - wala fibeli famma XAMPP wahda mel les services elli ma staamalnehomch tab3ath des email. Choufoha w aamlou recherche 3aleha
+|        2. create a class that will handle sending emails in the Utils folder
+|        juste class generaique feha el fonctionalité sendMail, sendMail($to, $subject, $message) par exemple
+|        Fech bch nestaamloha? to naamlou appel w nahiw fih el mawdhou3
+|        propositions mteei: (haja barka tekfi mch lkol, ama nahna srafna srafna nnajmou naamlou akther mn kaaba)
+|            - mail de verification de compte (apres l'inscription)
+|            - mail de reinitialisation de mot de passe
+|            - mail de notification (like, comment, etc.)
+_______________________________________________________________
+
+
+
+------@fawzi
+|    - add tableName / ModelClass / TableManager mapping:
+|       1. create a class for each Model that will extend the TableManager class
+|       2. add mapping in the modelTableMapping.php file
+_______________________________________________________________
+
+-------@fawzi
+|    - For each Model:
+|        1. rodha t'extendi Model
+|            ** $id w getId() definithom fl Model donc tnajjem tna77ehom
+|            ** Pour les tables elli fehom foreign keys: (bch nestaamel exemple user_id fi meme)
+|                - el attribut ywalli esmou $user fi3oudh $user_id
+|                - fel constructeur, taamel
+|
+|                     public function __construct($id, ... ,$user_id, ...){
+|                            $this->id = $id;
+|                            ...
+|                            $user = new Proxy($user_id, 'User');
+|                            ...
+|                        }
+|
+|                - taamel 2 getters:
+|                    - getUserId(){ return $this->user->getId();}
+|                    - getUser(){ return $this->user->getInstance();}
+|
+|
+|        2. define jsonSerialize method that will return the object as an associative array
+|            Chmaanetha? Ya sidi ben sidek hedhi el methode elli bch t9oul lel json_encode kifeh y7ottou el objet fl format JSON
+|            maanetha elli bch t7ottou fl fonction hedhi howa elli bch yetb3ath lel client (frontend)
+|            public function jsonSerialize(){
+|                return [
+|                    'id' => $this->id,
+|                    ...
+|                    'user' => $this->user, (el proxy yetlhe brohou wahdou, don't worry)
+|                    ...
+|                ];
+|            }
+_______________________________________________________________
+
+
+-------@chidhi
+|    - authentication (login, register, logout):
+|        *** dhaherli zeyda el recherche fel 7keya hedhi juste hachetna bel database tarka7 w barra
+|        1. el 5edma lkol bch tkoun fl classe Auth (tnajjem tansana3 classes o5rin elli t7eb testaamalhom bien sur, ahawka el folder Utils 3ala dhemtek)
+|        1. en fin de compte naamloha kima elli mawjouda deja fl classe Auth ( user logged in <==> $_SESSION['user_id'] is set )
+|        3. wa9tli hachtek b requete ml base de donnees juste aamel comment wala ayy haja w e3taber anni el requete tba3thet.
+|        juste kammel el logique w baaed to nriglou el database m3a louey
+_______________________________________________________________
+
+
+
+-------@Sioua + 3ayet lchkoun e5r m3ak
+|    - implement queries in the table managers for each table
+|        *** jawek behi sioua 3andi thi9a fik tgued rohek meghir steps hhhh. Aamelhom enty el steps ma3andich fekra wadh7a ena
+|        juste hachetna melle5er bel hajet hedhom: (asra7 implementehom kima t7eb)
+|            - Des methodes fi kol tableManager lel les requetes elli hachtna behom (select, insert, update, delete)
+|            - Fi kol table manager famma function tasna3lek el objet Model mel reponse mtaa requete SQL.
+_______________________________________________________________
+
+
+
+
+
+
+
+
+
 @everyone:
     - add basic query functions smth like : "Select * from __ where" . implode("AND" , "$primarykey[i]=$value")
     - add attribute number of likes to the meme and like class to the model
     - add proxies instead of ids as foreign keys (??)
     - add roles to users in model
     - add models (classes metiers)
-     
+
     - Authentication (login, register, logout)
 
     - Add database classes
+
+
+
+
+
 
 
 

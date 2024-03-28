@@ -1,0 +1,20 @@
+lenna brainstormiw afkarkom / ideas :
+
+
+
+
+
+ROUTES: (el possible routes elli ynajjem yestaamelhom el frontend) as a webservice
+    - login
+    - register
+    - user/profile
+    - user/modifypassword
+    - user/modifyemail
+    - user/modifyUsername
+    - user/delete
+    - user/verify
+     .
+     .
+     .
+
+

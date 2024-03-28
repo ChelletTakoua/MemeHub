@@ -6,11 +6,23 @@ use Database\ModelTableMapper;
 use Database\TableManagers\TableManager;
 use JsonSerializable;
 
+
+//TODO: make all Models extend this class
+// implement the method jsonSerialize
+// this method should return the json object to return to the client (example in user)
+//
+
+
 abstract class Model implements JsonSerializable
 {
 
+    private $id;
 
-    //public abstract function getPrimaryKeyColumnName(): string;
+    public function getId()
+    {
+        return $this->id;
+    }
+
 
 
     /**
@@ -23,6 +35,8 @@ abstract class Model implements JsonSerializable
         $tableManager = self::getTableManager();
         return $tableManager->retrieve($id);
     }
+
+
 
     //TODO: the id is created by the database (maybe other attributes too), so we should retrieve the new object from the database after saving it
     // either return the new object or update the current object with the new values
@@ -51,12 +65,4 @@ abstract class Model implements JsonSerializable
        return ModelTableMapper::getTableManagerClassByModel(get_called_class())::getInstance();
     }
 
-    /*public static function getTableManager(): TableManager
-    {
-        $tableManagerName = 'Database\\' . basename(get_called_class()) . 'TableManager';
-        if (class_exists($tableManagerName) && is_subclass_of($tableManagerName, TableManager::class)) {
-            return $tableManagerName::GetInstance();
-        }
-        throw new \Exception("Class $tableManagerName does not exist or does not extend TableManager");
-    }*/
 }

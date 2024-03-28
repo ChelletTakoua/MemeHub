@@ -7,6 +7,7 @@ use Models\User;
 
 class Auth
 {
+    private $activeUser;
     public static function isLoggedIn()
     {
         return true;// for testing purposes
@@ -44,9 +45,40 @@ class Auth
         }
     }
 
+    /**
+     * Get the active user
+     *
+     * @return User
+     * @throws NotLoggedInException
+     */
+    public function getActiveUser(): User
+    {
+        // If activeUser is already set, return it
+        if ($this->activeUser !== null) {
+            return $this->activeUser;
+        }
+
+        if (!self::isLoggedIn()) {
+            throw new NotLoggedInException();
+        }
+
+        // Fetch the user from the database
+        $userId = $_SESSION['user_id'];
+
+        /* TODO: fetch from database
+        $userTableManager = UserTableManager::GetInstance();
+        $this->activeUser = $userTableManager->find($userId);
+        */
+
+        // If the user was not found, throw an exception
+        if ($this->activeUser === null) {
+            throw new \Exception("User with ID $userId not found");
+        }
+
+        return $this->activeUser;
+    }
     public static function getActiveUser()
     {
-        //return new User($_SESSION['user_id']);
 
         return new User(1, 'admin', 'password', 'mm', '2021-01-01', 'admin');//for now, return a hardcoded user
     }

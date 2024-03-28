@@ -14,13 +14,19 @@ class DatabaseQuery
     }
 
     /**
-     * Execute a query on the database and return the result (if any) as an associative array of rows(columns => values)
-     * no need to write a separate method for each query type (SELECT, INSERT, UPDATE, DELETE)
+     * Execute a query on the database and return the result (if any) as an associative array of rows(columns => values).
+     * No need to write a separate method for each query type (SELECT, INSERT, UPDATE, DELETE). You need to create the connection to the database first
+     * , instantiate the DatabaseQuery class and call the executeQuery method with the following parameters:
      * @param $queryType : SELECT, INSERT, UPDATE, DELETE
      * @param $table : the table name
      * @param $attributes : associative array of columns => values for INSERT and UPDATE queries (pass it empty for SELECT and DELETE queries)
      * @param $conditions : associative array of columns => values for WHERE clause (pass it empty for INSERT queries)
      * @return array|false
+     * @example
+     * DatabaseConnection::getInstance();
+     * $query = new DatabaseQuery();
+     * $queryObjects = $query->executeQuery("insert","users",["username" => "louey" , "password" => "123456"] ,"email" => "h@gmail.com","role" => "admin"]);
+     * $queryObjects = $query->executeQuery("update","users",["username" => "louey"],["username" => "nero"]);
      */
 
     public function executeQuery($queryType, $table, $attributes = [], $conditions = [])

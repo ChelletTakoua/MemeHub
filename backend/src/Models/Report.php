@@ -1,6 +1,6 @@
 <?php
 namespace Models;
-class Reports {
+class Report {
     private $id;
     private $reason;
     private $reportDate;

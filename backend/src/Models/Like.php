@@ -1,6 +1,6 @@
 <?php
-
-class Likes {
+namespace Models;
+class Like {
     private $id;
     private $memeId;
     private $userId;

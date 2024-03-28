@@ -1,6 +1,6 @@
 <?php
 namespace Models;
-class TextBlocks {
+class TextBlock {
     private $id;
     private $text;
     private $x;

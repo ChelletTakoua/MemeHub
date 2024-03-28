@@ -1,6 +1,6 @@
 <?php
 namespace Models;
-class Memes {
+class Meme {
     private $id;
     private $templateId;
     private $title;

@@ -1,6 +1,6 @@
 <?php
 namespace Models;
-class BlockedMemes {
+class BlockedMeme {
     private $id;
     private $memeId;
     private $adminId;

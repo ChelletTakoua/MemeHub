@@ -10,32 +10,37 @@ import Profile from "./pages/Profile";
 import Contact from "./pages/ContactUs";
 import Footer from "./components/Footer";
 import { AppContext } from "./context/AppContext";
+import "./App.css";
 
 function App() {
   const { user } = useContext(AppContext);
   return (
     <Router>
-      <Navbar />
-      <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="/contact" element={<Contact />} />
-        {!user && (
-          <>
-            <Route path="/login" element={<Login />} />
-            <Route path="/register" element={<Register />} />
-          </>
-        )}
-        {user && (
-          <>
-            <Route path="/meme/:id" element={<MemeEdit />} />
-            <Route path="/create" element={<MemeEdit />} />
-          </>
-        )}
-        <Route path="/admin" element={<AdminDashboard />} />
-        <Route path="/profile/:id" element={<Profile />} />
-        <Route path="*" element={<h1>Not Found</h1>} />
-      </Routes>
-      <Footer />
+      <div className="app">
+        <Navbar />
+        <main className="app-main">
+          <Routes>
+            <Route path="/" element={<Home />} />
+            <Route path="/contact" element={<Contact />} />
+            {!user && (
+              <>
+                <Route path="/login" element={<Login />} />
+                <Route path="/register" element={<Register />} />
+              </>
+            )}
+            {user && (
+              <>
+                <Route path="/meme/:id" element={<MemeEdit />} />
+                <Route path="/create" element={<MemeEdit />} />
+              </>
+            )}
+            <Route path="/admin" element={<AdminDashboard />} />
+            <Route path="/profile/:id" element={<Profile />} />
+            <Route path="*" element={<h1>Not Found</h1>} />
+          </Routes>
+        </main>
+        <Footer />
+      </div>
     </Router>
   );
 }

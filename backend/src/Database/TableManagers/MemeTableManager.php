@@ -23,5 +23,6 @@ class UserTableManager extends TableManager
         $meme->setNbLikes($queryObjects[0]["nb_likes"]);
         return $user;    
     }
+    
 
 }

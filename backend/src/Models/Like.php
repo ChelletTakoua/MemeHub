@@ -1,25 +1,33 @@
 <?php
 namespace Models;
-class Like {
-    private $id;
-    private $memeId;
-    private $userId;
+use Utils\Proxy;
+class Like extends Model{
+    private $meme;
+    private $user;
 
-    public function __construct($id, $memeId, $userId) {
+    public function __construct($id, $meme_id, $user_id) {
         $this->id = $id;
-        $this->memeId = $memeId;
-        $this->userId = $userId;
+        $meme = new Proxy($meme_id, 'Meme');
+        $user = new Proxy($user_id, 'User');
     }
-
-    public function getId() {
-        return $this->id;
+    public function getUserId(){
+        return $this->user->getId();
     }
-
-    public function getMemeId() {
-        return $this->memeId;
+    public function getMemeId(){
+        return $this->meme->getId();
     }
-
-    public function getUserId() {
-        return $this->userId;
+    public function getUser(){ 
+        return $this->user->getInstance();
+    }
+    public function getMeme(){ 
+        return $this->meme->getInstance();
+    }
+    public function jsonSerialize()
+    {
+        return [
+            'id' => $this->id,
+            'meme' => $this->meme,
+            'user' => $this->user,
+        ];
     }
 }

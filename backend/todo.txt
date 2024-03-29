@@ -49,7 +49,6 @@ _______________________________________________________________
 |                    - getUserId(){ return $this->user->getId();}
 |                    - getUser(){ return $this->user->getInstance();}
 |
-|
 |        2. define jsonSerialize method that will return the object as an associative array
 |            Chmaanetha? Ya sidi ben sidek hedhi el methode elli bch t9oul lel json_encode kifeh y7ottou el objet fl format JSON
 |            maanetha elli bch t7ottou fl fonction hedhi howa elli bch yetb3ath lel client (frontend)

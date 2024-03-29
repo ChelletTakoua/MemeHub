@@ -1,22 +1,30 @@
 <?php
 namespace Models;
-class Report {
-    private $id;
+use Utils\Proxy;
+class Report extends Model {
     private $reason;
     private $reportDate;
-    private $memeId;
-    private $userId;
+    private $meme;
+    private $user;
 
-    public function __construct($id, $reason, $reportDate, $meme, $user) {
+    public function __construct($id, $reason, $reportDate, $meme_id, $user_id) {
         $this->id = $id;
         $this->reason = $reason;
         $this->reportDate = $reportDate;
-        $this->memeId = $meme;
-        $this->userId = $user;
+        $meme = new Proxy($meme_id, 'Meme');
+        $user= new Proxy($user_id, 'User');
     }
-
-    public function getId() {
-        return $this->id;
+    public function getUserId(){
+        return $this->user->getId();
+    }
+    public function getMemeId(){
+        return $this->meme->getId();
+    }
+    public function getUser(){ 
+        return $this->user->getInstance();
+    }
+    public function getMeme(){ 
+        return $this->meme->getInstance();
     }
 
     public function getReason() {
@@ -27,18 +35,6 @@ class Report {
         return $this->reportDate;
     }
 
-    public function getMemeId() {
-        return $this->memeId;
-    }
-
-    public function getUserId() {
-        return $this->userId;
-    }
-
-    public function setId($id) {
-        $this->id = $id;
-    }
-
     public function setReason($reason) {
         $this->reason = $reason;
     }
@@ -47,5 +43,15 @@ class Report {
         $this->reportDate = $reportDate;
     }
 
+    public function jsonSerialize()
+    {
+        return [
+            'id' => $this->id,
+            'reason' => $this->reason,
+            'reportDate' => $this->reportDate,
+            'meme' => $this->meme,
+            'user' => $this->user,
+        ];
+    }
    
 }

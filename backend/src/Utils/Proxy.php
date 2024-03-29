@@ -4,6 +4,12 @@ namespace Utils;
 
 use Database\ModelTableMapper;
 use Models\User;
+use Models\Template;
+use Models\Like;
+use Models\Meme;
+use Models\TextBlock;
+use Models\Report;
+use Models\BlockedMeme;
 
 class Proxy
 {

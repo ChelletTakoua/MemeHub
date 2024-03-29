@@ -1,36 +1,32 @@
 <?php
 namespace Models;
-class Meme {
-    private $id;
-    private $templateId;
+use Utils\Proxy;
+class Meme extends Model{
+    private $template;
     private $title;
-    private $userId;
-    private $dateCreation;
+    private $user;
+    private $creationDate;
     private $nbLikes;
 
-    public function __construct($id, $templateId, $title, $userId, $dateCreation) {
+    public function __construct($id, $template, $title, $user, $creationDate) {
         $this->id = $id;
-        $this->templateId = $templateId;
+        $templateId = new Proxy($template_id, 'Template');
         $this->title = $title;
-        $this->userId = $userId;
-        $this->dateCreation = $dateCreation;
+        $userId = new Proxy($user_id, 'User');
+        $this->creationDate = $creationDate;
         $this->nbLikes = 0;
     }
-
-    public function getMemeId() {
-        return $this->id;
+    public function getUserId(){
+        return $this->user->getId();
     }
-
-    public function setMemeId($id) {
-        $this->id = $id;
+    public function getTemplateId(){
+        return $this->template->getId();
     }
-
-    public function getTemplateId() {
-        return $this->templateId;
+    public function getUser(){ 
+        return $this->user->getInstance();
     }
-
-    public function setTemplateId($templateId) {
-        $this->templateId = $templateId;
+    public function getTemplate(){ 
+        return $this->template->getInstance();
     }
 
     public function getTitle() {
@@ -41,15 +37,22 @@ class Meme {
         $this->title = $title;
     }
 
-    public function getUserId() {
-        return $this->userId;
+    public function getCreationDate() {
+        return $this->creationDate;
     }
 
-    public function getDateCreation() {
-        return $this->dateCreation;
+    public function setCreationDate($creationDate) {
+        $this->creationDate = $creationDate;
     }
-
-    public function setDateCreation($dateCreation) {
-        $this->dateCreation = $dateCreation;
+    public function jsonSerialize()
+    {
+        return [
+            'id' => $this->id,
+            'template' => $this->template,
+            'title' => $this->title,
+            'user' => $this->user,
+            'dateCreation' => $this->dateCreation,
+            'nbLikes' => $this->nbLikes,
+        ];
     }
 }

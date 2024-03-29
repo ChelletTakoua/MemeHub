@@ -1,40 +1,45 @@
 <?php
 namespace Models;
-class BlockedMeme {
-    private $id;
-    private $memeId;
-    private $adminId;
-    private $reportId;
+use Utils\Proxy;
+class BlockedMeme extends Model {
+    private $meme;
+    private $admin;
+    private $report;
 
-    public function __construct($id, $meme, $admin, $report) {
+    public function __construct($id, $meme_id, $admin_id, $report_id) {
         $this->id = $id;
-        $this->memeId = $meme;
-        $this->adminId = $admin;
-        $this->reportId = $report;
+        $meme = new Proxy($meme_id, 'Meme');
+        $admin = new Proxy($user_id, 'User');
+        $report = new Proxy($report_id, 'Report');
     }
 
-    public function getId() {
-        return $this->id;
+    public function getAdminId(){
+        return $this->user->getId();
     }
-
-    public function setId($id) {
-        $this->id = $id;
+    public function getMemeId(){
+        return $this->meme->getId();
     }
-
-    public function getMeme() {
-        return $this->memeId;
+    public function getAdmin(){ 
+        return $this->user->getInstance();
     }
-
-
-
-    public function getAdmin() {
-        return $this->adminId;
+    public function getMeme(){ 
+        return $this->meme->getInstance();
     }
-
-
-    public function getReport() {
-        return $this->reportId;
+    public function getReport(){ 
+        return $this->report->getInstance();
     }
-
+    public function getReportId(){
+        return $this->report->getId();
+    }
+    public function jsonSerialize()
+    {
+        return [
+            'id' => $this->id,
+            'meme' => $this->meme,
+            'admin' => $this->admin,
+            'report' => $this->report,
+        ];
+    }
+    
 
 }

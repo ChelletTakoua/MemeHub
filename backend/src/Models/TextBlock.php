@@ -1,31 +1,24 @@
 <?php
+
 namespace Models;
-class TextBlock {
-    private $id;
+use Utils\Proxy;
+
+class TextBlock extends Model{
     private $text;
     private $x;
     private $y;
-    private $width;
-    private $height;
-    private $memeId;
+    private $fontSize;
+    private $meme;
 
-    public function __construct($id, $text, $x, $y, $width, $height, $meme) {
+    public function __construct($id, $text, $x, $y, $fontSize,$meme_id) {
         $this->id = $id;
         $this->text = $text;
         $this->x = $x;
         $this->y = $y;
-        $this->width = $width;
-        $this->height = $height;
-        $this->memeId = $meme;
+        $this->fontSize = $fontSize;
+        $meme = new Proxy($meme_id, 'Meme');
     }
 
-    public function getId() {
-        return $this->id;
-    }
-
-    public function setId($id) {
-        $this->id = $id;
-    }
 
     public function getText() {
         return $this->text;
@@ -51,24 +44,28 @@ class TextBlock {
         $this->y = $y;
     }
 
-    public function getWidth() {
-        return $this->width;
+    public function getFontSize() {
+        return $this->fontSize;
+    }
+    public function setFontSize($fontSize) {
+        $this->fontSize = $fontSize;
     }
 
-    public function setWidth($width) {
-        $this->width = $width;
+    public function getMemeId(){
+        return $this->meme->getId();
     }
-
-    public function getHeight() {
-        return $this->height;
+    public function getMeme(){ 
+        return $this->meme->getInstance();
     }
-
-    public function setHeight($height) {
-        $this->height = $height;
+    public function jsonSerialize()
+    {
+        return [
+            'id' => $this->id,
+            'text' => $this->text,
+            'x' => $this->x,
+            'y' => $this->y,
+            'fontSize' => $this->fontSize,
+            'meme' => $this->meme,
+        ];
     }
-
-    public function getMemeId() {
-        return $this->memeId;
-    }
-
 }

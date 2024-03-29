@@ -1,7 +1,6 @@
 <?php
 namespace Models;
 class User extends Model{
-    private $id;
     private $username;
     private $password;
     private $email;
@@ -23,9 +22,7 @@ class User extends Model{
     public function setRole($role) {
         $this->role = $role;
     }
-    public function getId() {
-        return $this->id;
-    }
+
 
     public function setUserId($id) {
         $this->id = $id;
@@ -69,7 +66,7 @@ class User extends Model{
         return [
             'id' => $this->id,
             'username' => $this->username,
-            //'password' => $this->password,
+            'password' => $this->password,
             'email' => $this->email,
             'registrationDate' => $this->registrationDate,
             'role' => $this->role

@@ -3,6 +3,17 @@ For @loueySiwa: (3aytoulou blh)
     - el errorHandler ylogui el errors fl console, donc tnajjem traj3ou cb, ma3ach hachtek bch tna77ih
 
 
+@CHIDHI:
+    - to get the request body, use the RequestHandler::getJsonRequestBody() method.
+    this method will return the request body as an associative array. Exemple:
+    $requestBody = RequestHandler::getJsonRequestBody();
+     $requestBody = [
+        "name" => "John Doe",
+        "email" => "john@qzd.zd",
+        "password" => "123456"
+        ];
+
+
 
 How to work with this project:
     - to run the project, run the following command in the terminal:
@@ -19,9 +30,8 @@ How to work with this project:
 
 - no need to require any classfile, the autoloader will do it for u.
 
-- when a certain service needs the user to be logged in, you can call the `requireLogin` method of the Auth class. This method will throw an error if the user is not logged in.
-- same thing goes for the `requireAdmin` method, which will throw an error if the user is not an admin.
-(we can implement roles and other stuff but it will open a 9erbella kbira so let's keep it simple, a user is either an admin or not)
+
+
 
 
 when you throw an error and it's not catched by your code, the error will be caught by the error handler and a json response will be returned with the error message and the status code.
@@ -34,4 +44,3 @@ the routes are defined in the routes.php file in the Routes folder. the routes a
 the controllers are located in the Controllers folder and are responsible for handling the request and returning the response.
 use the ExampleController as reference to create new controllers.
 
-The infrastructure code is not yet 100% complete, but it should be enough to get you started. feel free to modify the code as needed to fit your requirements.

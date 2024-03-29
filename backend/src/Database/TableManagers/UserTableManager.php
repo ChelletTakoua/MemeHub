@@ -12,7 +12,6 @@ class UserTableManager extends TableManager
         echo "UserTableManager save method called";
     }
 
-
     public function getUser($attribut,$value) //from database
     {
         $query = new DatabaseQuery();
@@ -25,14 +24,55 @@ class UserTableManager extends TableManager
             $queryObjects[0]["role"]);
         return $user;    
     }
-    public function addUser($user) //to database
-    {
-
+    public function getUserById($id){
+        return getUser("id", $id);
+    }
+    
+    public function getUserByEmail($email){
+        return getUser("email", $email);
     }
 
+    public function getUserByUsername($username) {
+        return getUser("username", $username);
+    }
 
-    public function retrieve($attribut,$value)
+    public function verifyExistenceByUserName($username){
+        $query = new DatabaseQuery();
+        $queryObjects = $query->executeQuery("select","users",[],["username"=>$username]);
+        if(count($queryObjects)>0){
+            return true;
+        }
+        return false;
+    }
+    public function verifyExistenceByEmail($email){
+        $query = new DatabaseQuery();
+        $queryObjects = $query->executeQuery("select","users",[],["email"=>$email]);
+        if(count($queryObjects)>0){
+            return true;
+        }
+        return false;
+    }
+    public function AddUser($username,$email,$password,$role) //to database
     {
-        return $this->getUser($attribut,$value);
+        if(verifyExistenceByUserName($username))
+            return false;
+        else if(verifyExistenceByEmailByUserName($email))
+            return false;
+        else
+        {
+            $query = new DatabaseQuery();
+            $query->executeQuery("insert","users",["username"=>$username,"email"=>$email,"password"=>$password , "role"=>$role]);
+            return true;
+        }
+    }
+
+    public function updateRole($id,$role){
+        $query = new DatabaseQuery();
+        $query->executeQuery("update","users",["role"=>$role],["id"=>$id]);
+    }
+
+    public function retrieve($id)
+    {
+        return $this->getUserById($id);
     }
 }

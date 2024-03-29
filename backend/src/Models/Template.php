@@ -7,7 +7,7 @@ class Template extends Model {
    
 
     public function __construct($id, $url, $title) {
-        $this->id = $id;
+        parent::__construct($id);
         $this->url = $url;
         $this->title = $title;
     }

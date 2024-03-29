@@ -10,10 +10,14 @@ const AppProvider = ({ children }) => {
   const [error, setError] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
 
+  const base = axios.create({
+    baseURL: "localhost:8000",
+  });
+
   const checkAuth = useCallback(async () => {
     try {
       setIsLoading(true);
-      const res = await axios.get("/api/check-auth.php", {
+      const res = await base.get("/api/check-auth.php", {
         withCredentials: true,
       });
       setUser(res.data.user);
@@ -36,7 +40,7 @@ const AppProvider = ({ children }) => {
   const register = async (username, password) => {
     try {
       setIsLoading(true);
-      const res = await axios.post(
+      const res = await base.post(
         "/api/register.php",
         {
           username,
@@ -57,7 +61,7 @@ const AppProvider = ({ children }) => {
   const login = async (username, password) => {
     try {
       setIsLoading(true);
-      const res = await axios.post(
+      const res = await base.post(
         "/api/login.php",
         {
           username,
@@ -79,7 +83,7 @@ const AppProvider = ({ children }) => {
     try {
       setIsLoading(true);
       setUser(null);
-      await axios.get("/api/logout.php", { withCredentials: true });
+      await base.get("/api/logout.php", { withCredentials: true });
     } catch (error) {
       setUser(null);
     } finally {

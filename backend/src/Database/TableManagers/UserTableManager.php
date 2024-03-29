@@ -13,26 +13,26 @@ class UserTableManager extends TableManager
     }
 
 
-    public function getUserById($id) //from database
+    public function getUser($attribut,$value) //from database
     {
-        //send query to database
-
-        $data  = ['id' => $id,
-            'name' => 'John Doe',
-            'email' => 'mzqdq'];
-
-        return new User($data['id'], $data['name'], 'password', $data['email'], '2021-01-01', 'admin');
-
+        $query = new DatabaseQuery();
+        $queryObjects = $query->executeQuery("select","users",[],[$attribut => $value]);
+        $user=new User($queryObjects[0]["id"],
+            $queryObjects[0]["username"],
+            $queryObjects[0]["password"],
+            $queryObjects[0]["email"],
+            $queryObjects[0]["reg_date"],
+            $queryObjects[0]["role"]);
+        return $user;    
     }
-
     public function addUser($user) //to database
     {
 
     }
 
 
-    public function retrieve($id)
+    public function retrieve($attribut,$value)
     {
-        return $this->getUserById($id);
+        return $this->getUser($attribut,$value);
     }
 }

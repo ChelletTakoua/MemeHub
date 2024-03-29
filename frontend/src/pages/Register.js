@@ -1,29 +1,72 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import { Link } from "react-router-dom";
 import trollFace from "../images/troll_face.png";
 import Capture from "../images/Capture.PNG";
+import { AppContext } from "../context/AppContext";
+import { useNavigate } from "react-router-dom";
 
 const Register = () => {
   const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [passwordConfirm, setPasswordConfirm] = useState("");
+
+  const { register, toast } = useContext(AppContext);
+  const navigate = useNavigate();
 
   const handleUsernameChange = (e) => {
     setUsername(e.target.value);
-  };
-
-  const handlePasswordChange = (e) => {
-    setPassword(e.target.value);
   };
 
   const handleEmailChange = (e) => {
     setEmail(e.target.value);
   };
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    // TODO: Implement registration logic
-    // PHP
+  const handlePasswordChange = (e) => {
+    setPassword(e.target.value);
+  };
+
+  const handlePasswordConfirmChange = (e) => {
+    setPasswordConfirm(e.target.value);
+  };
+
+  const validateForm = () => {
+    if (username === "") {
+      toast.error("Username is required.");
+      return false;
+    } else if (email === "") {
+      toast.error("Email is required.");
+      return false;
+    } else if (password === "") {
+      toast.error("Password is required.");
+      return false;
+    } else if (password.length < 8) {
+      toast.error("Password must be at least 8 characters long.");
+      return false;
+    } else if (passwordConfirm === "") {
+      toast.error("Please confirm your password.");
+      return false;
+    } else if (password !== passwordConfirm) {
+      toast.error("Passwords do not match.");
+      return false;
+    }
+    return true;
+  };
+
+  const handleSubmit = async (event) => {
+    event.preventDefault();
+    if (validateForm()) {
+      // const data = await login(username, password);
+      const data = { status: false, msg: "Registration successful." };
+
+      if (data.status === false) {
+        toast.error(data.msg);
+      } else if (data.status === true) {
+        navigate("/");
+      } else {
+        toast.error("Something went wrong");
+      }
+    }
   };
 
   return (
@@ -53,7 +96,7 @@ const Register = () => {
               >
                 <div>
                   <label
-                    for="username"
+                    htmlFor="username"
                     className="block mb-2 text-sm font-medium text-white"
                   >
                     Username
@@ -64,14 +107,13 @@ const Register = () => {
                     id="username"
                     className=" border sm:text-sm rounded-lg block w-full p-2.5 bg-gray-700 border-gray-600 placeholder-gray-400 text-white focus:ring-blue-500 focus:border-blue-500"
                     placeholder="Username"
-                    required
                     value={username}
                     onChange={handleUsernameChange}
                   />
                 </div>
                 <div>
                   <label
-                    for="email"
+                    htmlFor="email"
                     className="block mb-2 text-sm font-medium text-white"
                   >
                     Email
@@ -84,12 +126,11 @@ const Register = () => {
                     placeholder="Email address"
                     onChange={handleEmailChange}
                     value={email}
-                    required
                   />
                 </div>
                 <div>
                   <label
-                    for="password"
+                    htmlFor="password"
                     className="block mb-2 text-sm font-medium text-white"
                   >
                     Password
@@ -100,14 +141,13 @@ const Register = () => {
                     id="password"
                     placeholder="••••••••"
                     className=" border sm:text-sm rounded-lg block w-full p-2.5 bg-gray-700 border-gray-600 placeholder-gray-400 text-white focus:ring-blue-500 focus:border-blue-500"
-                    required
                     value={password}
                     onChange={handlePasswordChange}
                   />
                 </div>
                 <div>
                   <label
-                    for="password"
+                    htmlFor="password"
                     className="block mb-2 text-sm font-medium text-white"
                   >
                     Confirm password
@@ -118,7 +158,8 @@ const Register = () => {
                     id="confirm-password"
                     placeholder="••••••••"
                     className=" border sm:text-sm rounded-lg block w-full p-2.5 bg-gray-700 border-gray-600 placeholder-gray-400 text-white focus:ring-blue-500 focus:border-blue-500"
-                    required
+                    value={passwordConfirm}
+                    onChange={handlePasswordConfirmChange}
                   />
                 </div>
                 <div className="mt-5 flex">

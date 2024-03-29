@@ -1,10 +1,16 @@
 import trollFace from "../images/troll_face.png";
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import { Link } from "react-router-dom";
+import { AppContext } from "../context/AppContext";
+
+import { useNavigate } from "react-router-dom";
 
 const Login = () => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+
+  const { login, setUser, toast } = useContext(AppContext);
+  const navigate = useNavigate();
 
   const handleUsernameChange = (e) => {
     setUsername(e.target.value);
@@ -14,10 +20,34 @@ const Login = () => {
     setPassword(e.target.value);
   };
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    // Add your login logic here
-    // PHP
+  const validateForm = () => {
+    if (username === "") {
+      toast.error("Username is required.");
+      return false;
+    } else if (password === "") {
+      toast.error("Password is required.");
+      return false;
+    }
+    return true;
+  };
+
+  const handleSubmit = async (event) => {
+    event.preventDefault();
+    if (validateForm()) {
+      // const data = await login(username, password);
+
+      const data = { status: true, msg: "Login successful." };
+
+      if (data.status === false) {
+        toast.error(data.msg);
+      } else if (data.status === true) {
+        setUser({ id: 1, username: "test", email: "example@e.com" });
+        toast.success(`Welcome back, ${username}`);
+        navigate("/");
+      } else {
+        toast.error("Something went wrong");
+      }
+    }
   };
 
   return (
@@ -42,7 +72,7 @@ const Login = () => {
             >
               <div>
                 <label
-                  for="username"
+                  htmlFor="username"
                   className="block mb-2 text-sm font-medium text-white"
                 >
                   Username
@@ -53,14 +83,13 @@ const Login = () => {
                   id="username"
                   className="border sm:text-sm rounded-lg block w-full p-2.5 bg-gray-700 border-gray-600 placeholder-gray-400 text-white focus:ring-blue-500 focus:border-blue-500"
                   placeholder="Username"
-                  required
                   value={username}
                   onChange={handleUsernameChange}
                 />
               </div>
               <div>
                 <label
-                  for="password"
+                  htmlFor="password"
                   className="block mb-2 text-sm font-medium text-white"
                 >
                   Password
@@ -71,7 +100,6 @@ const Login = () => {
                   id="password"
                   placeholder="••••••••"
                   className=" border  sm:text-sm rounded-lg block w-full p-2.5 bg-gray-700 border-gray-600 placeholder-gray-400 text-white focus:ring-blue-500 focus:border-blue-500"
-                  required
                   value={password}
                   onChange={handlePasswordChange}
                 />

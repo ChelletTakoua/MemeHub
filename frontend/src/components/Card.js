@@ -5,7 +5,7 @@ import ShareButton from "./ShareButton";
 import { useState } from "react";
 import { BsFillSendFill } from "react-icons/bs";
 
-export default function Card({ user, meme, profilePic, date, index }) {
+export default function Card({ user, meme, profilePic, date }) {
   const [showReport, setShowReport] = useState(false);
 
   const handleReportClick = () => {
@@ -17,13 +17,12 @@ export default function Card({ user, meme, profilePic, date, index }) {
       <div className="w-1/2 shadow-lg bg-gray-700 rounded-3xl relative">
         <div className="flex items-center px-6 py-4">
           <img src={profilePic} alt="user" className="rounded-full" />
-          <p className="text-gray-700 text-base ml-2">
-            <p className="text-zinc-100 font-bold">{user}</p>{" "}
-            <p className="text-gray-400">on {date}</p>
-          </p>
-          <OptionsButton memeId={`meme-${index}`} />
+          <p className="text-gray-700 text-base ml-2"></p>
+          <p className="text-zinc-100 font-bold">{user}</p>{" "}
+          <p className="text-gray-400">on {date}</p>
+          <OptionsButton memeId={meme?.id} />
         </div>
-        <img src={meme} id={`meme-${index}`} alt="random" className="w-full" />
+        <img src={meme} id={meme?.id} alt={meme?.title} className="w-full" />
         <div className="px-6 py-4">
           <div className="flex items-center">
             <LikeButton />

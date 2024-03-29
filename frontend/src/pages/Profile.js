@@ -1,14 +1,23 @@
-import React, { useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
+import { useParams } from "react-router-dom";
 import ProfileCard from "../components/ProfileCard";
+import { AppContext } from "../context/AppContext";
 
-const Profile = ({ isOwner }) => {
-  // isOwner = true;
+const Profile = () => {
+  const { user } = useContext(AppContext);
+  const { id } = useParams("id");
+  const isOwner = user?.id === +id;
+  useEffect(() => {
+    if (!isOwner) {
+      // fetch user data from the backend
+    }
+  }, [isOwner]);
 
-  const [userName, setUserName] = useState("UserName");
+  const [userName, setUserName] = useState("Username");
   const [Email, setEmail] = useState("Email");
-  const [aboutMe, setAboutMe] = useState(
-    "Lorem ipsum dolor sit amet consectetur adipisicing elit. Autem placeat fugit eius debitis, in aspernatur dolorum ea! Laudantium hic distinctio reprehenderit neque labore molestiae quas! Id rerum optio quos quo!"
-  );
+  // const [aboutMe, setAboutMe] = useState(
+  //   "Lorem ipsum dolor sit amet consectetur adipisicing elit. Autem placeat fugit eius debitis, in aspernatur dolorum ea! Laudantium hic distinctio reprehenderit neque labore molestiae quas! Id rerum optio quos quo!"
+  // );
   const [profileImage, setProfileImage] = useState(
     "https://www.seekpng.com/png/detail/847-8474751_download-empty-profile.png"
   );
@@ -25,14 +34,22 @@ const Profile = ({ isOwner }) => {
     }
   };
 
-  const handleTextChange = (event, setText) => {
+  const handleUsernameChange = (e) => {
     if (isOwner) {
-      setText(event.target.value);
+      setUserName(e.target.value);
+    }
+  };
+
+  const handleEmailChange = (e) => {
+    if (isOwner) {
+      setEmail(e.target.value);
     }
   };
 
   const handleSave = () => {
-    // Add your save logic here
+    // handle email and username change in backend
+    // toast error if already exists
+    // toast success if updated
   };
 
   return (
@@ -54,7 +71,7 @@ const Profile = ({ isOwner }) => {
             {isOwner ? (
               <input
                 value={userName}
-                onChange={(e) => handleTextChange(e, setUserName)}
+                onChange={handleUsernameChange}
                 className="w-full px-3 py-2 mt-4 text-white bg-gray-800 rounded shadow-lg"
               />
             ) : (
@@ -72,7 +89,7 @@ const Profile = ({ isOwner }) => {
                 <input
                   type="email"
                   value={Email}
-                  onChange={(e) => handleTextChange(e, setEmail)}
+                  onChange={handleEmailChange}
                   className="w-full px-3 py-2 mt-4 text-white bg-gray-800 rounded shadow-lg"
                 />
               ) : (
@@ -90,7 +107,7 @@ const Profile = ({ isOwner }) => {
             )}
           </div>
           <div className="w-3/4">
-            {isOwner ? (
+            {/* {isOwner ? (
               <>
                 <h3 className="text-xl font-bold text-white">About Me</h3>
                 <textarea
@@ -104,7 +121,7 @@ const Profile = ({ isOwner }) => {
                 <h3 className="text-xl font-bold text-white">About Me</h3>
                 <p className="text-gray-100 mt-2">{aboutMe}</p>
               </>
-            )}
+            )} */}
 
             <div className="w-3/4">
               <h3 className="text-xl font-bold mt-4 text-white">My Memes</h3>
@@ -114,7 +131,6 @@ const Profile = ({ isOwner }) => {
                     key={index}
                     isOwner={isOwner}
                     meme={meme}
-                    index={index}
                     memes={memes}
                     setMemes={setMemes}
                   />

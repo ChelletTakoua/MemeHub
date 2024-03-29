@@ -3,16 +3,16 @@ namespace Models;
 use Utils\Proxy;
 class Meme extends Model{
     private $template;
-    private $title;
+    private $custom_title;
     private $user;
     private $creation_date;
     private $nb_likes;
 
-    public function __construct($id, $template_id, $title, $user_id, $creation_date) {
+    public function __construct($id, $template_id, $custom_title, $user_id, $creation_date) {
         parent::__construct($id);
-        $template = new Proxy($template_id, 'Template');
-        $this->title = $title;
-        $user = new Proxy($user_id, 'User');
+        $this->template = new Proxy($template_id, 'Template');
+        $this->custom_title = $custom_title;
+        $this->user = new Proxy($user_id, 'User');
         $this->creation_date = $creation_date;
         $this->nb_likes = 0;
     }
@@ -29,12 +29,12 @@ class Meme extends Model{
         return $this->template->getInstance();
     }
 
-    public function getTitle() {
-        return $this->title;
+    public function getcustom_title() {
+        return $this->custom_title;
     }
 
-    public function setTitle($title) {
-        $this->title = $title;
+    public function setcustom_title($custom_title) {
+        $this->custom_title = $custom_title;
     }
 
     public function getCreationDate() {
@@ -44,18 +44,23 @@ class Meme extends Model{
     public function setCreationDate($creation_date) {
         $this->creation_date = $creation_date;
     }
-    public function getNbLikes() {
+    public function getNbLikes(): int
+    {
         return $this->nb_likes;
     }
     public function setNbLikes($nb_likes) {
         $this->nb_likes = $nb_likes;
     }
-    public function jsonSerialize()
+
+    /**
+     * @return array {id: , template: , custom_title: , user: , creation_date: , nb_likes: }
+     */
+    public function jsonSerialize(): array
     {
         return [
-            'id' => $this->id,
+            'id' => parent::getId(),
             'template' => $this->template,
-            'title' => $this->title,
+            'custom_title' => $this->custom_title,
             'user' => $this->user,
             'creation_date' => $this->creation_date,
             'nb_likes' => $this->nb_likes,

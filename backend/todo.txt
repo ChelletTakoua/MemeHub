@@ -80,6 +80,8 @@ _______________________________________________________________
 |        juste hachetna melle5er bel hajet hedhom: (asra7 implementehom kima t7eb)
 |            - Des methodes fi kol tableManager lel les requetes elli hachtna behom (select, insert, update, delete)
 |            - Fi kol table manager famma function tasna3lek el objet Model mel reponse mtaa requete SQL.
+|    - find a way to save an image in the database (profile picture)
+|    - make the delete of foreign keys cascade in the database
 _______________________________________________________________
 
 

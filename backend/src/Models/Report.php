@@ -11,8 +11,8 @@ class Report extends Model {
         parent::__construct($id);
         $this->reason = $reason;
         $this->report_date = $report_date;
-        $meme = new Proxy($meme_id, 'Meme');
-        $user= new Proxy($user_id, 'User');
+        $this->meme = new Proxy($meme_id, 'Meme');
+        $this->user= new Proxy($user_id, 'User');
     }
     public function getUserId(){
         return $this->user->getId();

@@ -6,11 +6,9 @@ use PDO;
 
 class DatabaseQuery
 {
-    private $connection;
-
     public function __construct()
     {
-        $this->connection = DatabaseConnection::getInstance();
+       //cstructor
     }
 
     /**
@@ -28,8 +26,9 @@ class DatabaseQuery
      * $queryObjects = $query->executeQuery("update","users",["username" => "louey"],["username" => "nero"]);
      */
 
-    public function executeQuery($queryType, $table, $attributes = [], $conditions = [])
+    static public function executeQuery($queryType, $table, $attributes = [], $conditions = [])
     {
+        $connection = DatabaseConnection::getInstance();
         $query = "";
         switch (strtoupper($queryType)){
             case "SELECT":
@@ -89,9 +88,18 @@ class DatabaseQuery
 
         echo "<hr> $query <hr>";
 
-        $statement = $this->connection->prepare($query);
+        $statement = $connection->prepare($query);
         $statement->execute(array_merge($attributes, $conditions));
         return $statement->fetchAll(PDO::FETCH_ASSOC);
+    }
+
+    /**
+     * Get the last inserted id by an INSERT query
+     * @return int
+     */
+    static public function getLastInsertId(): int
+    {
+        return intval(DatabaseConnection::getInstance()->lastInsertId());
     }
 
 

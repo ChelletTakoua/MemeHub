@@ -4,7 +4,7 @@ namespace Database\TableManagers;
 
 use Models\Like;
 
-class UserTableManager extends TableManager
+class LikeTableManager extends TableManager
 {
 
     public function save($model)

@@ -16,7 +16,7 @@ class TextBlock extends Model{
         $this->x = $x;
         $this->y = $y;
         $this->font_size = $font_size;
-        $meme = new Proxy($meme_id, 'Meme');
+        $this->meme = new Proxy($meme_id, 'Meme');
     }
 
 

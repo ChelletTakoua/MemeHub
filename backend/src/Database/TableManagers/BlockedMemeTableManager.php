@@ -4,7 +4,7 @@ namespace Database\TableManagers;
 
 use Models\BlockedMeme;
 
-class UserTableManager extends TableManager
+class BlockedMemeTableManager extends TableManager
 {
 
     public function save($model)

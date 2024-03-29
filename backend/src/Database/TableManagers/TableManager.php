@@ -29,7 +29,7 @@ abstract class TableManager
 
     public abstract function retrieve($id);
 
-    public function getTableName()
+    public function getTableName(): string
     {
         return ModelTableMapper::getTableNameByTableManager(static::class);
     }

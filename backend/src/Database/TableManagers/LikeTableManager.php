@@ -40,26 +40,26 @@ class LikeTableManager extends TableManager
     /**
      * Get like from database based on meme_id
      * @param int $meme_id
-     * @return Like|null
+     * @return Like[]
      */
     static public function getLikeByMemeId(int $meme_id): ?array{
         $likes = self::getLike(["meme_id" => $meme_id]);
         if(!empty($likes)){
             return $likes;
         }
-        return null;
+        return [];
     }
     /**
      * Get like from database based on user_id
      * @param int $user_id
-     * @return Like|null
+     * @return Like[]
      */
     static public function getLikeByUserId(int $user_id): ?array{
         $likes = self::getLike(["user_id" => $user_id]);
         if(!empty($likes)){
             return $likes;
         }
-        return null;
+        return [];
     }
 
     //--------verify existence methods----------------

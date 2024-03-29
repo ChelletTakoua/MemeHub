@@ -6,7 +6,7 @@ class BlockedMeme extends Model {
     private $admin;
     private $report;
 
-    public function __construct($id, $meme_id, $admin_id, $report_id) {
+    public function __construct($id, $meme_id, $user_id, $report_id) {
         parent::__construct($id);
         $meme = new Proxy($meme_id, 'Meme');
         $admin = new Proxy($user_id, 'User');

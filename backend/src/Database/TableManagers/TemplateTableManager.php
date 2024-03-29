@@ -4,7 +4,7 @@ namespace Database\TableManagers;
 
 use Models\Template;
 
-class UserTableManager extends TableManager
+class TemplateTableManager extends TableManager
 {
 
     public function save($model)
@@ -13,4 +13,8 @@ class UserTableManager extends TableManager
     }
 
 
+    public function retrieve($id)
+    {
+        // TODO: Implement retrieve() method.
+    }
 }

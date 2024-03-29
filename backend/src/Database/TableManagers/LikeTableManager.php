@@ -4,7 +4,7 @@ namespace Database\TableManagers;
 
 use Models\Like;
 
-class UserTableManager extends TableManager
+class LikeTableManager extends TableManager
 {
 
     public function save($model)
@@ -12,4 +12,8 @@ class UserTableManager extends TableManager
         echo "LikeTableManager save method called";
     }
 
+    public function retrieve($id)
+    {
+        // TODO: Implement retrieve() method.
+    }
 }

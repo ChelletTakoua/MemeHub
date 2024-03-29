@@ -27,7 +27,9 @@ class UserTableManager extends TableManager
     public function getUserById($id){
         return getUser("id", $id);
     }
-    
+
+
+
     public function getUserByEmail($email){
         return getUser("email", $email);
     }

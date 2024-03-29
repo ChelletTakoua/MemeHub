@@ -8,7 +8,7 @@ class User extends Model{
     private $role;
 
     public function __construct($id, $username, $password, $email, $reg_dat, $role) {
-        $this->id = $id;
+        parent::__construct($id);
         $this->username = $username;
         $this->password = $password;
         $this->email = $email;

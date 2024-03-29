@@ -12,4 +12,8 @@ class LikeTableManager extends TableManager
         echo "LikeTableManager save method called";
     }
 
+    public function retrieve($id)
+    {
+        // TODO: Implement retrieve() method.
+    }
 }

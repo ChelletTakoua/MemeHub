@@ -70,6 +70,8 @@ _______________________________________________________________
 |        1. en fin de compte naamloha kima elli mawjouda deja fl classe Auth ( user logged in <==> $_SESSION['user_id'] is set )
 |        3. wa9tli hachtek b requete ml base de donnees juste aamel comment wala ayy haja w e3taber anni el requete tba3thet.
 |        juste kammel el logique w baaed to nriglou el database m3a louey
+|
+|     ****** @CHIDHIII: check notes file ******
 _______________________________________________________________
 
 

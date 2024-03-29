@@ -2,15 +2,16 @@
 
 namespace Database\TableManagers;
 
-use Models\BlockedMeme;
+use Models\TextBlock;
 
-class BlockedMemeTableManager extends TableManager
+class TestBlockTableManager extends TableManager
 {
 
     public function save($model)
     {
-        echo "BlockedMemesTableManager save method called";
+        echo "TextBlockTableManager save method called";
     }
+
 
     public function retrieve($id)
     {

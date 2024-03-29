@@ -7,7 +7,7 @@ use Models\User;
 
 class Auth
 {
-    private $activeUser;
+    private static $activeUser;
     public static function isLoggedIn()
     {
         return true;// for testing purposes
@@ -77,11 +77,10 @@ class Auth
 
         return $this->activeUser;
     }
-    public static function getActiveUser()
-    {
 
-        return new User(1, 'admin', 'password', 'mm', '2021-01-01', 'admin');//for now, return a hardcoded user
+
+
+    function register(){
+
     }
-
-
 }

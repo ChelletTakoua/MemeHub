@@ -4,7 +4,7 @@ namespace Database\TableManagers;
 
 use Models\Meme;
 
-class UserTableManager extends TableManager
+class MemeTableManager extends TableManager
 {
 
     public function save($model)
@@ -23,5 +23,10 @@ class UserTableManager extends TableManager
         $meme->setNbLikes($queryObjects[0]["nb_likes"]);
         return $user;    
     }
+    
 
+    public function retrieve($id)
+    {
+        // TODO: Implement retrieve() method.
+    }
 }

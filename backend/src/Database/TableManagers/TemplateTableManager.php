@@ -114,4 +114,8 @@ class TemplateTableManager extends TableManager
     }
 
 
+    public function retrieve($id)
+    {
+        // TODO: Implement retrieve() method.
+    }
 }

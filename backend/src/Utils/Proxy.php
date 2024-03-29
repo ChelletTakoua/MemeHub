@@ -30,6 +30,9 @@ class Proxy
     {
 
         $this->instance = $this->className::retrieve($this->id);
+        if($this->instance == null){
+            throw new \Exception("Instance of class $this->className with id $this->id not found");
+        }
         $this->isLoaded = true;
     }
     public function getInstance()

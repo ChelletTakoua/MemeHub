@@ -17,10 +17,16 @@ export default function MemeEdit() {
       //setCurrMeme(memes.find((meme) => meme.id === id));
       setCurrMeme({
         id: 1,
-        url: "https://i.imgflip.com/1ur9b0.jpg",
+        url: "https://i.imgflip.com/30b1gx.jpg",
         inputBoxes: [
-          { id: 0, text: "Malla zaamila", x: 80, y: -44, fontSize: "3xl" },
-          { id: 1, text: "Ramdhan ya sa5ta", x: 196, y: -12, fontSize: "3xl" },
+          { id: 0, text: "n3ich 3adi", x: 194, y: -156, fontSize: "3xl" },
+          {
+            id: 1,
+            text: "projet web lifestyle",
+            x: 142,
+            y: 114,
+            fontSize: "3xl",
+          },
         ],
       });
     } else {

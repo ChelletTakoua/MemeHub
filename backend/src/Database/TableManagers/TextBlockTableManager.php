@@ -70,7 +70,7 @@ class TextBlockTableManager extends TableManager
      * @param int $meme_id
      * @return TextBlock|null
      */
-    static public function addTextBlock($text, $x, $y, $font_size, $meme_id): ?TextBlock
+    static public function addTextBlock(string $text, int $x, int $y, int $font_size, int $meme_id): ?TextBlock
     {
         DatabaseQuery::executeQuery("insert", "text_blocks",
                                     ["text" => $text, "x" => $x, "y" => $y, "font_size" => $font_size , "meme_id" => $meme_id]);

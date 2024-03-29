@@ -6,7 +6,7 @@ class Like extends Model{
     private $user;
 
     public function __construct($id, $meme_id, $user_id) {
-        $this->id = $id;
+        parent::__construct($id);
         $meme = new Proxy($meme_id, 'Meme');
         $user = new Proxy($user_id, 'User');
     }

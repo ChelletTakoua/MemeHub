@@ -4,15 +4,15 @@ class User extends Model{
     private $username;
     private $password;
     private $email;
-    private $registrationDate;
+    private $reg_dat;
     private $role;
 
-    public function __construct($id, $username, $password, $email, $registrationDate, $role) {
+    public function __construct($id, $username, $password, $email, $reg_dat, $role) {
         $this->id = $id;
         $this->username = $username;
         $this->password = $password;
         $this->email = $email;
-        $this->registrationDate = $registrationDate;
+        $this->reg_dat = $reg_dat;
         $this->role = $role;
     }
     public function getRole() {
@@ -53,11 +53,11 @@ class User extends Model{
     }
 
     public function getRegistrationDate() {
-        return $this->registrationDate;
+        return $this->reg_dat;
     }
 
-    public function setRegistrationDate($registrationDate) {
-        $this->registrationDate = $registrationDate;
+    public function setRegistrationDate($reg_dat) {
+        $this->reg_dat = $reg_dat;
     }
 
 
@@ -68,7 +68,7 @@ class User extends Model{
             'username' => $this->username,
             'password' => $this->password,
             'email' => $this->email,
-            'registrationDate' => $this->registrationDate,
+            'reg_dat' => $this->reg_dat,
             'role' => $this->role
         ];
     }

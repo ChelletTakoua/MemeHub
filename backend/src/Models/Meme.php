@@ -5,16 +5,16 @@ class Meme extends Model{
     private $template;
     private $title;
     private $user;
-    private $creationDate;
-    private $nbLikes;
+    private $creation_date;
+    private $nb_likes;
 
-    public function __construct($id, $template, $title, $user, $creationDate) {
-        $this->id = $id;
-        $templateId = new Proxy($template_id, 'Template');
+    public function __construct($id, $template_id, $title, $user_id, $creation_date) {
+        parent::__construct($id);
+        $template = new Proxy($template_id, 'Template');
         $this->title = $title;
-        $userId = new Proxy($user_id, 'User');
-        $this->creationDate = $creationDate;
-        $this->nbLikes = 0;
+        $user = new Proxy($user_id, 'User');
+        $this->creation_date = $creation_date;
+        $this->nb_likes = 0;
     }
     public function getUserId(){
         return $this->user->getId();
@@ -38,11 +38,17 @@ class Meme extends Model{
     }
 
     public function getCreationDate() {
-        return $this->creationDate;
+        return $this->creation_date;
     }
 
-    public function setCreationDate($creationDate) {
-        $this->creationDate = $creationDate;
+    public function setCreationDate($creation_date) {
+        $this->creation_date = $creation_date;
+    }
+    public function getNbLikes() {
+        return $this->nb_likes;
+    }
+    public function setNbLikes($nb_likes) {
+        $this->nb_likes = $nb_likes;
     }
     public function jsonSerialize()
     {
@@ -51,8 +57,8 @@ class Meme extends Model{
             'template' => $this->template,
             'title' => $this->title,
             'user' => $this->user,
-            'dateCreation' => $this->dateCreation,
-            'nbLikes' => $this->nbLikes,
+            'creation_date' => $this->creation_date,
+            'nb_likes' => $this->nb_likes,
         ];
     }
 }

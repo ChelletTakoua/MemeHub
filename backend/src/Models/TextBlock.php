@@ -7,15 +7,15 @@ class TextBlock extends Model{
     private $text;
     private $x;
     private $y;
-    private $fontSize;
+    private $font_size;
     private $meme;
 
-    public function __construct($id, $text, $x, $y, $fontSize,$meme_id) {
-        $this->id = $id;
+    public function __construct($id, $text, $x, $y, $font_size,$meme_id) {
+        parent::__construct($id);
         $this->text = $text;
         $this->x = $x;
         $this->y = $y;
-        $this->fontSize = $fontSize;
+        $this->font_size = $font_size;
         $meme = new Proxy($meme_id, 'Meme');
     }
 
@@ -45,10 +45,10 @@ class TextBlock extends Model{
     }
 
     public function getFontSize() {
-        return $this->fontSize;
+        return $this->font_size;
     }
-    public function setFontSize($fontSize) {
-        $this->fontSize = $fontSize;
+    public function setFontSize($font_size) {
+        $this->font_size = $font_size;
     }
 
     public function getMemeId(){
@@ -64,7 +64,7 @@ class TextBlock extends Model{
             'text' => $this->text,
             'x' => $this->x,
             'y' => $this->y,
-            'fontSize' => $this->fontSize,
+            'font_size' => $this->font_size,
             'meme' => $this->meme,
         ];
     }

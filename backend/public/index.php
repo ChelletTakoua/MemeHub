@@ -7,6 +7,8 @@ require_once '../src/Exceptions/ErrorHandler.php';
 
 
 $router = new Router\Router();
+require '../src/Router/routes.php';
+
 $router->run();
 
 

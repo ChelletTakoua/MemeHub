@@ -15,7 +15,6 @@ class Router
     public function __construct()
     {
         $this->url = $_SERVER['REQUEST_URI'];
-        require '../src/Router/routes.php';
     }
 
     public function get($path, $callable, $roles = [])

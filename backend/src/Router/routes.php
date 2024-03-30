@@ -39,7 +39,6 @@ $router->post('/user/profile/edit', "UserController@editProfile", ['user', 'admi
 $router->delete('/user/profile', "UserController@deleteProfile", ['user', 'admin']);
 
 
-
 $router->get('/memes', "MemeController@getAllMemes", ['user', 'admin']);
 $router->get('/memes/:id', "MemeController@getMemeById", ['user', 'admin']);
 $router->get('/memes/user/:id', "MemeController@getUserMemes", ['user', 'admin']);
@@ -61,10 +60,10 @@ $router->get('/admin/users/:id', "AdminController@getUserProfile", ['admin']); /
 $router->post('/admin/users/:id/role', "AdminController@changeUserRole", ['admin']); // change user role
 $router->post('/admin/users/:id/delete', "AdminController@deleteUser", ['admin']); // delete user
 
-$router->get('/admin/reports', "AdminController@getAllReports", ['admin']); // get all reports
-$router->post('/admin/reports/:id/resolve', "AdminController@resolveReport", ['admin']); // resolve report (delete meme)
-$router->post('/admin/reports/:id/ignore', "AdminController@ignoreReport", ['admin']); // ignore report
-$router->post('/admin/reports/:id/delete', "AdminController@deleteReport", ['admin']); // delete report
+$router->get('/admin/reports', "ReportController@getAllReports", ['admin']); // get all reports
+$router->post('/admin/reports/:id/resolve', "ReportController@resolveReport", ['admin']); // resolve report (delete meme)
+$router->post('/admin/reports/:id/ignore', "ReportController@ignoreReport", ['admin']); // ignore report
+$router->post('/admin/reports/:id/delete', "ReportController@deleteReport", ['admin']); // delete report
 
 $router->post('/admin/memes/:id/delete', "AdminController@deleteMeme", ['admin']); // delete meme
 

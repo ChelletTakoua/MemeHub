@@ -68,14 +68,17 @@ class Meme extends Model{
     }
 
     //get text blocks by id of meme
-    public function getTextBlocks(){
+    public function getTextBlocks():array{
         $textBlocks = [];
         $textBlocksId=[];
-        $textBlocks = TextBlockTableManager::getTextBlockByMemeId(parent::getId());
-        
-        foreach ($textBlocks as $textBlock) {
-            $textBlocksId[] = $textBlock->getId();
+        if(TextBlockTableManager::textBlockExistsByMemeId(parent::getId())){
+            $textBlocks = TextBlockTableManager::getTextBlockByMemeId(parent::getId());
+            foreach ($textBlocks as $textBlock) {
+                $textBlocksId[] = $textBlock->getId();
+            }
+            return $textBlocksId;
         }
-        return $textBlocks;
+        else return [];
+        
     }
 }

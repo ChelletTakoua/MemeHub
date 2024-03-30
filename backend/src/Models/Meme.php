@@ -67,7 +67,7 @@ class Meme extends Model{
         ];
     }
 
-    //get text blocks by id of meme
+    //get id of text blocks by id of meme
     public function getTextBlocks():array{
         $textBlocks = [];
         $textBlocksId=[];

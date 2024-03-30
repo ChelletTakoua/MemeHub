@@ -4,6 +4,7 @@ namespace Authentication;
 use Exceptions\HttpExceptions\LoginFailedException;
 use Exceptions\HttpExceptions\NotLoggedInException;
 use Exceptions\HttpExceptions\UnauthorizedException;
+use Exceptions\HttpExceptions\UserRegistrationException;
 use Models\User;
 use Database\TableManagers\UserTableManager;
 
@@ -18,10 +19,10 @@ class Auth
     *
     * @param string $username The username of the user.
     * @param string $password The password of the user.
-    * @return User The logged in user.
+    * @return User The logged-in user.
     * @throws LoginFailedException If the password is incorrect or the user is not found.
     */
-    public static function login($username, $password)
+    public static function login(string $username, string $password): User
     {
         // Retrieve the user from the database using the provided username
         $user = UserTableManager::getUserByUsername($username);
@@ -29,7 +30,7 @@ class Auth
         if (!empty($user) && password_verify($password, $user->getPassword())) {
             // Store the user's ID in the session
             $_SESSION['user_id'] = $user->getId();
-            // Set the active user to the logged in user
+            // Set the active user to the logged-in user
             self::$activeUser = $user;
             // Return the user
             return $user;
@@ -72,7 +73,7 @@ class Auth
     * @return bool True if the user was successfully registered.
     * @throws UserRegistrationException If the username or email is already in use, or if the user could not be added to the database.
     */
-    public static function register($username, $password, $email)
+    public static function register(string $username, string $password, string $email): bool
     {
         // Check if the username already exists in the database
         if (UserTableManager::verifyExistenceByUserName($username)) {
@@ -96,24 +97,30 @@ class Auth
         }
     }
 
-    public static function isLoggedIn()
+    public static function isLoggedIn(): bool
     {
         return true;// for testing purposes
         // Check if a user is logged in (e.g., check session or token)
         return isset($_SESSION['user_id']);
     }
 
-    public static function isSpecificUserLoggedIn($userId)
+    public static function isSpecificUserLoggedIn($userId): bool
     {
         return isset($_SESSION['user_id']) && $_SESSION['user_id'] == $userId;
     }
 
+    /**
+     * @throws NotLoggedInException
+     */
     public static function requireLogin(){
         if(!self::isLoggedIn()){
             throw new NotLoggedInException();
         }
     }
 
+    /**
+     * @throws UnauthorizedException
+     */
     public static function requireAdminAccess(){
         if(!self::isLoggedIn() || $_SESSION['user_id'] !== 1){
             throw new UnauthorizedException();

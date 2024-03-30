@@ -60,7 +60,7 @@ class TextBlock extends Model{
     public function jsonSerialize()
     {
         return [
-            'id' => $this->id,
+            'id' => parent::getId(),
             'text' => $this->text,
             'x' => $this->x,
             'y' => $this->y,

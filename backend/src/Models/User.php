@@ -64,7 +64,7 @@ class User extends Model{
     public function jsonSerialize()
     {
         return [
-            'id' => $this->id,
+            'id' => parent::getId(),
             'username' => $this->username,
             'password' => $this->password,
             'email' => $this->email,

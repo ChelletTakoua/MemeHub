@@ -66,4 +66,16 @@ class Meme extends Model{
             'nb_likes' => $this->nb_likes,
         ];
     }
+
+    //get text blocks by id of meme
+    public function getTextBlocks(){
+        $textBlocks = [];
+        $textBlocksId=[];
+        $textBlocks = TextBlockTableManager::getTextBlockByMemeId(parent::getId());
+        
+        foreach ($textBlocks as $textBlock) {
+            $textBlocksId[] = $textBlock->getId();
+        }
+        return $textBlocks;
+    }
 }

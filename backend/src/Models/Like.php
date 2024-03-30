@@ -7,8 +7,8 @@ class Like extends Model{
 
     public function __construct($id, $meme_id, $user_id) {
         parent::__construct($id);
-        $meme = new Proxy($meme_id, 'Meme');
-        $user = new Proxy($user_id, 'User');
+        $this->meme = new Proxy($meme_id, 'Meme');
+        $this->user = new Proxy($user_id, 'User');
     }
     public function getUserId(){
         return $this->user->getId();
@@ -25,7 +25,7 @@ class Like extends Model{
     public function jsonSerialize()
     {
         return [
-            'id' => $this->id,
+            'id' => parent::getId(),
             'meme' => $this->meme,
             'user' => $this->user,
         ];

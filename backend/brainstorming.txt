@@ -5,17 +5,64 @@ lenna brainstormiw afkarkom / ideas :
 
 
 ROUTES: (el possible routes elli ynajjem yestaamelhom el frontend) as a webservice
+
+
+
+
+    Get:
+
+    - memes    (get all memes)
+    - memes/:id
+    - user/:id (get user profile)
+    - memes/user/:id/    (get all memes of a specific user)
+    - user/checkAuth    (check if the user is authenticated, and return the user object)
+
+
+
+
+
+    Post:
+
     - login
     - register
-    - user/profile
-    - user/modifypassword
-    - user/modifyemail
-    - user/modifyUsername
-    - user/delete
-    - user/verify
-     .
-     .
-    $router->post('/admin/users/{id}/role', 'AdminController@giveUserRole',['admin']);  (role passed in body
+    - logout
+
+    - memes  (add a meme)
+    - memes/:id/like  (return the meme with the new like count / or just return the new like count)
+    - memes/:id/dislike (return the meme with the new like count / or just return the new like count)
+    - memes/:id/report (report a meme)
+
+    - user/profile/modifyPassword
+    - user/profile/edit
+    - user/profile/delete
+
+
+    Delete:
+    - memes/:id/   (delete only your meme CHECK)
+    - user/profile  (delete your account, all memes will be deleted too)
+
+
+
+
+
+
+
+    Admin:
+
+    GET:
+    - admin/users (get all users)
+    - admin/users/:id (get user profile, maybe with more details than the user profile route)
+    - admin/reports (get all reports)
+
+
+    POST:
+    - admin/users/:id/role (change user role)
+    - admin/users/:id/delete (delete user)
+
+    - admin/memes/:id/delete (delete meme)
+
+    - admin/reports/:id/ignore (ignore report)
+    - admin/reports/:id/delete (delete report)
 
 
 

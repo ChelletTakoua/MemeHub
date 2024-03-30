@@ -1,6 +1,10 @@
 
 @everyone. These are the tasks that need to be done:
 
+
+- make session destroy after a certain time of inactivity (1 week for example)
+
+
 -----@Sallemi + @everyone
 |    - implement Controllers and routes:
 |        - bch naamlou el routes elli yest7a9hom el front lkol, lezemna donc el lista mtaa el requests elli hachtou behom lfront @Sallemi

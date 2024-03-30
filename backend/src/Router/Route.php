@@ -3,10 +3,12 @@
 namespace Router;
 
 use Authentication\Auth;
+use Closure;
 use Exceptions\HttpExceptions\NotLoggedInException;
 use Exceptions\HttpExceptions\UnauthorizedException;
+use JsonSerializable;
 
-class Route {
+class Route implements JsonSerializable {
 
     private $path;
     private $callable;
@@ -19,6 +21,36 @@ class Route {
         $this->callable = $callable;
         $this->roles = $roles;
     }
+
+    /**
+     *  Get the path of the route
+     * @return string
+     */
+    public function getPath(): string
+    {
+        return $this->path;
+    }
+    /**
+     *  Get the Roles permitted to access the route
+     *  @return array
+     */
+    public function getRoles(): array
+    {
+        return $this->roles;
+    }
+
+    /**
+     *  Get the callable name of the route
+     * @return string
+     */
+    public function getCallable(): string
+    {
+        if ($this->callable instanceof Closure) {
+            return 'Closure';
+        }
+        return $this->callable;
+    }
+
 
 
     /**
@@ -52,6 +84,7 @@ class Route {
     }
 
     public function validateAccess() {
+        return; // TODO: to remove this line (it's just for testing purposes to allow all requests to pass through)
         if(in_array('guest', $this->roles)){
             return;
         }
@@ -64,5 +97,15 @@ class Route {
         if (!in_array(Auth::getActiveUser()->getRole(), $this->roles)) {
             throw new UnauthorizedException();
         }
+    }
+
+
+    public function jsonSerialize()
+    {
+        return [
+            'path' => '/'.$this->path,
+            'roles' => $this->roles,
+            'callable' => $this->getCallable()
+        ];
     }
 }

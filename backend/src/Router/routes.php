@@ -33,7 +33,7 @@ $router->get('/sendVerificationEmail', "UserController@sendVerificationEmail", [
 $router->get('/verifyEmail', "UserController@verifyEmail", ['guest']); // verify email (token in the url?)
 
 
-$router->get('/user/:id', "UserController@getUserProfile", ['user', 'admin']); // get user profile
+$router->get('/user/:id', "UserController@getUserById", ['guest','user', 'admin']); // get user profile
 $router->post('/user/profile/modifyPassword', "UserController@modifyPassword", ['user', 'admin']); // modify user password
 $router->post('/user/profile/edit', "UserController@editProfile", ['user', 'admin']); // edit user profile (username, email, ...) (not password), the modifications are sent in the body of the request
 $router->delete('/user/profile', "UserController@deleteProfile", ['user', 'admin']);
@@ -67,7 +67,15 @@ $router->post('/admin/reports/:id/delete', "ReportController@deleteReport", ['ad
 
 $router->post('/admin/memes/:id/delete', "AdminController@deleteMeme", ['admin']); // delete meme
 
+// a route to return all the routes (with all the details) and another route to print them in a beautiful way
 
+$router->get('/routes', function () use ($router) {
+    echo json_encode($router->getRoutes());
+}, ['admin']);
+
+$router->get('admin/routes', function () use ($router) {
+    $router->printRoutes();
+}, ['admin']);
 
 
 

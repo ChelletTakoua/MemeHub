@@ -102,5 +102,12 @@ class DatabaseQuery
         return intval(DatabaseConnection::getInstance()->lastInsertId());
     }
 
+    static public function fileLoader($file)
+    {
+        $connection = DatabaseConnection::getInstance();
+        $query = file_get_contents($file);
+        $statement = $connection->prepare("File_Load( $query )");
+        $statement->execute();
+    }
 
 }

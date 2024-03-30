@@ -2,6 +2,7 @@
 
 namespace Database\TableManagers;
 
+use Database\DatabaseQuery;
 use Models\Like;
 
 class LikeTableManager extends TableManager

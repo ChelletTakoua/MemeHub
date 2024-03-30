@@ -81,13 +81,13 @@ _______________________________________________________________
 
 
 -------@Sioua + 3ayet lchkoun e5r m3ak
-|    - implement queries in the table managers for each table
+|    (done)- implement queries in the table managers for each table
 |        *** jawek behi sioua 3andi thi9a fik tgued rohek meghir steps hhhh. Aamelhom enty el steps ma3andich fekra wadh7a ena
 |        juste hachetna melle5er bel hajet hedhom: (asra7 implementehom kima t7eb)
 |            - Des methodes fi kol tableManager lel les requetes elli hachtna behom (select, insert, update, delete)
 |            - Fi kol table manager famma function tasna3lek el objet Model mel reponse mtaa requete SQL.
-|    - find a way to save an image in the database (profile picture)
-|    - make the delete of foreign keys cascade in the database
+|    (done)- find a way to save an image in the database (profile picture)
+|    (done)- make the delete of foreign keys cascade in the database
 |    (done)- add a verified column to users table in database
 |    - add isVerified method to UserTableManager
 _______________________________________________________________

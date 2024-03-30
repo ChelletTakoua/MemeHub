@@ -86,7 +86,7 @@ class Auth
         // Hash the password using the default algorithm
         $hashedPassword = password_hash($password, PASSWORD_DEFAULT);
         // Attempt to add the user to the database
-        if (!empty(UserTableManager::AddUser($username, $email, $hashedPassword))) {
+        if (!empty(UserTableManager::addUser($username, $email, $hashedPassword))) {
             // If successful, return true
             return true;
         } else {

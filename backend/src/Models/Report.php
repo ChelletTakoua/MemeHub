@@ -2,17 +2,19 @@
 namespace Models;
 use Utils\Proxy;
 class Report extends Model {
+    private $status;
     private $reason;
     private $report_date;
     private $meme;
     private $user;
 
-    public function __construct($id, $reason, $report_date, $meme_id, $user_id) {
+    public function __construct($id, $reason, $report_date, $meme_id, $user_id, $status) {
         parent::__construct($id);
         $this->reason = $reason;
         $this->report_date = $report_date;
         $this->meme = new Proxy($meme_id, 'Meme');
         $this->user= new Proxy($user_id, 'User');
+        $this->status = $status;
     }
     public function getUserId(){
         return $this->user->getId();
@@ -35,7 +37,15 @@ class Report extends Model {
         return $this->report_date;
     }
 
-    public function jsonSerialize()
+    public function getStatus() {
+        return $this->status;
+    }
+
+    /**
+     * @return array {id: , reason: , report_date: , meme: , user: }
+     */
+
+    public function jsonSerialize(): array
     {
         return [
             'id' => parent::getId(),

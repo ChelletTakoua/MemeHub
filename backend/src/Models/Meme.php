@@ -1,5 +1,6 @@
 <?php
 namespace Models;
+use Database\TableManagers\TextBlockTableManager;
 use Utils\Proxy;
 class Meme extends Model{
     private $template;
@@ -29,7 +30,7 @@ class Meme extends Model{
         return $this->template->getInstance();
     }
 
-    public function getcustom_title() {
+    public function getCustomTitle() {
         return $this->custom_title;
     }
 
@@ -66,8 +67,7 @@ class Meme extends Model{
     public function getTextBlocks():array{
         $textBlocks = [];
         if(TextBlockTableManager::textBlockExistsByMemeId(parent::getId())){
-            $textBlocks = TextBlockTableManager::getTextBlockByMemeId(parent::getId());
-            return $textBlocks;
+            return TextBlockTableManager::getTextBlockByMemeId(parent::getId());
         }
         else return [];
         

@@ -2,6 +2,7 @@
 
 namespace Database\TableManagers;
 
+use Database\DatabaseQuery;
 use Models\BlockedMeme;
 
 class BlockedMemeTableManager extends TableManager

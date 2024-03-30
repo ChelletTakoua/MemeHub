@@ -19,7 +19,6 @@ export default function OptionsMenu({ imageId }){
                 <p className="text-sm">Select an option</p>
             </div>
             <div className="py-1">
-                <button className="block w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">save meme</button>
                 <button onClick={download} className="block w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">download meme</button>
                 <button className="block w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">use as template</button>
             </div>

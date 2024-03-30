@@ -22,7 +22,7 @@ $router->post('/login', "AuthController@login", ['guest']);
 $router->post('/register', "AuthController@register", ['guest']);
 $router->post('/logout', "AuthController@logout", ['user', 'admin']);
 
-$router->get('/user/checkAuth', "AuthController@checkAuth", ['user', 'admin']); // return the user object if the user is logged in (null if not)
+$router->get('/checkAuth', "AuthController@checkAuth", ['guest','user', 'admin']); // return the user object if the user is logged in (null if not)
 
 // routes to send email of forgot password, and route for reset password with token
 $router->post('/forgotPassword', "UserController@forgotPassword", ['guest']); // send email with token
@@ -39,9 +39,9 @@ $router->post('/user/profile/edit', "UserController@editProfile", ['user', 'admi
 $router->delete('/user/profile', "UserController@deleteProfile", ['user', 'admin']);
 
 
-$router->get('/memes', "MemeController@getAllMemes", ['user', 'admin']);
+$router->get('/memes', "MemeController@getAllMemes", ['guest','user', 'admin']);
 $router->get('/memes/:id', "MemeController@getMemeById", ['user', 'admin']);
-$router->get('/memes/user/:id', "MemeController@getUserMemes", ['user', 'admin']);
+$router->get('/memes/user/:id', "MemeController@getUserMemes", ['guest','user', 'admin']);
 $router->post('/memes', "MemeController@addMeme", ['user', 'admin']);
 $router->post('/memes/:id/like', "MemeController@likeMeme", ['user', 'admin']);
 $router->post('/memes/:id/dislike', "MemeController@dislikeMeme", ['user', 'admin']);

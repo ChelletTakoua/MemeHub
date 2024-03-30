@@ -8,9 +8,9 @@ class BlockedMeme extends Model {
 
     public function __construct($id, $meme_id, $user_id, $report_id) {
         parent::__construct($id);
-        $meme = new Proxy($meme_id, 'Meme');
-        $admin = new Proxy($user_id, 'User');
-        $report = new Proxy($report_id, 'Report');
+        $this->meme = new Proxy($meme_id, 'Meme');
+        $this->admin = new Proxy($user_id, 'User');
+        $this->report = new Proxy($report_id, 'Report');
     }
 
     public function getAdminId(){
@@ -34,7 +34,7 @@ class BlockedMeme extends Model {
     public function jsonSerialize()
     {
         return [
-            'id' => $this->id,
+            'id' => parent::getId(),
             'meme' => $this->meme,
             'admin' => $this->admin,
             'report' => $this->report,

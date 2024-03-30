@@ -59,4 +59,38 @@ class Router
         }
         throw new RouterException("No matching routes for $this->url");
     }
-}
+
+    /**
+     * Get the value of routes
+     * @return array
+     */
+    public function getRoutes(): array
+    {
+        return $this->routes;
+    }
+
+    /**
+     * A function that prints all the routes in a readable and beautiful html way
+     * @return void
+     */
+    public function printRoutes(){
+        echo "<h1>Routes</h1>";
+        echo "<table border='1'>";
+        echo "<tr><th>Method</th><th>Path</th><th>Callable</th><th>Roles</th></tr>";
+
+        foreach ($this->routes as $method => $routes) {
+            foreach ($routes as $route) {
+                echo "<tr>";
+                echo "<td>$method</td>";
+                echo "<td>". $route->getPath()  ."</td>";
+                echo "<td>". $route->getCallable() ."</td>";
+                echo "<td>".implode(", ", $route->getRoles())."</td>";
+                echo "</tr>";
+            }
+        }
+        echo "</table>";
+    }
+
+    //TODO: add an option to print the routes in the console for debugging (print each route and if it's matched or not)
+
+}// TODO: php returns errors and wornings

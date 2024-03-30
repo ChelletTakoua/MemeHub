@@ -2,6 +2,9 @@
 
 namespace Controllers;
 
+use Exceptions\HttpExceptions\BadRequestException;
+use Utils\RequestHandler;
+
 class AuthController
 {
     /**

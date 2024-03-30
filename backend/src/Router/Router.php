@@ -12,9 +12,10 @@ class Router
     public $url;
     private $routes = []; // liste des routes
 
-    public function __construct($url)
+    public function __construct()
     {
-        $this->url = $url;
+        $this->url = $_SERVER['REQUEST_URI'];
+        require '../src/Router/routes.php';
     }
 
     public function get($path, $callable, $roles = [])

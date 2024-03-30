@@ -32,3 +32,5 @@ function errorHandler($e)
     http_response_code($e->getHttpResponseCode());
     echo json_encode($response);
 }
+
+set_exception_handler('errorHandler');

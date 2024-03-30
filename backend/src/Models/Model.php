@@ -10,7 +10,8 @@ use JsonSerializable;
 //TODO: make all Models extend this class
 // implement the method jsonSerialize
 // this method should return the json object to return to the client (example in user)
-//
+// .
+// The foreign keys should be implemented as Proxies
 
 
 abstract class Model implements JsonSerializable
@@ -34,17 +35,16 @@ abstract class Model implements JsonSerializable
      * this method retrieves the model from the database
      * @param int $id the id of the model
      * @return Model the model retrieved from the database
+     * @noinspection PhpUndefinedMethodInspection
      */
-    public static function retrieve($id)
+    public static function retrieve(int $id) : Model
     {
-        $tableManager = self::getTableManager();
-        return $tableManager->retrieve($id);
+        return self::getTableManager()::retrieve($id);
     }
 
 
 
-    //TODO: the id is created by the database (maybe other attributes too), so we should retrieve the new object from the database after saving it
-    // either return the new object or update the current object with the new values
+    //TODO: to remove if not needed
     /**
      * this method saves the model to the database
      * @return void
@@ -60,14 +60,13 @@ abstract class Model implements JsonSerializable
 
 
 
-
     /**
      * this method returns the TableManager class that handles the database operations, the tableManager name is the class name of the model + 'TableManager'
-     * @return TableManager the TableManager class that handles the database operations
+        * @return string the name of the TableManager class
      */
-    public static function getTableManager(): TableManager
+    public static function getTableManager(): string
     {
-       return ModelTableMapper::getTableManagerClassByModel(get_called_class())::getInstance();
+       return ModelTableMapper::getTableManagerClassByModel(get_called_class());
     }
 
 }

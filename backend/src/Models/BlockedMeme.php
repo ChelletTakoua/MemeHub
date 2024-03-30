@@ -6,21 +6,21 @@ class BlockedMeme extends Model {
     private $admin;
     private $report;
 
-    public function __construct($id, $meme_id, $user_id, $report_id) {
+    public function __construct($id, $meme_id, $admin_id, $report_id) {
         parent::__construct($id);
         $this->meme = new Proxy($meme_id, 'Meme');
-        $this->admin = new Proxy($user_id, 'User');
+        $this->admin = new Proxy($admin_id, 'User');
         $this->report = new Proxy($report_id, 'Report');
     }
 
     public function getAdminId(){
-        return $this->user->getId();
+        return $this->admin->getId();
     }
     public function getMemeId(){
         return $this->meme->getId();
     }
     public function getAdmin(){ 
-        return $this->user->getInstance();
+        return $this->admin->getInstance();
     }
     public function getMeme(){ 
         return $this->meme->getInstance();

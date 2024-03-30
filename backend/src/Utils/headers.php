@@ -3,7 +3,7 @@
 
 // TODO: to read more about CORS: https://developer.mozilla.org/en-US/docs/Web/HTTP/CORS
 // Allow requests from any origin
-header('Access-Control-Allow-Origin: *');
+header('Access-Control-Allow-Origin: localhost:3000');
 
 // Allow the following methods from the frontend
 header('Access-Control-Allow-Methods: GET, POST, PUT, DELETE');
@@ -19,3 +19,7 @@ header('Access-Control-Allow-Credentials: true');
 //  ex: header('Content-Type: text/html');
 //      header('Content-Type: application/pdf');
 header('Content-Type: application/json');
+
+
+
+

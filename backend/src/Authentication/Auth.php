@@ -128,8 +128,8 @@ class Auth
     public function getActiveUser(): User
     {
         // If activeUser is already set, return it
-        if ($this->activeUser !== null) {
-            return $this->activeUser;
+        if (self::$activeUser !== null) {
+            return self::$activeUser;
         }
 
         if (!self::isLoggedIn()) {

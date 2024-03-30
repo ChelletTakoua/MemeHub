@@ -53,6 +53,7 @@ class Report extends Model {
             'report_date' => $this->report_date,
             'meme' => $this->meme,
             'user' => $this->user,
+            'status' => $this->status
         ];
     }
    

@@ -29,27 +29,22 @@ class Mail{
     $mail->send();
     echo "Mail sent";
     }
-
-    static public function sendMailFile($to,$subject){
-        $file_content=file_get_contents(__DIR__ . '/file.txt');
+    
+    static public function sendMailFile($to,$subject,$path,$attributes=[]){//a path to a file in Utils is like  __DIR__ . '/file.txt'
+        $file_content=file_get_contents($path);
+        foreach ($attributes as $attribut => $value) {
+            $file_content = str_replace('{{'.$attribut.'}}', $value, $file_content);
+        }
         $file_content = nl2br($file_content);
         Self::sendMail($to,$subject,$file_content);
     }
    
     static public function account_created($to,$username){
-        $file_content=file_get_contents(__DIR__ . '/account-created.txt');
-        $file_content = str_replace('{{username}}', $username, $file_content);
-        $file_content = nl2br($file_content);
-        Self::sendMail($to,"welcome to MemeHub !",$file_content);
+        Self::sendMailFile($to,"Welcome to Memehub !",__DIR__ . '/account-created.txt',["username"=>$username]);
     }
 
     static public function password_reset($to,$username){
-        $file_content=file_get_contents(__DIR__ . '/password-reset.txt');
-        $file_content = str_replace('{{username}}', $username, $file_content);
-        $file_content = nl2br($file_content);
-        Self::sendMail($to,"password reset",$file_content);
+        Self::sendMailFile($to,"password reset",__DIR__ . '/password-reset.txt',["username"=>$username]);
     }
-
-
 
 }

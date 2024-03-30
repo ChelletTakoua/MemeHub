@@ -24,9 +24,17 @@ $router->post('/logout', "AuthController@logout", ['user', 'admin']);
 
 $router->get('/user/checkAuth', "AuthController@checkAuth", ['user', 'admin']); // return the user object if the user is logged in (null if not)
 
+// routes to send email of forgot password, and route for reset password with token
+$router->post('/forgotPassword', "UserController@forgotPassword", ['guest']); // send email with token
+$router->post('/resetPassword', "UserController@resetPassword", ['guest']); // reset password with token
+
+// verify email after registration
+$router->get('/sendVerificationEmail', "UserController@sendVerificationEmail", ['user', 'admin']); // send verification email
+$router->get('/verifyEmail', "UserController@verifyEmail", ['guest']); // verify email (token in the url?)
+
 
 $router->get('/user/:id', "UserController@getUserProfile", ['user', 'admin']); // get user profile
-$router->post('/user/profile/modifyPassword', "UserController@modifyPassword", ['user', 'admin']); // send a mail to the user to reset his password and return a success message if the mail is sent
+$router->post('/user/profile/modifyPassword', "UserController@modifyPassword", ['user', 'admin']); // modify user password
 $router->post('/user/profile/edit', "UserController@editProfile", ['user', 'admin']); // edit user profile (username, email, ...) (not password), the modifications are sent in the body of the request
 $router->delete('/user/profile', "UserController@deleteProfile", ['user', 'admin']);
 
@@ -44,8 +52,8 @@ $router->delete('/memes/:id', "MemeController@deleteMeme", ['user', 'admin']); /
 
 $router->get('/templates', "TemplateController@getAllTemplates", ['user', 'admin']); // get all templates
 $router->get('/templates/:id', "TemplateController@getTemplateById", ['user', 'admin']); // get template by id
-$router->post('/templates', "TemplateController@addTemplate", ['admin']); // add a template
-$router->delete('/templates/:id', "TemplateController@deleteTemplate", ['admin']); // delete a template
+//$router->post('/templates', "TemplateController@addTemplate", ['admin']); // add a template
+//$router->delete('/templates/:id', "TemplateController@deleteTemplate", ['admin']); // delete a template
 
 
 $router->get('/admin/users', "AdminController@getAllUsers", ['admin']); // get all users

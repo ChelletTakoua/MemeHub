@@ -33,24 +33,16 @@ class Meme extends Model{
         return $this->custom_title;
     }
 
-    public function setcustom_title($custom_title) {
-        $this->custom_title = $custom_title;
-    }
 
     public function getCreationDate() {
         return $this->creation_date;
     }
 
-    public function setCreationDate($creation_date) {
-        $this->creation_date = $creation_date;
-    }
     public function getNbLikes(): int
     {
         return $this->nb_likes;
     }
-    public function setNbLikes($nb_likes) {
-        $this->nb_likes = $nb_likes;
-    }
+  
 
     /**
      * @return array {id: , template: , custom_title: , user: , creation_date: , nb_likes: }
@@ -67,16 +59,15 @@ class Meme extends Model{
         ];
     }
 
-    //get id of text blocks by id of meme
+    /**
+     * get text blocks by id of meme
+     * @return array
+     */
     public function getTextBlocks():array{
         $textBlocks = [];
-        $textBlocksId=[];
         if(TextBlockTableManager::textBlockExistsByMemeId(parent::getId())){
             $textBlocks = TextBlockTableManager::getTextBlockByMemeId(parent::getId());
-            foreach ($textBlocks as $textBlock) {
-                $textBlocksId[] = $textBlock->getId();
-            }
-            return $textBlocksId;
+            return $textBlocks;
         }
         else return [];
         

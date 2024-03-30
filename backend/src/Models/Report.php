@@ -35,14 +35,6 @@ class Report extends Model {
         return $this->report_date;
     }
 
-    public function setReason($reason) {
-        $this->reason = $reason;
-    }
-
-    public function setReportDate($report_date) {
-        $this->report_date = $report_date;
-    }
-
     public function jsonSerialize()
     {
         return [

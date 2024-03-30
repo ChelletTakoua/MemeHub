@@ -26,21 +26,26 @@ class DatabaseQuery
      * $queryObjects = $query->executeQuery("update","users",["username" => "louey"],["username" => "nero"]);
      */
 
-    static public function executeQuery($queryType, $table, $attributes = [], $conditions = [])
+    static public function executeQuery($queryType, $table, $attributes = [], $conditions = [], $additionalWhereCondition = ""): array
     {
         $connection = DatabaseConnection::getInstance();
         $query = "";
         switch (strtoupper($queryType)){
             case "SELECT":
                 $query = $queryType . " * FROM " . $table;
-                if(count($conditions) > 0){
+                if(count($conditions) > 0 || $additionalWhereCondition != ""){
                     $whereClause = [];
                     foreach($conditions as $condition => $value){
                         $whereClause[] = "$condition = :where_$condition";
                         $conditions["where_$condition"] = $value;
                         unset($conditions[$condition]);
                     }
-                    $query .= " WHERE " . implode(" AND ", $whereClause);
+
+                    if($additionalWhereCondition != ""){
+                        $whereClause[]= $additionalWhereCondition;
+                    }
+
+                    $query .= " WHERE " . implode(" AND ", $whereClause) ;
                 }
                 break;
 
@@ -51,8 +56,11 @@ class DatabaseQuery
                     $conditions["where_$condition"] = $value;
                     unset($conditions[$condition]);
                 }
+                if($additionalWhereCondition != ""){
+                    $whereClause[]= $additionalWhereCondition;
+                }
                 $query = $queryType . " FROM " . $table .
-                         " WHERE " . implode(" AND ", $whereClause);
+                         " WHERE " . implode(" AND ", $whereClause) . $additionalWhereCondition;
                 break;
 
             case "INSERT":
@@ -79,6 +87,9 @@ class DatabaseQuery
                     $conditions["where_$condition"] = $value;
                     unset($conditions[$condition]);
                 }
+                if($additionalWhereCondition != ""){
+                    $whereClause[]= $additionalWhereCondition;
+                }
                 $query = $queryType . " " . $table .
                          " SET " . implode(", ", $setClause) .
                          " WHERE " . implode(" AND ", $whereClause);
@@ -86,7 +97,6 @@ class DatabaseQuery
 
         }
 
-       //echo "<hr> $query <hr>";
 
         $statement = $connection->prepare($query);
         $statement->execute(array_merge($attributes, $conditions));

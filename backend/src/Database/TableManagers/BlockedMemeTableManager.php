@@ -201,7 +201,7 @@ class BlockedMemeTableManager extends TableManager
         echo "BlockedMemesTableManager save method called";
     }
 
-    public function retrieve($id): ?BlockedMeme
+    public static function retrieve($id): ?BlockedMeme
     {
         return self::getBlockedMemeById($id);
     }

@@ -254,7 +254,7 @@ class UserTableManager extends TableManager
     }
 
     //--------save/retrieve method----------------
-    public function retrieve($id): ?User
+    public static function retrieve($id): ?User
     {
         return self::getUserById($id);
     }

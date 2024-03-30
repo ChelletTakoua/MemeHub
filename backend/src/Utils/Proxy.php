@@ -22,10 +22,11 @@ class Proxy implements JsonSerializable
     private $instance;
     private $isLoaded = false;
 
+    const MODEL_NAMESPACE = 'Models\\';
     public function __construct($id, $className)
     {
         $this->id = $id;
-        $this->className = $className;
+        $this->className = self::MODEL_NAMESPACE . $className;
     }
 
     private function retrieve()

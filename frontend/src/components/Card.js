@@ -17,9 +17,11 @@ export default function Card({ user, meme, profilePic, date }) {
       <div className="w-1/2 shadow-lg bg-gray-700 rounded-3xl relative">
         <div className="flex items-center px-6 py-4">
           <img src={profilePic} alt="user" className="rounded-full" />
-          <p className="text-gray-700 text-base ml-2"></p>
-          <p className="text-zinc-100 font-bold">{user}</p>{" "}
-          <p className="text-gray-400">on {date}</p>
+          <div className="flex flex-col ml-4">
+            <p className="text-gray-700 text-base ml-2"></p>
+            <p className="text-zinc-100 font-bold">{user}</p>
+            <p className="text-gray-400">on {date}</p>
+          </div>
           <OptionsButton memeId={meme?.id} />
         </div>
         <img src={meme} id={meme?.id} alt={meme?.title} className="w-full" />
@@ -29,17 +31,15 @@ export default function Card({ user, meme, profilePic, date }) {
             <ShareButton />
             <ReportButton onReportClick={handleReportClick} />
           </div>
-          {showReport && (
-            <div className="mt-4 flex flex-row  justify-end space-x-5 items-start">
-              <textarea
-                className="p-2 rounded w-1/2 h-20 border-black border-2 bg-gray-300"
-                placeholder="Write a report..."
-              />
-              <button className="mt-2 p-2 text-greens-200 text-2xl hover:text-greens-300 active:text-nightgreen">
-                <BsFillSendFill />
-              </button>
-            </div>
-          )}
+          <div className={`mt-4 flex flex-row justify-end space-x-5 items-start report-container ${showReport ? 'h-auto' : 'h-0'}`}>
+            <textarea
+              className="p-2 rounded w-1/2 h-20 border-black border-2 bg-gray-300"
+              placeholder="Write a report..."
+            />
+            <button className="mt-2 p-2 text-greens-200 text-2xl hover:text-greens-300 active:text-nightgreen">
+              <BsFillSendFill />
+            </button>
+          </div>
         </div>
       </div>
     </div>

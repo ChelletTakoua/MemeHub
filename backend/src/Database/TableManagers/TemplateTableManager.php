@@ -108,7 +108,7 @@ class TemplateTableManager extends TableManager
         echo "TemplateTableManager save method called";
     }
 
-    public function retrieve($id)
+    public static function retrieve($id)
     {
         return self::getTemplateById($id);
     }

@@ -128,7 +128,7 @@ class LikeTableManager extends TableManager
         echo "LikeTableManager save method called";
     }
 
-    public function retrieve($id) : ?Like
+    public static function retrieve($id) : ?Like
     {
         return self::getLikeById($id);
     }

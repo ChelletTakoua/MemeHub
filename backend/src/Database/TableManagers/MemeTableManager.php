@@ -17,30 +17,18 @@ class MemeTableManager extends TableManager
      */
     static public function getMeme(array $params=[]): array
     {
-        //check if the meme exists in blocked memes if yes then don't return it
-        $queryObjects = DatabaseQuery::executeQuery("select","blocked_memes",[],[]);
-        $blockedMemes = [];
+        $queryObjects =  DatabaseQuery::executeQuery("select","memes",[],$params, " id NOT IN (SELECT meme_id FROM blocked_memes)");
+
+        $memes = [];
+
         foreach ($queryObjects as $queryObject ) {
-            $blockedMemes[] = $queryObject['meme_id'];
+            $memes[] = new Meme($queryObject['id'],
+                $queryObject['template_id'],
+                $queryObject['custom_title'],
+                $queryObject['user_id'],
+                $queryObject['creation_date']);
         }
-        // if the blocked memes array doesn't contain the meme_id then return the meme
-            $queryObjects2 = DatabaseQuery::executeQuery("select","memes",[],$params);
-            $memes = [];
-            foreach ($queryObjects2 as $queryObject ) {
-
-                if(!in_array($queryObject['id'],$blockedMemes)) {
-                    $memes[] = new Meme($queryObject['id'],
-                        $queryObject['template_id'],
-                        $queryObject['custom_title'],
-                        $queryObject['user_id'],
-                        $queryObject['creation_date']);
-                }
-
-            }
-            return $memes;
-
-
-
+        return $memes;
     }
 
     // specific get methods
@@ -181,9 +169,9 @@ class MemeTableManager extends TableManager
         echo "MemeTableManager save method called";
     }
 
-    public function retrieve($id): ?Meme
+    public static function retrieve($id): ?Meme
     {
-        return $this->getMemeById($id);
+        return self::getMemeById($id);
     }
     
 

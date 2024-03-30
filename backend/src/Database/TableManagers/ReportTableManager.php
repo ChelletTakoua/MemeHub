@@ -135,7 +135,7 @@ class ReportTableManager extends TableManager
 
 
     //--------save/retrieve methods----------------
-    public function retrieve($id): ?Report
+    public static function retrieve($id): ?Report
     {
         return self::getReportById($id);
     }

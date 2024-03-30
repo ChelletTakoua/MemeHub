@@ -27,7 +27,7 @@ abstract class TableManager
         echo "TableManager save method called";
     }
 
-    public abstract function retrieve($id);
+    public static abstract function retrieve($id);
 
     public function getTableName(): string
     {

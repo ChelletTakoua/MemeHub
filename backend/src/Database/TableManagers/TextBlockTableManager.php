@@ -139,7 +139,7 @@ class TextBlockTableManager extends TableManager
         echo "TextBlockTableManager save method called";
     }
 
-    public function retrieve($id): ?TextBlock
+    public static function retrieve($id): ?TextBlock
     {
         return self::getTextBlockById($id);
     }

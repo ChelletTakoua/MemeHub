@@ -19,7 +19,13 @@ SET time_zone = "+00:00";
 
 --
 -- Database: `memehub`
+
 --
+
+drop database if exists memehub;
+
+create database memehub;
+use memehub;
 
 -- --------------------------------------------------------
 

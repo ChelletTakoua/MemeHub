@@ -86,7 +86,7 @@ class DatabaseQuery
 
         }
 
-        echo "<hr> $query <hr>";
+       //echo "<hr> $query <hr>";
 
         $statement = $connection->prepare($query);
         $statement->execute(array_merge($attributes, $conditions));

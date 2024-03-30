@@ -24,31 +24,18 @@ class TextBlock extends Model{
         return $this->text;
     }
 
-    public function setText($text) {
-        $this->text = $text;
-    }
-
     public function getX() {
         return $this->x;
     }
 
-    public function setX($x) {
-        $this->x = $x;
-    }
 
     public function getY() {
         return $this->y;
     }
 
-    public function setY($y) {
-        $this->y = $y;
-    }
 
     public function getFontSize() {
         return $this->font_size;
-    }
-    public function setFontSize($font_size) {
-        $this->font_size = $font_size;
     }
 
     public function getMemeId(){
@@ -60,7 +47,7 @@ class TextBlock extends Model{
     public function jsonSerialize()
     {
         return [
-            'id' => $this->id,
+            'id' => parent::getId(),
             'text' => $this->text,
             'x' => $this->x,
             'y' => $this->y,

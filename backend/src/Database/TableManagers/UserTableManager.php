@@ -156,7 +156,7 @@ class UserTableManager extends TableManager
         if( self::verifyExistenceByUserName($username) || self::verifyExistenceByEmail($email) ){
             return null;
         }
-        DatabaseQuery::executeQuery("insert","users",["username"=>$username,"email"=>$email,"password"=>$password]);
+        DatabaseQuery::executeQuery("insert","users",["username"=>$username,"email"=>$email,"password"=>$password,"role"=>"user"]);
         $user = DatabaseQuery::executeQuery("select","users",[],
                                             ["username"=>$username,"email"=>$email,"password"=>$password]);
         $id = $user[0]["id"];

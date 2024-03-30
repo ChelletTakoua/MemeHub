@@ -84,6 +84,8 @@ _______________________________________________________________
 |            - Fi kol table manager famma function tasna3lek el objet Model mel reponse mtaa requete SQL.
 |    - find a way to save an image in the database (profile picture)
 |    - make the delete of foreign keys cascade in the database
+|    (done)- add a verified column to users table in database
+|    - add isVerified method to UserTableManager
 _______________________________________________________________
 
 

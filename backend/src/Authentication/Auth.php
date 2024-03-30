@@ -1,6 +1,7 @@
 <?php
 
 namespace Authentication;
+use Exceptions\HttpExceptions\LoginFailedException;
 use Exceptions\HttpExceptions\NotLoggedInException;
 use Exceptions\HttpExceptions\UnauthorizedException;
 use Models\User;

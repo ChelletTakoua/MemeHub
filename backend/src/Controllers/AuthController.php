@@ -3,6 +3,7 @@
 namespace Controllers;
 
 use Exceptions\HttpExceptions\BadRequestException;
+use Authentication\Auth;   
 use Utils\RequestHandler;
 
 class AuthController

@@ -6,10 +6,10 @@ class Template extends Model {
     private $title;
    
 
-    public function __construct($id, $url, $title) {
+    public function __construct($id, $title, $url) {
         parent::__construct($id);
-        $this->url = $url;
         $this->title = $title;
+        $this->url = $url;
     }
 
     public function getUrl() {

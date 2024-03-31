@@ -55,6 +55,7 @@ $router->delete('/memes/:id', "MemeController@deleteMeme", ['user', 'admin']); /
 
 $router->get('/templates', "TemplateController@getAllTemplates", ['user', 'admin']); // get all templates
 $router->get('/templates/:id', "TemplateController@getTemplateById", ['user', 'admin']); // get template by id
+$router->get('/admin/templates/url/:url', "TemplateController@getTemplateByUrl", ['user', 'admin']);
 //$router->post('/templates', "TemplateController@addTemplate", ['admin']); // add a template
 //$router->delete('/templates/:id', "TemplateController@deleteTemplate", ['admin']); // delete a template
 

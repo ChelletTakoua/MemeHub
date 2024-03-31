@@ -4,6 +4,7 @@ namespace Controllers;
 
 use Database\TableManagers\MemeTableManager;
 use Database\TableManagers\UserTableManager;
+use Exceptions\HttpExceptions\BadRequestException;
 use Exceptions\HttpExceptions\NotFoundException;
 use Utils\ApiResponseBuilder;
 use Utils\RequestHandler;
@@ -62,21 +63,26 @@ class AdminController
     /** takes in a user id and changes the role of the user which is specified in the body of the request
      * @param $id
      * @throws NotFoundException
+     * @throws BadRequestException
      */
     public function changeUserRole($id)
     {
         $request = RequestHandler::getJsonRequestBody();
         // Check if the request body is not empty and contains 'role'
         if(!empty($request) && isset($request['role'])) {
-            $role = $request['role'];
-            $user = UserTableManager::getUserById($id);
-            if($user) {
-                UserTableManager::updateRole($id, $role);
-                ApiResponseBuilder::buildSuccessResponse();
-            }
-            else {
-                throw new NotFoundException("User not found");
-            }
+                if($request['role'] == "admin" || $request['role'] == "user") {
+                    $role = $request['role'];
+                    $user = UserTableManager::getUserById($id);
+                    if ($user) {
+                        UserTableManager::updateRole($id, $role);
+                        ApiResponseBuilder::buildSuccessResponse();
+                    } else {
+                        throw new NotFoundException("User not found");
+                    }
+                }
+                else {
+                    throw new BadRequestException("Role not found in request body");
+                }
         }
         else {
             throw new NotFoundException("Role not found in request body");

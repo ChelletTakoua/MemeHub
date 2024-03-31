@@ -12,7 +12,9 @@ use Models\BlockedMeme;
 
 class ReportController
 {
-
+    /**
+     * Get all reports in the database
+     */
     public function getAllReports()
     {
         $reports = ReportTableManager::getReport();
@@ -20,6 +22,11 @@ class ReportController
         echo json_encode($response);
     }
 
+    /**
+     * Resolve a report (changes the status to resolved and blocks the meme)
+     * @param $id
+     * @throws NotFoundException
+     */
     public function resolveReport($id)
     {
         //get the report
@@ -41,6 +48,11 @@ class ReportController
         }
     }
 
+    /**
+     * Ignore a report (changes the status to ignored)
+     * @param $id
+     * @throws NotFoundException
+     */
     public function ignoreReport($id)
     {
         //get the report
@@ -58,6 +70,11 @@ class ReportController
         //ignore pending resolve
     }
 
+    /**
+     * Delete a report from the database
+     * @param $id
+     * @throws NotFoundException
+     */
     public function deleteReport($id)
     {
         //get the report

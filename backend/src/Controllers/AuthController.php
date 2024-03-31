@@ -85,7 +85,7 @@ class AuthController
             // Register the user    
             Auth::register($username, $password,$email);
             // Build a success response with the user details
-            $response = ApiResponseBuilder::buildSuccessResponse(["user"=>$user]);
+            $response = ApiResponseBuilder::buildSuccessResponse();
             // Output the response as JSON
             echo json_encode($response);
         }else{

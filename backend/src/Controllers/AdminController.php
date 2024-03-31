@@ -11,7 +11,7 @@ use Utils\RequestHandler;
 class AdminController
 {
 
-    /**
+    /** gets all the users and sends them in the response
      * @throws NotFoundException
      */
     public function getAllUsers()
@@ -26,7 +26,7 @@ class AdminController
         }
     }
 
-    /**
+    /** gets all the admins and sends them in the response
      * @throws NotFoundException
      */
     public function getAdminDashboard()
@@ -42,7 +42,8 @@ class AdminController
 
     }
 
-    /**
+    /** takes in a user id and sends the user profile in the response
+     * @param $id
      * @throws NotFoundException
      */
     public function getUserProfile($id)
@@ -59,6 +60,7 @@ class AdminController
     }
 
     /** takes in a user id and changes the role of the user which is specified in the body of the request
+     * @param $id
      * @throws NotFoundException
      */
     public function changeUserRole($id)
@@ -82,12 +84,18 @@ class AdminController
 
     }
 
+    /** takes in a user id and deletes the user
+     * @param $id
+     */
     public function deleteUser($id)
     {
         UserTableManager::deleteUserById($id);
         ApiResponseBuilder::buildSuccessResponse();
     }
 
+    /** takes in a meme id and deletes the meme
+     * @param $id
+     */
     public function deleteMeme($id)
     {
         MemeTableManager::deleteMeme($id);

@@ -66,11 +66,11 @@ class TextBlockTableManager extends TableManager
      * @param string $text
      * @param int $x
      * @param int $y
-     * @param int $font_size
+     * @param string $font_size
      * @param int $meme_id
      * @return TextBlock|null
      */
-    static public function addTextBlock(string $text, int $x, int $y, int $font_size, int $meme_id): ?TextBlock
+    static public function addTextBlock(string $text, int $x, int $y, string $font_size, int $meme_id): ?TextBlock
     {
         DatabaseQuery::executeQuery("insert", "text_blocks",
                                     ["text" => $text, "x" => $x, "y" => $y, "font_size" => $font_size , "meme_id" => $meme_id]);
@@ -103,7 +103,7 @@ class TextBlockTableManager extends TableManager
         self::updateTextBlock(["y" => $y], ["id" => $id]);
     }
 
-    static public function updateTextBlockFontSize(int $id, int $font_size){
+    static public function updateTextBlockFontSize(int $id, string $font_size){
         self::updateTextBlock(["font_size" => $font_size], ["id" => $id]);
     }
 

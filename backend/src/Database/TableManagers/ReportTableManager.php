@@ -4,6 +4,7 @@ namespace Database\TableManagers;
 
 use Database\DatabaseQuery;
 use Models\Report;
+use Models\User;
 
 class ReportTableManager extends TableManager
 {
@@ -62,6 +63,14 @@ class ReportTableManager extends TableManager
         return null;
     }
 
+    static public function getReportByMemeIdAndUserId(int $meme_id, int $user_id): ?Report{
+        $reports = self::getReport(["meme_id" => $meme_id, "user_id" => $user_id]);
+        if(!empty($reports)){
+            return $reports[0];
+        }
+        return null;
+    }
+
 
     //-----------------verify existence methods----------------
     static public function reportExists(int $id): bool{
@@ -75,9 +84,16 @@ class ReportTableManager extends TableManager
      * @param string $reason
      * @param int $meme_id
      * @param int $user_id
-     * @return void
+     * @return Report|null
      */
-    static public function addReport(string $reason, int $meme_id, int $user_id): Report{
+    static public function addReport(string $reason, int $meme_id, int $user_id): ?Report{
+        if( empty( MemeTableManager::memeExists($meme_id) )
+            || empty( UserTableManager::verifyExistenceById($user_id) )
+            || !empty(self::getReportByMemeIdAndUserId($meme_id, $user_id) ))
+        {
+            return null ;
+        }
+
         DatabaseQuery::executeQuery("insert", "reports", ["reason" => $reason, "meme_id" => $meme_id, "user_id" => $user_id]);
         $id = DatabaseQuery::getLastInsertId();
         return self::getReportById($id);

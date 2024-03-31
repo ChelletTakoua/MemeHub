@@ -132,7 +132,8 @@ class LikeTableManager extends TableManager
             return null;
         }
         $queryObject = DatabaseQuery::executeQuery("insert","likes",["meme_id" => $meme_id ,"user_id" =>$user_id ]);
-        return new Like($queryObject['id'],$meme_id,$user_id);
+        $like = self::getLikeByMemeIdAndUserId($meme_id, $user_id);
+        return new Like($like->getId(), $like->getMemeId(), $like->getUserId());
 
     }
 

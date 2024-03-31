@@ -138,7 +138,7 @@ class BlockedMemeTableManager extends TableManager
      */
     static public function addBlockedMeme(int $meme_id, int $admin_id, int $report_id): ?BlockedMeme
     {
-        if( self::blockedMemeExistsByMemeId($meme_id) || self::blockedMemeExistsByAdminId($admin_id) || self::blockedMemeExistsByReportId($report_id) ){
+        if( self::blockedMemeExistsByMemeId($meme_id) ){
             return null;
         }
         DatabaseQuery::executeQuery("insert","blocked_memes",["meme_id"=>$meme_id,"admin_id"=>$admin_id,"report_id"=>$report_id]);

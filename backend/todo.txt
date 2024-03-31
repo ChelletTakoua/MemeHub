@@ -90,6 +90,7 @@ _______________________________________________________________
 |    (done)- make the delete of foreign keys cascade in the database
 |    (done)- add a verified column to users table in database
 |    (done)- add isVerified method to UserTableManager
+|          - add checks before the adds and updates in controllers
 _______________________________________________________________
 
 

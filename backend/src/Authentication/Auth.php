@@ -101,6 +101,21 @@ class Auth
         }
     }
 
+    /**
+     * Modify the password of a user
+     * @param $userId
+     * @param $password
+     * @return bool
+     */
+    public static function modifyPassword($userId,$password): bool
+    {
+        $hashedPassword = password_hash($password, PASSWORD_DEFAULT);
+        UserTableManager::updatePassword($userId, $hashedPassword);
+        self::forceReloadActiveUser();
+        return true;
+    }
+
+
     public static function isLoggedIn(): bool
     {
         return true;// for testing purposes
@@ -132,6 +147,16 @@ class Auth
     }
 
     /**
+     * this function is used to force the active user to be reloaded from the database on the next call to getActiveUser()
+     * this is useful when the user's data has been modified in the database and the active user's data needs to be updated
+     * @return void
+     */
+    private static function forceReloadActiveUser()
+    {
+        self::$activeUser = null;
+    }
+
+    /**
      * Get the active user
      *
      * @return User
@@ -148,21 +173,19 @@ class Auth
             throw new NotLoggedInException();
         }
 
-        // Fetch the user from the database
         $userId = $_SESSION['user_id'];
 
-        /* TODO: fetch from database
-        $userTableManager = UserTableManager::GetInstance();
-        $this->activeUser = $userTableManager->find($userId);
-        */
+        self::$activeUser = UserTableManager::getUserById($userId);
 
-        // If the user was not found, throw an exception
-        if ($this->activeUser === null) {
+
+        if (self::$activeUser === null) {
             throw new \Exception("User with ID $userId not found");
         }
 
-        return $this->activeUser;
+        return self::$activeUser;
     }
+
+
     /**
      * Get the active user's ID
      * @return int

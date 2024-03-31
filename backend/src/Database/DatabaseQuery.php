@@ -94,7 +94,6 @@ class DatabaseQuery
                          " SET " . implode(", ", $setClause) .
                          " WHERE " . implode(" AND ", $whereClause);
                 break;
-
         }
 
 

@@ -2,6 +2,12 @@
 @everyone. These are the tasks that need to be done:
 
 
+fel fichier php.ini fl dossier C:\xampp\php
+    - display_errors = Off
+
+
+
+
 - make session destroy after a certain time of inactivity (1 week for example)
 
 

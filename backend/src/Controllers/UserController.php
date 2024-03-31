@@ -3,36 +3,98 @@
 namespace Controllers;
 
 use Authentication\Auth;
+use Authentication\AuthKeyGenerator;
 use Database\TableManagers\MemeTableManager;
 use Exceptions\HttpExceptions\BadRequestException;
+use Exceptions\HttpExceptions\InvalidTokenException;
 use Exceptions\HttpExceptions\NotFoundException;
 use Database\TableManagers\UserTableManager;
 use Exceptions\HttpExceptions\NotLoggedInException;
+use Mailing\Mail;
 use Utils\RequestHandler;
 use Utils\ApiResponseBuilder;
 
 class UserController
 {
 
+    /**
+     * This function is used to send an email to the user with a link to reset his password
+     * It takes the username of the user as a parameter
+     * @param string $username
+     * @return void
+     */
+    public function forgotPassword($username) {
 
-    public function forgotPassword() {
-        // Logic to send email with forgot password token
-        //TODO: implement this method
+        //TODO: @takoua
+        // fetch user from database
+        // send email to user with password reset link
+        // rodd les 2 methodes mte3 mail ye5dhou user fel parametre
+        // Mail::sendPasswordResetMail($user);
+
+
     }
 
+
+    /**
+     *  This function is used to reset the password of a user
+     * It takes a token and a new password from the request body
+     * @return void
+     * @throws BadRequestException if the token or password is not provided
+     * @throws InvalidTokenException
+     */
     public function resetPassword() {
-        // Logic to reset password with token
-        //TODO: implement this method
+
+        $requestBody = RequestHandler::getJsonRequestBody();
+
+        if(!isset($requestBody['token'])) {
+            throw new BadRequestException("Token must be provided");
+        }
+        if (!isset($requestBody['password'])) {
+            throw new BadRequestException("Password must be provided");
+        }
+
+        $token = $requestBody['token'];
+        $password = $requestBody['password'];
+
+        $user = AuthKeyGenerator::getUserFromToken($token);
+
+        Auth::modifyPassword($user->getId(), $password);
+
+        $response = ApiResponseBuilder::buildSuccessResponse();
+        echo json_encode($response);
+
     }
 
-    public function sendVerificationEmail() {
+    /**
+     * This function is used to send a verification email to the user
+     * @return void
+     */
+    public function sendVerificationEmail(){
+
+        //TODO: @takoua
         // Logic to send verification email
         //TODO: implement this method
     }
 
+
+    /**
+     * This function is used to verify the email of a user
+     * It takes a token from the request body
+     * @return void
+     * @throws BadRequestException if the token is not provided
+     * @throws InvalidTokenException if the token is invalid
+     */
     public function verifyEmail() {
-        // Logic to verify email with token
-        //TODO: implement this method
+
+        $requestBody = RequestHandler::getJsonRequestBody();
+        $token = $requestBody['token'];
+
+        $user = AuthKeyGenerator::getUserFromToken($token);
+
+        UserTableManager::updateIsVerified($user->getId());
+
+        $response = ApiResponseBuilder::buildSuccessResponse();
+        echo json_encode($response);
     }
 
     /**

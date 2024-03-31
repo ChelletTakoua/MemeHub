@@ -13,6 +13,9 @@ class RequestHandler {
     {
         return json_decode(file_get_contents('php://input'), true) ?? [];
     }
+
+
+
     /**
      * Retrieves parameters from the current request.
      *

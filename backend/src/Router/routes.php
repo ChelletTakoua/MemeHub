@@ -79,10 +79,12 @@ $router->get('/routes', function () use ($router) {
     echo json_encode($router->getRoutes());
 }, ['admin']);
 
+$router->get('/admin/routes', "../src/Debugging/debugging.php", ['guest']);
+
+
 $router->get('admin/routes', function () use ($router) {
     $router->printRoutes();
 }, ['admin']);
-
 
 
 

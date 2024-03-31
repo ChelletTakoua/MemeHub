@@ -7,6 +7,7 @@ use Database\TableManagers\MemeTableManager;
 use Exceptions\HttpExceptions\BadRequestException;
 use Exceptions\HttpExceptions\NotFoundException;
 use Database\TableManagers\UserTableManager;
+use Exceptions\HttpExceptions\NotLoggedInException;
 use Utils\RequestHandler;
 use Utils\ApiResponseBuilder;
 
@@ -34,19 +35,27 @@ class UserController
         //TODO: implement this method
     }
 
+    /**
+     * @throws NotFoundException
+     */
     public function getUserProfile($id) {
-            //get the user
-            $user=UserTableManager::getUserById($id);
-            if ($user) {
+        //get the user
+        $user=UserTableManager::getUserById($id);
+        if ($user) {
             // Build a success response with the user details
             $response = ApiResponseBuilder::buildSuccessResponse(["user"=>$user]);
             // Output the response as JSON
             echo json_encode($response);}
-            else {
-                // Throw a NotFoundException if user profile not found
-                throw new NotFoundException("User profile not found");
+        else {
+            // Throw a NotFoundException if user profile not found
+            throw new NotFoundException("User profile not found");
         }
     }
+
+    /**
+     * @throws BadRequestException
+     * @throws NotLoggedInException
+     */
     public function modifyPassword() {
         // Get the JSON request body
         $requestBody = RequestHandler::getJsonRequestBody();
@@ -66,10 +75,14 @@ class UserController
         }
     }
 
+    /**
+     * @throws BadRequestException
+     * @throws NotLoggedInException
+     */
     public function editProfile() {
         // Get the JSON request body
         $requestBody = RequestHandler::getJsonRequestBody();
-        // Check if the request body is not empty 
+        // Check if the request body is not empty
         if (!empty($requestBody) &&( isset($requestBody['username']) || isset($requestBody['email']) || isset($requestBody['profile_picture']) ) ){
             // Extract the id from the request body
             $id = Auth::getActiveUserId();
@@ -86,7 +99,7 @@ class UserController
                 $profile_picture = $requestBody['profile_picture'];
                 UserTableManager::updateProfilePic($id,$profile_picture);
             }
-            $user=Auth::getActiveUser(true);
+            $user= (new Auth)->getActiveUser(true);
             $response = ApiResponseBuilder::buildSuccessResponse(["user"=>$user]);
             // Output a success message
             echo json_encode($response);
@@ -102,4 +115,5 @@ class UserController
         //delete the user
         UserTableManager::deleteUserById($id);
     }
+
 }

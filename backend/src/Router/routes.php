@@ -9,6 +9,7 @@ global $router;
 $router->get('/', function (){echo "welcome to the homepage GET";},['guest']);
 $router->post('/', function (){echo "welcome to the homepage POST";},['guest']);
 
+$router->options('*', function (){} , ['guest']);
 
 // use this route to test your code (len t7eb ttesti ayy haja)  Yaa Sioua meghir ma tbaddel fl index.php 5allih rayedh!!
 $router->get('/test', 'TestController@testMethod',['guest']);
@@ -33,7 +34,7 @@ $router->get('/sendVerificationEmail', "UserController@sendVerificationEmail", [
 $router->get('/verifyEmail', "UserController@verifyEmail", ['guest']); // verify email (token in the url?)
 
 
-$router->get('/user/:id', "UserController@getUserById", ['guest','user', 'admin']); // get user profile
+$router->get('/user/:id', "UserController@getUserProfile", ['guest','user', 'admin']); // get user profile
 $router->post('/user/profile/modifyPassword', "UserController@modifyPassword", ['user', 'admin']); // modify user password
 $router->post('/user/profile/edit', "UserController@editProfile", ['user', 'admin']); // edit user profile (username, email, ...) (not password), the modifications are sent in the body of the request
 $router->delete('/user/profile', "UserController@deleteProfile", ['user', 'admin']);

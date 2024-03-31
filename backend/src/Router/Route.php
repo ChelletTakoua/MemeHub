@@ -54,10 +54,16 @@ class Route implements JsonSerializable {
 
 
     /**
-     * Permettra de capturer l'url avec les paramètre
-     * get('/posts/:id') par exemple
+     * return true if the route match the url
+     *  @param string $url
+     *  @return bool
      **/
     public function match($url){
+
+        //if path is * then match all, this is just an easy way to implement a catch all route
+        if ($this->path === '*') {
+            return true;
+        }
 
         $url = trim($url, '/');
         $path = preg_replace('#:([\w]+)#', '([^/]+)', $this->path);

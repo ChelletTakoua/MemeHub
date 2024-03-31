@@ -28,10 +28,12 @@ class UserController
     }
     public function forgotPassword() {
         // Logic to send email with forgot password token
+        //TODO: implement this method
     }
 
     public function resetPassword() {
         // Logic to reset password with token
+        //TODO: implement this method
     }
 
     public function sendVerificationEmail() {
@@ -40,16 +42,15 @@ class UserController
 
     public function verifyEmail() {
         // Logic to verify email with token
+        //TODO: implement this method
     }
 
     public function getUserProfile($id) {
             //get the user
             $user=UserTableManager::getUserById($id);
             if ($user) {
-            //get memes
-            $memes= MemeTableManager::getMemeByUserId($id);
             // Build a success response with the user details
-            $response = ApiResponseBuilder::buildSuccessResponse(["user"=>$user,"memes"=>$memes]);
+            $response = ApiResponseBuilder::buildSuccessResponse(["user"=>$user]);
             // Output the response as JSON
             echo json_encode($response);}
             else {
@@ -63,7 +64,8 @@ class UserController
         // Check if the request body is not empty and contains 'password'
         if (!empty($requestBody) && isset($requestBody['password'] ) ) {
             //get the id and password
-            $id = Auth::getActiveUser();
+
+            $id = (new Auth)->getActiveUser();
             $password = $requestBody['password'];
             //update password the user
             UserTableManager::updatePassword($id,$password);

@@ -1,5 +1,6 @@
 import React, { useContext, useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
+import Moment from "react-moment";
 import ProfileCard from "../components/ProfileCard";
 import { AppContext } from "../context/AppContext";
 
@@ -15,14 +16,9 @@ const Profile = () => {
     }
   }, [isOwner]);
 
-  const [userName, setUserName] = useState("Username");
-  const [Email, setEmail] = useState("Email");
-  // const [aboutMe, setAboutMe] = useState(
-  //   "Lorem ipsum dolor sit amet consectetur adipisicing elit. Autem placeat fugit eius debitis, in aspernatur dolorum ea! Laudantium hic distinctio reprehenderit neque labore molestiae quas! Id rerum optio quos quo!"
-  // );
-  const [profileImage, setProfileImage] = useState(
-    "https://www.seekpng.com/png/detail/847-8474751_download-empty-profile.png"
-  );
+  const [userName, setUserName] = useState(user?.username);
+  const [Email, setEmail] = useState(user?.email);
+  const [profileImage, setProfileImage] = useState(user?.profile_pic);
   const [memes, setMemes] = useState([
     "https://media.blogto.com/articles/201731-sunrise-ed.jpg?width=1300&quality=70",
     "https://www.telegraph.co.uk/multimedia/archive/03597/potd-london_3597432k.jpg",
@@ -33,22 +29,13 @@ const Profile = () => {
   const handleImageUpload = (event) => {
     if (isOwner) {
       setProfileImage(URL.createObjectURL(event.target.files[0]));
-      // if (profileImage) {
-      //   const reader = new FileReader();
-      //   reader.readAsDataURL(profileImage);
-      //   reader.onloadend = () => {
-      //     const imageData = reader.result;
-      //     // Send imageData to the server
-      //     axios
-      //       .post("/upload", { imageData })
-      //       .then((response) => {
-      //         console.log(response.data);
-      //       })
-      //       .catch((error) => {
-      //         console.error("Error uploading image:", error);
-      //       });
-      //   };
-      // }
+      if (profileImage) {
+        const reader = new FileReader();
+        reader.readAsDataURL(profileImage);
+        reader.onloadend = () => {
+          setProfileImage(reader.result);
+        };
+      }
     }
   };
 
@@ -82,7 +69,7 @@ const Profile = () => {
               className={`${isOwner ? "" : "hidden"} mb-4`}
             />
             <img
-              src={profileImage}
+              src={`data:image/jpeg;base64,${profileImage}`}
               alt="Profile Picture"
               className="rounded-full w-32 h-32 mx-auto shadow-lg"
             />
@@ -95,7 +82,9 @@ const Profile = () => {
             ) : (
               <h2 className="text-2xl font-bold mt-4 text-white">{userName}</h2>
             )}
-            <p className="text-gray-300">Joined: January 2022</p>
+            <p className="text-gray-300">
+              Joined: <Moment fromNow>{user?.reg_dat}</Moment>
+            </p>
             <p className="text-gray-300">
               Total Memes Contributed: {memes.length}
             </p>

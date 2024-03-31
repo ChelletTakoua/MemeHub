@@ -16,7 +16,7 @@ class ApiResponseBuilder
      * @param int $statusCode The status code to be returned, default is 200
      * @return array
      */
-    public static function buildSuccessResponse(array $data, string $message = "" , int $statusCode = 200): array
+    public static function buildSuccessResponse(array $data=[], string $message = "" , int $statusCode = 200): array
     {
         http_response_code($statusCode);
 

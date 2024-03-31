@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Mar 30, 2024 at 07:23 AM
+-- Generation Time: Mar 31, 2024 at 07:56 AM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -19,13 +19,11 @@ SET time_zone = "+00:00";
 
 --
 -- Database: `memehub`
-
 --
 
-drop database if exists memehub;
-
-create database memehub;
-use memehub;
+DROP database IF EXISTS memehub;
+CREATE database memehub;
+USE memehub;
 
 -- --------------------------------------------------------
 
@@ -36,7 +34,7 @@ use memehub;
 CREATE TABLE `blocked_memes` (
   `id` int(11) NOT NULL,
   `admin_id` int(11) NOT NULL,
-  `report_id` int(11) NOT NULL,
+  `report_id` int(11) DEFAULT NULL,
   `meme_id` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
@@ -368,6 +366,7 @@ INSERT INTO `users` (`id`, `username`, `email`, `password`, `reg_date`, `role`, 
 --
 ALTER TABLE `blocked_memes`
   ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `meme_id` (`meme_id`),
   ADD KEY `admin_id_fk` (`admin_id`),
   ADD KEY `report_id_fk` (`report_id`),
   ADD KEY `meme_id_fk` (`meme_id`);
@@ -394,6 +393,7 @@ ALTER TABLE `memes`
 --
 ALTER TABLE `reports`
   ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `meme_id` (`meme_id`,`user_id`),
   ADD KEY `meme_id_fk` (`meme_id`),
   ADD KEY `user_id_fk` (`user_id`);
 

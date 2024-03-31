@@ -15,6 +15,7 @@ import {
 
 const base = axios.create({
   baseURL: BASE_URL,
+  withCredentials: true,
 });
 
 export const api = {
@@ -28,7 +29,7 @@ export const userApi = {
     return base.get(USER_API_ROUTES["CHECH_AUTH"]);
   },
   getUserProfile: (userId) =>
-    base.get(USER_API_ROUTES["GET_USER_PROFILE"]).replace(":id", userId),
+    base.get(USER_API_ROUTES["GET_USER_PROFILE"].replace(":id", userId)),
   modifyUserPassword: (passwordData) =>
     base.post(USER_API_ROUTES["MODIFY_PASSWORD"], passwordData),
   editUserProfile: (userData) =>

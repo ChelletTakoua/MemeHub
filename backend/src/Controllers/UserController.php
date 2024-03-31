@@ -145,7 +145,7 @@ class UserController
         // Get the JSON request body
         $requestBody = RequestHandler::getJsonRequestBody();
         // Check if the request body is not empty
-        if (!empty($requestBody) &&( isset($requestBody['username']) || isset($requestBody['email']) || isset($requestBody['profile_picture']) ) ){
+        if (!empty($requestBody) &&( isset($requestBody['username']) || isset($requestBody['email']) || isset($requestBody['profile_pic']) ) ){
             // Extract the id from the request body
             $id = Auth::getActiveUserId();
             //update the user
@@ -157,9 +157,9 @@ class UserController
                 $email = $requestBody['email'];
                 UserTableManager::updateEmail($id,$email);
             }
-            if(isset($requestBody['profile_picture'])){
-                $profile_picture = $requestBody['profile_picture'];
-                UserTableManager::updateProfilePic($id,$profile_picture);
+            if(isset($requestBody['profile_pic'])){
+                $profile_pic = $requestBody['profile_pic'];
+                UserTableManager::updateProfilePic($id,$profile_pic);
             }
             $user= (new Auth)->getActiveUser(true);
             $response = ApiResponseBuilder::buildSuccessResponse(["user"=>$user]);

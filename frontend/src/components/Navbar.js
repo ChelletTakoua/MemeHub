@@ -1,6 +1,6 @@
 import trollFace from "../images/troll_face.png";
 import { Link } from "react-router-dom";
-import { useContext, useEffect } from "react";
+import { useContext } from "react";
 import { AppContext } from "../context/AppContext";
 import { FaPlusCircle } from "react-icons/fa";
 
@@ -60,7 +60,7 @@ export default function Navbar() {
             </Link>
             <Link to="/register">
               <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
-                Regsiter
+                Register
               </button>
             </Link>
           </>

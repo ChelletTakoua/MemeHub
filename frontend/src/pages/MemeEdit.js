@@ -1,40 +1,50 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
 import Browse from "../components/Browse";
 import Meme from "../components/Meme";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
+import { memeApi, templateApi } from "../services/api";
+import { AppContext } from "../context/AppContext";
 
 export default function MemeEdit() {
   const [browse, setBrowse] = useState(true);
   const [memes, setMemes] = useState([]);
   const [currMeme, setCurrMeme] = useState({});
+  const navigate = useNavigate();
 
   const { id } = useParams("id");
+  const { user } = useContext(AppContext);
 
   //-----------------------------
   useEffect(() => {
+    const fetchTemplates = async () => {
+      try {
+        const res = await templateApi.getAllTemplates();
+        console.log(res);
+        setMemes(res?.data.data.templates);
+      } catch (error) {
+        console.error("Error fetching data:", error);
+      }
+    };
+    const fetchMeme = async (id) => {
+      try {
+        const res = await memeApi.getMemeById(id);
+        if (res?.data.data.meme.user_id !== user.id) navigate("/");
+        const memeData = { ...res?.data.data.meme };
+        memeData.inputBoxes = res?.data.data.meme.text_blocks;
+        delete memeData.text_blocks;
+        setCurrMeme(memeData);
+        console.log(memeData);
+      } catch (error) {
+        console.error("Error fetching data:", error);
+        navigate("/");
+      }
+    };
+
     if (id) {
       setBrowse(false);
-      //setCurrMeme(memes.find((meme) => meme.id === id));
-      setCurrMeme({
-        id: 1,
-        url: "https://i.imgflip.com/30b1gx.jpg",
-        inputBoxes: [
-          { id: 0, text: "n3ich 3adi", x: 194, y: -156, fontSize: "3xl" },
-          {
-            id: 1,
-            text: "projet web lifestyle",
-            x: 142,
-            y: 114,
-            fontSize: "3xl",
-          },
-        ],
-      });
+      fetchMeme(id);
     } else {
-      fetch("https://api.imgflip.com/get_memes")
-        .then((data) => data.json())
-        .then(({ data }) => {
-          setMemes(data.memes);
-        });
+      fetchTemplates();
     }
   }, []);
   //-----------------------------

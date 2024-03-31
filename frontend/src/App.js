@@ -1,5 +1,5 @@
-import React, { useContext, useEffect } from "react";
-import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
+import React, { useContext } from "react";
+import { Route, Routes } from "react-router-dom";
 import Navbar from "./components/Navbar";
 import Home from "./pages/Home";
 import Login from "./pages/Login";
@@ -36,6 +36,7 @@ function App() {
           )}
           <Route path="/admin" element={<AdminDashboard />} />
           <Route path="/profile/:id" element={<Profile />} />
+          <Route path="/admin" element={<AdminDashboard />} />
           <Route path="*" element={<h1>Not Found</h1>} />
         </Routes>
       </main>

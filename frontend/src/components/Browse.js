@@ -32,7 +32,7 @@ export default function Browse({ memes, setCurrMeme, setBrowse }) {
           setBrowse(false);
         }}
       >
-        <img src={meme.url} alt={meme.name} loading="lazy" />
+        <img src={meme.url} alt={meme.title} loading="lazy" />
       </li>
     );
   }
@@ -44,7 +44,7 @@ export default function Browse({ memes, setCurrMeme, setBrowse }) {
 
     return memes
       .filter((meme) => {
-        if (meme.name.toLowerCase().includes(memeSearch.toLocaleLowerCase())) {
+        if (meme.title.toLowerCase().includes(memeSearch.toLocaleLowerCase())) {
           return meme;
         }
         return null;

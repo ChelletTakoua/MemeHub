@@ -1,15 +1,17 @@
 import React, { useState } from "react";
-import OptionsButton from "../components/OptionsButton";
 import ReportButton from "../components/ReportButton";
 import LikeButton from "../components/LikeButton";
 import ShareButton from "../components/ShareButton";
 import { BsFillSendFill } from "react-icons/bs";
 import { FaEdit, FaTrash } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
+import DraggableText from "./DraggableText";
+import MemeImg from "./MemeImg";
 
 const ProfileCard = ({ isOwner, meme, memes, setMemes }) => {
   const [showReport, setShowReport] = useState(false);
   const [enlargedImage, setEnlargedImage] = useState(null);
+  const [inputBoxes, setInputBoxes] = useState(meme.text_blocks);
   const navigate = useNavigate();
 
   const toggleImageSize = (event) => {
@@ -49,11 +51,11 @@ const ProfileCard = ({ isOwner, meme, memes, setMemes }) => {
   };
   return (
     <div className="bg-white rounded-lg shadow-md flex flex-col justify-between ">
-      <img
-        src={meme}
-        alt={meme?.title}
-        className="w-full rounded-t-lg aspect-square cursor-pointer"
-        onClick={toggleImageSize}
+      <MemeImg
+        key={meme?.id}
+        memeData={meme}
+        inputBoxes={inputBoxes}
+        setInputBoxes={setInputBoxes}
       />
       {isOwner ? (
         <div className="flex justify-between px-12 py-4 ">
@@ -75,7 +77,7 @@ const ProfileCard = ({ isOwner, meme, memes, setMemes }) => {
       ) : (
         <div className="px-6 py-4">
           <div className="flex items-center">
-            <LikeButton />
+            <LikeButton nbLikes={meme.nb_likes.length} memeId={meme.id} />
             <ShareButton />
             <ReportButton onReportClick={handleReportClick} />
           </div>

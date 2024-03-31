@@ -36,7 +36,7 @@ class MemeController
                 // Create an associative array with the meme's data
                 $memeData = [
                     "id" => $meme->getId(),
-                    "url" => TemplateTableManager::getTemplateById($meme->getTemplateId()),
+                    "url" => (TemplateTableManager::getTemplateById($meme->getTemplateId()))->getUrl(),
                     "user_id" => $meme->getUserId(),
                     "nb_likes" => LikeTableManager::getLikeByMemeId($meme->getId()),
                     "creation_date" => $meme->getCreationDate(),
@@ -75,7 +75,7 @@ class MemeController
                     "meme" =>
                     [
                         "id" => $meme->getId(),
-                        "url" => TemplateTableManager::getTemplateById($meme->getTemplateId()),
+                        "url" => (TemplateTableManager::getTemplateById($meme->getTemplateId()))->getUrl(),
                         "user_id" => $meme->getUserId(),
                         "nb_likes" => LikeTableManager::getLikeByMemeId($meme->getId()),
                         "creation_date" => $meme->getCreationDate(),
@@ -110,7 +110,7 @@ class MemeController
                 // Create an associative array with the meme's data
                 $memeData = [
                     "id" => $meme->getId(),
-                    "url" => TemplateTableManager::getTemplateById($meme->getTemplateId()),
+                    "url" => (TemplateTableManager::getTemplateById($meme->getTemplateId()))->getUrl(),
                     "user_id" => $meme->getUserId(),
                     "nb_likes" => LikeTableManager::getLikeByMemeId($meme->getId()),
                     "creation_date" => $meme->getCreationDate(),

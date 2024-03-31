@@ -1,60 +1,110 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext, useEffect, useRef, useState } from "react";
 import { useParams } from "react-router-dom";
 import Moment from "react-moment";
 import ProfileCard from "../components/ProfileCard";
 import { AppContext } from "../context/AppContext";
+import { memeApi, userApi } from "../services/api";
 
 const Profile = () => {
-  const { user } = useContext(AppContext);
+  const { user, setUser, toast } = useContext(AppContext);
 
   const { id } = useParams("id");
   const isOwner = user?.id === +id;
 
-  useEffect(() => {
-    if (!isOwner) {
-      // fetch user data from the backend
-    }
-  }, [isOwner]);
+  const [username, setUsername] = useState(null);
+  const [email, setEmail] = useState(null);
+  const [profileImage, setProfileImage] = useState(null);
+  const [regDate, setRegDate] = useState(null);
+  const [memes, setMemes] = useState(null);
 
-  const [userName, setUserName] = useState(user?.username);
-  const [Email, setEmail] = useState(user?.email);
-  const [profileImage, setProfileImage] = useState(user?.profile_pic);
-  const [memes, setMemes] = useState([
-    "https://media.blogto.com/articles/201731-sunrise-ed.jpg?width=1300&quality=70",
-    "https://www.telegraph.co.uk/multimedia/archive/03597/potd-london_3597432k.jpg",
-    "https://th.bing.com/th/id/R.43b4c6d7ff4da57ead06bae72b2b18b7?rik=Gpz%2fbYGq9r441g&riu=http%3a%2f%2finteriordesignsmagazine.com%2fwp-content%2fuploads%2f2016%2f09%2fPic-1-e1474096677813-940x490.jpg&ehk=YwpCQwfdxmQB3U3fxXmZMmYVjb5magDoxKEkN5uJttI%3d&risl=&pid=ImgRaw&r=0",
-    "https://th.bing.com/th/id/R.ed4c5c82883ef4309eb02f8e2417646c?rik=L7mq4JeVSZO0Gw&riu=http%3a%2f%2fradiusblocks.com%2fwp-content%2fuploads%2f2022%2f09%2fimage-grid_3.jpg&ehk=lsdi%2bBpjRQvuIvmtlegfvmYOtqp0reJX%2baon5vAL4F4%3d&risl=&pid=ImgRaw&r=0",
-  ]);
+  const usernameChanged = useRef(false);
+  const emailChanged = useRef(false);
+  const profileImageChanged = useRef(false);
+
+  useEffect(() => {
+    const fetchUser = async (id) => {
+      try {
+        const res = await userApi.getUserProfile(id);
+        setUsername(res?.data.data.user.username);
+        setEmail(res?.data.data.user.email);
+        setProfileImage(res?.data.data.user.profile_pic);
+        setRegDate(res?.data.data.user.reg_dat);
+      } catch (error) {
+        console.error("Error fetching data:", error);
+      }
+    };
+
+    const fetchMemes = async (id) => {
+      try {
+        const res = await memeApi.getUserMemes(id);
+        setMemes(res?.data.data.memes);
+      } catch (error) {
+        console.error("Error fetching data:", error);
+      }
+    };
+
+    if (isOwner) {
+      setEmail(user?.email);
+      setUsername(user?.username);
+      setProfileImage(user?.profile_pic);
+      setRegDate(user?.reg_dat);
+    } else {
+      fetchUser(id);
+    }
+    fetchMemes(id);
+  }, [setEmail, setUsername, setProfileImage, setRegDate, isOwner, id, user]);
 
   const handleImageUpload = (event) => {
     if (isOwner) {
-      setProfileImage(URL.createObjectURL(event.target.files[0]));
-      if (profileImage) {
-        const reader = new FileReader();
-        reader.readAsDataURL(profileImage);
-        reader.onloadend = () => {
-          setProfileImage(reader.result);
-        };
-      }
+      const reader = new FileReader();
+      reader.onload = () => {
+        const base64Image = reader.result.split(",")[1];
+        setProfileImage(base64Image);
+      };
+      reader.readAsDataURL(event.target.files[0]);
+      profileImageChanged.current = true;
     }
   };
 
   const handleUsernameChange = (e) => {
     if (isOwner) {
-      setUserName(e.target.value);
+      setUsername(e.target.value);
+      usernameChanged.current = true;
     }
   };
 
   const handleEmailChange = (e) => {
     if (isOwner) {
       setEmail(e.target.value);
+      emailChanged.current = true;
     }
   };
 
   const handleSave = () => {
-    // handle email and username change in backend
-    // toast error if already exists
-    // toast success if updated
+    if (
+      usernameChanged.current ||
+      emailChanged.current ||
+      profileImageChanged.current
+    ) {
+      const updatedData = {};
+      if (usernameChanged.current) {
+        updatedData.username = username;
+      }
+      if (emailChanged.current) {
+        updatedData.email = email;
+      }
+      if (profileImageChanged.current) {
+        updatedData.profile_pic = profileImage;
+      }
+      try {
+        userApi.editUserProfile(updatedData);
+        toast.success("Profile updated successfully.");
+        setUser({ ...user, ...updatedData });
+      } catch (error) {
+        console.error("Error updating profile:", error);
+        toast.error("Error updating profile.");
+      }
+    }
   };
 
   return (
@@ -70,23 +120,23 @@ const Profile = () => {
             />
             <img
               src={`data:image/jpeg;base64,${profileImage}`}
-              alt="Profile Picture"
+              alt="Profile"
               className="rounded-full w-32 h-32 mx-auto shadow-lg"
             />
             {isOwner ? (
               <input
-                value={userName}
+                value={username}
                 onChange={handleUsernameChange}
                 className="w-full px-3 py-2 mt-4 text-white bg-gray-800 rounded shadow-lg"
               />
             ) : (
-              <h2 className="text-2xl font-bold mt-4 text-white">{userName}</h2>
+              <h2 className="text-2xl font-bold mt-4 text-white">{username}</h2>
             )}
             <p className="text-gray-300">
-              Joined: <Moment fromNow>{user?.reg_dat}</Moment>
+              Joined: <Moment durationFromNow>{regDate}</Moment>
             </p>
             <p className="text-gray-300">
-              Total Memes Contributed: {memes.length}
+              Total Memes Contributed: {memes ? memes.length : 0}
             </p>
             <div className="mt-4">
               <h3 className="text-xl font-bold text-white">
@@ -95,12 +145,12 @@ const Profile = () => {
               {isOwner ? (
                 <input
                   type="email"
-                  value={Email}
+                  value={email}
                   onChange={handleEmailChange}
                   className="w-full px-3 py-2 mt-4 text-white bg-gray-800 rounded shadow-lg"
                 />
               ) : (
-                <p className="text-gray-300">Email: example@example.com</p>
+                <p className="text-gray-300">Email: {email}</p>
               )}
             </div>
             {isOwner && (
@@ -133,9 +183,9 @@ const Profile = () => {
             <div className="w-3/4">
               <h3 className="text-xl font-bold mt-4 text-white">My Memes</h3>
               <div className="grid grid-cols-3 gap-4 mt-2">
-                {memes.map((meme, index) => (
+                {memes?.map((meme) => (
                   <ProfileCard
-                    key={index}
+                    key={meme.id}
                     isOwner={isOwner}
                     meme={meme}
                     memes={memes}

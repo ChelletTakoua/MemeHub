@@ -3,7 +3,6 @@ import { Link } from "react-router-dom";
 import trollFace from "../images/troll_face.png";
 import Capture from "../images/Capture.PNG";
 import { AppContext } from "../context/AppContext";
-import { useNavigate } from "react-router-dom";
 
 const Register = () => {
   const [username, setUsername] = useState("");
@@ -12,7 +11,6 @@ const Register = () => {
   const [passwordConfirm, setPasswordConfirm] = useState("");
 
   const { register, toast } = useContext(AppContext);
-  const navigate = useNavigate();
 
   const handleUsernameChange = (e) => {
     setUsername(e.target.value);

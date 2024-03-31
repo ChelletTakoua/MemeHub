@@ -1,7 +1,7 @@
 import React from "react";
 import Draggable from "react-draggable";
 
-const DraggableText = ({ inputBox, setInputBoxes }) => {
+const DraggableText = ({ inputBox, setInputBoxes = null }) => {
   const handleStopDrag = (e, data) => {
     const { x, y } = data;
     console.log({ e, data });
@@ -11,6 +11,7 @@ const DraggableText = ({ inputBox, setInputBoxes }) => {
   };
   return (
     <Draggable
+      allowAnyClick={setInputBoxes ? true : false}
       bounds="parent"
       axis="both"
       defaultPosition={{ x: 0, y: 0 }}

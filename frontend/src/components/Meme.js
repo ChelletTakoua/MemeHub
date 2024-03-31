@@ -11,13 +11,16 @@ export default function Meme({ currMeme = null, setBrowse = null }) {
   const { user } = useContext(AppContext);
 
   const [inputBoxes, setInputBoxes] = useState([]);
+
   useEffect(() => {
-    if (currMeme && currMeme.inputBoxes) setInputBoxes(currMeme.inputBoxes);
-    else
+    if (currMeme) {
+      setInputBoxes(currMeme.inputBoxes);
+    } else {
       setInputBoxes([
         { id: new Date().getTime(), text: "", fontSize: 4, x: 0, y: 0 },
       ]);
-  }, [setInputBoxes]);
+    }
+  }, [setInputBoxes, currMeme]);
 
   // Add a new input box
   function handleAddInputBox(e) {
@@ -36,12 +39,7 @@ export default function Meme({ currMeme = null, setBrowse = null }) {
 
   // Save the meme
   function handleSave() {
-    const meme = {
-      ...currMeme,
-      inputBoxes,
-      userid: user.id,
-    };
-    console.log(meme);
+    // Logic here TODOdodo tan dodo tan dododododododooooo dododdooodoooo
   }
 
   return (
@@ -67,7 +65,7 @@ export default function Meme({ currMeme = null, setBrowse = null }) {
         </div>
         <div className="flex flex-col gap-8 flex-1">
           <form className="flex flex-col gap-8 h-min">
-            {inputBoxes.map((inputBox) => (
+            {inputBoxes?.map((inputBox) => (
               <InputBox
                 key={inputBox.id}
                 inputBox={inputBox}
@@ -87,9 +85,6 @@ export default function Meme({ currMeme = null, setBrowse = null }) {
           </div>
           <p className="text-white">
             Hint: You can drag and move around the text!
-          </p>
-          <p className="text-white">
-            Another hint: You can break the line by entering double space!
           </p>
         </div>
       </div>

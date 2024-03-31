@@ -1,9 +1,21 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import Card from "../components/Card";
-import trollFace from "../images/troll_face.png";
 import BackToTop from "../components/BackToTopButton";
+import { memeApi } from "../services/api";
 
 const Home = () => {
+  const [memes, setMemes] = useState([]);
+  useEffect(() => {
+    const fetchMemes = async () => {
+      try {
+        const res = await memeApi.getAllMemes();
+        setMemes(res?.data.data.memes);
+      } catch (error) {
+        console.error("Error fetching data:", error);
+      }
+    };
+    fetchMemes();
+  }, []);
   return (
     <div className="bg-palenight">
       <header className="text-center py-20 bg-gradient-to-r from-greens-200 to-palenight shadow-2xl text-white">
@@ -15,48 +27,9 @@ const Home = () => {
         </p>
       </header>
       <BackToTop />
-      <Card
-        date={"25 March 2024"}
-        user={"Louey Sioua"}
-        profilePic={"https://source.unsplash.com/random/50x50"}
-        meme={"https://source.unsplash.com/random"}
-        index={1}
-      />
-      <Card
-        date={"25 March 2024"}
-        user={"Yessine Sellami"}
-        profilePic={"https://source.unsplash.com/random/50x50"}
-        meme={trollFace}
-        index={2}
-      />
-      <Card
-        date={"25 March 2024"}
-        user={"E Tooooooher"}
-        profilePic={"https://source.unsplash.com/random/50x50"}
-        meme={"https://source.unsplash.com/random"}
-        index={3}
-      />
-      <Card
-        date={"25 March 2024"}
-        user={"Binomti"}
-        profilePic={"https://source.unsplash.com/random/50x50"}
-        meme={"https://source.unsplash.com/random"}
-        index={4}
-      />
-      <Card
-        date={"25 March 2024"}
-        user={"Chidhiiii"}
-        profilePic={"https://source.unsplash.com/random/50x50"}
-        meme={"https://source.unsplash.com/random"}
-        index={5}
-      />
-      <Card
-        date={"25 March 2024"}
-        user={"Takouaa Pres"}
-        profilePic={"https://source.unsplash.com/random/50x50"}
-        meme={"https://source.unsplash.com/random"}
-        index={6}
-      />
+      {memes?.map((meme) => (
+        <Card key={meme.id} meme={meme} />
+      ))}
       <br />
       <br />
     </div>

@@ -13,19 +13,7 @@ use Utils\ApiResponseBuilder;
 class UserController
 {
 
-    public function getUserById($id)
-    {
-    echo "User with id $id";
-        // Handle GET request
-    }
 
-    
-    public function post()
-    {
-        echo "post user called successfully";
-
-        // Handle POST request
-    }
     public function forgotPassword() {
         // Logic to send email with forgot password token
         //TODO: implement this method
@@ -38,6 +26,7 @@ class UserController
 
     public function sendVerificationEmail() {
         // Logic to send verification email
+        //TODO: implement this method
     }
 
     public function verifyEmail() {

@@ -14,7 +14,7 @@ class Router
 
     public function __construct()
     {
-        $this->url = $_SERVER['REQUEST_URI'];
+        $this->url = explode("?",$_SERVER['REQUEST_URI'])[0];
     }
 
     public function get($path, $callable, $roles = [])

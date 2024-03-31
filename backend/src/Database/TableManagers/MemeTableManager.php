@@ -44,46 +44,31 @@ class MemeTableManager extends TableManager
     static public function getMemeByTemplateId(int $template_id): ?array
     {
         $memes = self::getMeme(["template_id" => $template_id]);
-        if (!empty($memes)) {
-            return $memes;
-        }
-        return null;
+        return $memes;
     }
 
     static public function getMemeByUserId(int $user_id): ?array
     {
         $memes = self::getMeme(["user_id" => $user_id]);
-        if (!empty($memes)) {
-            return $memes;
-        }
-        return null;
+        return $memes;
     }
 
     static public function getMemeByCreationDate(string $creation_date): ?array
     {
         $memes = self::getMeme(["creation_date" => $creation_date]);
-        if (!empty($memes)) {
-            return $memes;
-        }
-        return null;
+        return $memes;
     }
 
     static public function getMemeByCustomTitle(string $custom_title): ?array
     {
         $memes = self::getMeme(["custom_title" => $custom_title]);
-        if (!empty($memes)) {
-            return $memes;
-        }
-        return null;
+        return $memes;
     }
 
     static public function getMemeByNbLikes(int $nb_likes): ?array
     {
         $memes = self::getMeme(["nb_likes" => $nb_likes]);
-        if (!empty($memes)) {
-            return $memes;
-        }
-        return null;
+        return $memes;
     }
 
     //--------verify existence methods----------------

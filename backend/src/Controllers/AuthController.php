@@ -15,7 +15,7 @@ class AuthController
     * Logs in a user.
     *
     * This function retrieves the request body as JSON and checks if it contains 'username' and 'password'.
-    * If these fields are present, it sanitizes the username, then attempts to log in the user using these details.
+    * If these fields are prese nt, it sanitizes the username, then attempts to log in the user using these details.
     * If login is successful, it returns a success response with the user details.
     * If the required fields are not present in the request body, it throws a BadRequestException.
     *
@@ -84,8 +84,6 @@ class AuthController
             $email = filter_var($email, FILTER_SANITIZE_EMAIL);
             // Register the user    
             Auth::register($username, $password,$email);
-            // Log in the user
-            $user = Auth::login($username, $password);
             // Build a success response with the user details
             $response = ApiResponseBuilder::buildSuccessResponse(["user"=>$user]);
             // Output the response as JSON

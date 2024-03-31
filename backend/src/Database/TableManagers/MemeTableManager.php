@@ -100,6 +100,7 @@ class MemeTableManager extends TableManager
      * @param int $template_id
      * @param string $custom_title
      * @param int $user_id
+     * @param string $result_img
      * @return Meme|null
      */
     static public function addMeme(int $template_id, string $custom_title, int $user_id, string $result_img): ?Meme

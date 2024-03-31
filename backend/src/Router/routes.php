@@ -55,18 +55,19 @@ $router->get('/templates/:id', "TemplateController@getTemplateById", ['user', 'a
 //$router->post('/templates', "TemplateController@addTemplate", ['admin']); // add a template
 //$router->delete('/templates/:id', "TemplateController@deleteTemplate", ['admin']); // delete a template
 
-
+$router->get('/admin', "AdminController@getAdminDashboard", ['admin']); // get admin dashboard
 $router->get('/admin/users', "AdminController@getAllUsers", ['admin']); // get all users
 $router->get('/admin/users/:id', "AdminController@getUserProfile", ['admin']); // get user by id
 $router->post('/admin/users/:id/role', "AdminController@changeUserRole", ['admin']); // change user role
 $router->post('/admin/users/:id/delete', "AdminController@deleteUser", ['admin']); // delete user
+$router->post('/admin/memes/:id/delete', "AdminController@deleteMeme", ['admin']); // delete meme
+
 
 $router->get('/admin/reports', "ReportController@getAllReports", ['admin']); // get all reports
 $router->post('/admin/reports/:id/resolve', "ReportController@resolveReport", ['admin']); // resolve report (delete meme)
 $router->post('/admin/reports/:id/ignore', "ReportController@ignoreReport", ['admin']); // ignore report
 $router->post('/admin/reports/:id/delete', "ReportController@deleteReport", ['admin']); // delete report
 
-$router->post('/admin/memes/:id/delete', "AdminController@deleteMeme", ['admin']); // delete meme
 
 // a route to return all the routes (with all the details) and another route to print them in a beautiful way
 

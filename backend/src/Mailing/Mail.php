@@ -8,6 +8,13 @@ require 'phpmailer/src/PHPMailer.php';
 require 'phpmailer/src/SMTP.php';
 
 class Mail{
+    //TODO: add param types and return types in the function definitions
+    //TODO: ma trajja3ch echo fi function sendMail,
+    // juste na77i el block try catch w t5alli elli i3ayet lel function yhandli el exception w yrajja3 success response
+    // to naatik taamel controller elli lehi bl mail bch tmess chwaya mn kol haja
+
+
+
     /**
      * Sends an email.
      *
@@ -41,7 +48,10 @@ class Mail{
         } catch (Exception $e) {
             echo "Email could not be sent.";
         }  
-    }  
+    }
+
+
+
     /**
      * Sends an email with content loaded from a file, where placeholders are replaced with provided attributes.
      *
@@ -59,6 +69,9 @@ class Mail{
         }
         Self::sendMail($to,$subject,$file_content);
     }
+
+
+
      /**
      * Sends a welcome email to a newly created account, containing a verification link.
      *
@@ -66,10 +79,12 @@ class Mail{
      * @param string $username The username of the newly created account.
      * @throws Exception If an error occurs while sending the email.
      */
-
     static public function sendAccountCreatedMail($to,$username){
         Self::sendMailFile($to,"Welcome to Memehub !",'account-created.html',["username"=>$username]);
     }
+
+
+
     /**
      * Sends an email for password reset.
      *

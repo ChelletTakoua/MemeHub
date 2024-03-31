@@ -7,7 +7,6 @@ use Exceptions\HttpExceptions\UnauthorizedException;
 use Exceptions\HttpExceptions\UserRegistrationException;
 use Models\User;
 use Database\TableManagers\UserTableManager;
-use Exceptions\HttpExceptions\UserRegistrationException;
 
 class Auth
 {

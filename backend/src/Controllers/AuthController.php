@@ -8,7 +8,7 @@ use Exceptions\HttpExceptions\LoginFailedException;
 use Utils\ApiResponseBuilder;
 use Utils\RequestHandler;
 use Exceptions\HttpExceptions\UserRegistrationException;
-use Utils\ApiResponseBuilder;
+
 class AuthController
 {
     /**

@@ -5,19 +5,15 @@ use Authentication\AuthKeyGenerator;
 use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\Exception;
 use Utils\JWT;
+use Models\User;
 
 require 'phpmailer/src/Exception.php';
 require 'phpmailer/src/PHPMailer.php';
 require 'phpmailer/src/SMTP.php';
 
 class Mail{
-    //TODO: add param types and return types in the function definitions
-    //TODO: ma trajja3ch echo fi function sendMail,
+ 
     // juste na77i el block try catch w t5alli elli i3ayet lel function yhandli el exception w yrajja3 success response
-    // to naatik taamel controller elli lehi bl mail bch tmess chwaya mn kol haja
-    // Rod les 2 methodes mtaa resetPassword w forgotPassword ye5dhou user fel parametre
-
-
     /**
      * Sends an email.
      *
@@ -26,33 +22,26 @@ class Mail{
      * @param string $message The content of the email.
      * @throws Exception If an error occurs while sending the email.
      */
-    static public function sendMail($to,$subject,$message){
-        try {
-            
-            $config = include __DIR__ . '/../config/mailing.php';
-            $mail=new PHPMailer(true);
+    static public function sendMail(string $to, string $subject, string $message): void{
+        $config = include __DIR__ . '/../config/mailing.php';
+        $mail=new PHPMailer(true);
 
-            $mail->isSMTP();
-            $mail->Host=$config['Host'];
-            $mail->SMTPAuth=$config['SMTPAuth'];
-            $mail->Username=$config['Username'];
-            $mail->Password=$config['Password'];
-            $mail->SMTPSecure=$config['SMTPSecure'];
-            $mail->Port=$config['Port'];
-            $mail->setFrom('chellettakoua@gmail.com');
+        $mail->isSMTP();
+        $mail->Host=$config['Host'];
+        $mail->SMTPAuth=$config['SMTPAuth'];
+        $mail->Username=$config['Username'];
+        $mail->Password=$config['Password'];
+        $mail->SMTPSecure=$config['SMTPSecure'];
+        $mail->Port=$config['Port'];
+        $mail->setFrom('chellettakoua@gmail.com');
 
-            $mail->addAddress($to);
-            $mail->Subject=$subject;
-            $mail->Body=$message;
-            $mail->isHTML(true);
+        $mail->addAddress($to);
+        $mail->Subject=$subject;
+        $mail->Body=$message;
+        $mail->isHTML(true);
 
-            $mail->send();
-            echo "Email sent successfully";
-        } catch (Exception $e) {
-            echo "Email could not be sent.";
-        }  
+        $mail->send();
     }
-
 
 
     /**
@@ -65,14 +54,13 @@ class Mail{
      * @throws Exception If an error occurs while sending the email.
      */
 
-    static public function sendMailFile($to,$subject,$path,$attributes=[]){
+    static public function sendMailFile(string $to, string $subject, string $path, array $attributes = []): void{
         $file_content=file_get_contents( __DIR__.'/' .$path);
         foreach ($attributes as $attribut => $value) {
             $file_content = str_replace('{{'.$attribut.'}}', $value, $file_content);
         }
         Self::sendMail($to,$subject,$file_content);
     }
-
 
 
      /**
@@ -82,15 +70,16 @@ class Mail{
      * @param string $username The username of the newly created account.
      * @throws Exception If an error occurs while sending the email.
      */
-    static public function sendAccountCreatedMail($to,$username){
+    static public function sendAccountCreatedMail(User $user): void{
 
-        // use this link
         $link = "http://localhost:3000/verify-email?token=".AuthKeyGenerator::encodeJWK($user, 3600);
 
 
-        Self::sendMailFile($to,"Welcome to Memehub !",'account-created.html',["username"=>$username]);
+        Self::sendMailFile($user->getEmail(), "Welcome to Memehub !", 'account-created.html', [
+            "username" => $user->getUsername(),
+            "link" => $link
+        ]);
     }
-
 
 
     /**
@@ -100,14 +89,16 @@ class Mail{
      * @param string $username The username associated with the account.
      * @throws Exception If an error occurs while sending the email.
      */
-    static public function sendPasswordResetMail($to,$username){
+    static public function sendPasswordResetMail(User $user): void {
 
         //hedha howa el link (to nzidou nchoufou fl front kifeh bch naamlou bedhabt)
         // probably bch nfetchiw el 'localhost:3000' mn fichier config ( same thing fl fonction lo5ra)
         $link = "http://localhost:3000/reset-password?token=".AuthKeyGenerator::encodeJWK($user, 3600);
 
-
-        Self::sendMailFile($to,"password reset",'password-reset.html',["username"=>$username]);
+        Self::sendMailFile($user->getEmail(), "password reset", 'password-reset.html', [
+            "username" => $user->getUsername(),
+            "link" => $link
+        ]);
     }
 
 }

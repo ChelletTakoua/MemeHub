@@ -18,22 +18,25 @@ class UserController
 {
 
     /**
-     * This function is used to send an email to the user with a link to reset his password
-     * It takes the username of the user as a parameter
-     * @param string $username
+     * Sends an email to the user with a link to reset his password.
+     *
+     * @param string $username The username of the user.
      * @return void
+     * @throws HttpException If an error occurs during the process.
      */
-    public function forgotPassword($username) {
-
-        //TODO: @takoua
-        // fetch user from database
-        // send email to user with password reset link
-        // rodd les 2 methodes mte3 mail ye5dhou user fel parametre
-        // Mail::sendPasswordResetMail($user);
-
-
+    public function forgotPassword(string $username):void {
+        try {
+            $user = UserTableManager::getByUsername($username);
+            if ($user == null) {
+                throw new NotFoundException("User not found");
+            }
+            Mail::sendPasswordResetMail($user);
+            $response = ApiResponseBuilder::buildSuccessResponse();
+            echo json_encode($response);
+        }catch (Exception $e) {
+            throw new HttpException;
+        }
     }
-
 
     /**
      *  This function is used to reset the password of a user
@@ -66,16 +69,25 @@ class UserController
     }
 
     /**
-     * This function is used to send a verification email to the user
+     * Sends a verification email to the user.
+     *
+     * @param string $username The username of the user.
      * @return void
+     * @throws HttpException If an error occurs during the process.
      */
-    public function sendVerificationEmail(){
-
-        //TODO: @takoua
-        // Logic to send verification email
-        //TODO: implement this method
+    public function sendVerificationEmail(string $username):void{
+        try {
+            $user = UserTableManager::getByUsername($username);
+            if ($user == null) {
+                throw new NotFoundException("User not found");
+            }
+            Mail::sendAccountCreatedMail($user);
+            $response = ApiResponseBuilder::buildSuccessResponse();
+            echo json_encode($response);
+        } catch (Exception $e) {
+            throw new HttpException;
+        }
     }
-
 
     /**
      * This function is used to verify the email of a user

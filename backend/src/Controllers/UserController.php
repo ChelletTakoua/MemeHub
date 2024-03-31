@@ -2,6 +2,14 @@
 
 namespace Controllers;
 
+use Authentication\Auth;
+use Database\TableManagers\MemeTableManager;
+use Exceptions\HttpExceptions\BadRequestException;
+use Exceptions\HttpExceptions\NotFoundException;
+use Database\TableManagers\UserTableManager;
+use Utils\RequestHandler;
+use Utils\ApiResponseBuilder;
+
 class UserController
 {
 
@@ -18,65 +26,89 @@ class UserController
 
         // Handle POST request
     }
-    public function forgotPassword(Request $request, Response $response) {
+    public function forgotPassword() {
         // Logic to send email with forgot password token
     }
 
-    public function resetPassword(Request $request, Response $response) {
+    public function resetPassword() {
         // Logic to reset password with token
     }
 
-    public function sendVerificationEmail(Request $request, Response $response) {
+    public function sendVerificationEmail() {
         // Logic to send verification email
     }
 
-    public function verifyEmail(Request $request, Response $response) {
+    public function verifyEmail() {
         // Logic to verify email with token
     }
 
-    public function getUserProfile() {
-        // Get the JSON request body
-        $requestBody = RequestHandler::getJsonRequestBody();
-        // Check if the request body is not empty and contains 'id'
-        if (!empty($requestBody) && isset($requestBody['id']) ) {
-            // Extract the id from the request body
-            $id = $requestBody['id'];
+    public function getUserProfile($id) {
             //get the user
-            $user=UserTableMnager::getUserById($id);
+            $user=UserTableManager::getUserById($id);
+            if ($user) {
+            //get memes
+            $memes= MemeTableManager::getMemeByUserId($id);
             // Build a success response with the user details
-            $response = ApiResponseBuilder::buildSuccessResponse(["user"=>$user]);
+            $response = ApiResponseBuilder::buildSuccessResponse(["user"=>$user,"memes"=>$memes]);
             // Output the response as JSON
-            echo json_encode($response);
-        }else {
-            // Throw a BadRequestException if 'id' is not provided
-            throw new BadRequestException("Id must be provided");
+            echo json_encode($response);}
+            else {
+                // Throw a NotFoundException if user profile not found
+                throw new NotFoundException("User profile not found");
         }
     }
-
     public function modifyPassword() {
         // Get the JSON request body
         $requestBody = RequestHandler::getJsonRequestBody();
-        // Check if the request body is not empty and contains 'password' and 'id'
-        if (!empty($requestBody) && isset($requestBody['password']) && isset($requestBody['id']) ) {
-            // Extract the id from the request body
-            $id = $requestBody['id'];
-            // Extract the password from the request body
+        // Check if the request body is not empty and contains 'password'
+        if (!empty($requestBody) && isset($requestBody['password'] ) ) {
+            //get the id and password
+            $id = Auth::getActiveUser();
             $password = $requestBody['password'];
             //update password the user
-            UserTableMnager::updatePassword($id,$password);
+            UserTableManager::updatePassword($id,$password);
             // Output a success message
-            echo "Password updated successfully";
+            $response = ApiResponseBuilder::buildSuccessResponse();
         }else {
-            // Throw a BadRequestException if 'id'and 'password' are not provided
-            throw new BadRequestException("Id and password must be provided");
+            // Throw a BadRequestException 'password' is not provided
+            throw new BadRequestException("Password must be provided");
         }
     }
 
-    public function editProfile(Request $request, Response $response) {
-        // Logic to edit user profile (username, email, etc.)
+    public function editProfile() {
+        // Get the JSON request body
+        $requestBody = RequestHandler::getJsonRequestBody();
+        // Check if the request body is not empty 
+        if (!empty($requestBody) &&( isset($requestBody['username']) || isset($requestBody['email']) || isset($requestBody['profile_picture']) ) ){
+            // Extract the id from the request body
+            $id = Auth::getActiveUserId();
+            //update the user
+            if(isset($requestBody['username'])){
+                $username = $requestBody['username'];
+                UserTableManager::updateUsername($id,$username);
+            }
+            if(isset($requestBody['email'])){
+                $email = $requestBody['email'];
+                UserTableManager::updateEmail($id,$email);
+            }
+            if(isset($requestBody['profile_picture'])){
+                $profile_picture = $requestBody['profile_picture'];
+                UserTableManager::updateProfilePic($id,$profile_picture);
+            }
+            $user=Auth::getActiveUser(true);
+            $response = ApiResponseBuilder::buildSuccessResponse(["user"=>$user]);
+            // Output a success message
+            echo json_encode($response);
+        }else {
+            // Throw a BadRequestException if any parameter is provided
+            throw new BadRequestException("A parameter must be provided");
+        }
     }
 
-    public function deleteProfile(Request $request, Response $response) {
-        // Logic to delete user profile
+    public function deleteProfile() {
+        // get the id of active user
+        $id = Auth::getActiveUserId();
+        //delete the user
+        UserTableManager::deleteUserById($id);
     }
 }

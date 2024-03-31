@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useContext, useEffect } from "react";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import Navbar from "./components/Navbar";
 import Home from "./pages/Home";
@@ -14,34 +14,33 @@ import "./App.css";
 
 function App() {
   const { user } = useContext(AppContext);
+
   return (
-    <Router>
-      <div className="app">
-        <Navbar />
-        <main className="app-main">
-          <Routes>
-            <Route path="/" element={<Home />} />
-            <Route path="/contact" element={<Contact />} />
-            {!user && (
-              <>
-                <Route path="/login" element={<Login />} />
-                <Route path="/register" element={<Register />} />
-              </>
-            )}
-            {user && (
-              <>
-                <Route path="/meme/:id" element={<MemeEdit />} />
-                <Route path="/create" element={<MemeEdit />} />
-              </>
-            )}
-            <Route path="/admin" element={<AdminDashboard />} />
-            <Route path="/profile/:id" element={<Profile />} />
-            <Route path="*" element={<h1>Not Found</h1>} />
-          </Routes>
-        </main>
-        <Footer />
-      </div>
-    </Router>
+    <div className="app">
+      <Navbar />
+      <main className="app-main">
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/contact" element={<Contact />} />
+          {!user && (
+            <>
+              <Route path="/login" element={<Login />} />
+              <Route path="/register" element={<Register />} />
+            </>
+          )}
+          {user && (
+            <>
+              <Route path="/meme/:id" element={<MemeEdit />} />
+              <Route path="/create" element={<MemeEdit />} />
+            </>
+          )}
+          <Route path="/admin" element={<AdminDashboard />} />
+          <Route path="/profile/:id" element={<Profile />} />
+          <Route path="*" element={<h1>Not Found</h1>} />
+        </Routes>
+      </main>
+      <Footer />
+    </div>
   );
 }
 

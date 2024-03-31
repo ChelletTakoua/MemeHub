@@ -5,8 +5,10 @@ import { AppContext } from "../context/AppContext";
 
 const Profile = () => {
   const { user } = useContext(AppContext);
+
   const { id } = useParams("id");
   const isOwner = user?.id === +id;
+
   useEffect(() => {
     if (!isOwner) {
       // fetch user data from the backend
@@ -31,6 +33,22 @@ const Profile = () => {
   const handleImageUpload = (event) => {
     if (isOwner) {
       setProfileImage(URL.createObjectURL(event.target.files[0]));
+      // if (profileImage) {
+      //   const reader = new FileReader();
+      //   reader.readAsDataURL(profileImage);
+      //   reader.onloadend = () => {
+      //     const imageData = reader.result;
+      //     // Send imageData to the server
+      //     axios
+      //       .post("/upload", { imageData })
+      //       .then((response) => {
+      //         console.log(response.data);
+      //       })
+      //       .catch((error) => {
+      //         console.error("Error uploading image:", error);
+      //       });
+      //   };
+      // }
     }
   };
 

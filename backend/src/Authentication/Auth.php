@@ -163,4 +163,12 @@ class Auth
 
         return $this->activeUser;
     }
+    /**
+     * Get the active user's ID
+     * @return int
+     */
+    public static function getActiveUserId()
+    {
+        return $_SESSION['user_id'];
+    }
 }

@@ -1,62 +1,61 @@
-
-const BASE_URL = 'http://localhost:8000/';
+const BASE_URL = "http://localhost:8000/";
 
 const USER_API_ROUTES = {
-    CHECK_AUTH: '/test',
-    GET_USER_PROFILE: '/user/:id',
-    MODIFY_PASSWORD: '/user/profile/modifyPassword',
-    EDIT_PROFILE: '/user/profile/edit',
-    DELETE_PROFILE: '/user/profile'
+  CHECK_AUTH: "/test",
+  GET_USER_PROFILE: "/user/:id",
+  MODIFY_PASSWORD: "/user/profile/modifyPassword",
+  EDIT_PROFILE: "/user/profile/edit",
+  DELETE_PROFILE: "/user/profile",
 };
 
 const MEME_API_ROUTES = {
-    GET_ALL_MEMES: '/memes',
-    GET_MEME_BY_ID: '/memes/:id',
-    GET_USER_MEMES: '/memes/user/:id',
-    ADD_MEME: '/memes',
-    LIKE_MEME: '/memes/:id/like',
-    DISLIKE_MEME: '/memes/:id/dislike',
-    REPORT_MEME: '/memes/:id/report',
-    DELETE_MEME: '/memes/:id'
+  GET_ALL_MEMES: "/memes",
+  GET_MEME_BY_ID: "/memes/:id",
+  GET_USER_MEMES: "/memes/user/:id",
+  ADD_MEME: "/memes",
+  LIKE_MEME: "/memes/:id/like",
+  DISLIKE_MEME: "/memes/:id/dislike",
+  REPORT_MEME: "/memes/:id/report",
+  DELETE_MEME: "/memes/:id",
 };
 
 const TEMPLATE_API_ROUTES = {
-    GET_ALL_TEMPLATES: '/templates',
-    GET_TEMPLATE_BY_ID: '/templates/:id'
+  GET_ALL_TEMPLATES: "/templates",
+  GET_TEMPLATE_BY_ID: "/templates/:id",
 };
 
 const ADMIN_API_ROUTES = {
-    GET_ALL_USERS: '/admin/users',
-    GET_USER_PROFILE: '/admin/users/:id',
-    CHANGE_USER_ROLE: '/admin/users/:id/role',
-    DELETE_USER: '/admin/users/:id/delete',
-    GET_ALL_REPORTS: '/admin/reports',
-    RESOLVE_REPORT: '/admin/reports/:id/resolve',
-    IGNORE_REPORT: '/admin/reports/:id/ignore',
-    DELETE_REPORT: '/admin/reports/:id/delete',
-    DELETE_MEME: '/admin/memes/:id/delete'
+  GET_ALL_USERS: "/admin/users",
+  GET_USER_PROFILE: "/admin/users/:id",
+  CHANGE_USER_ROLE: "/admin/users/:id/role",
+  DELETE_USER: "/admin/users/:id/delete",
+  GET_ALL_REPORTS: "/admin/reports",
+  RESOLVE_REPORT: "/admin/reports/:id/resolve",
+  IGNORE_REPORT: "/admin/reports/:id/ignore",
+  DELETE_REPORT: "/admin/reports/:id/delete",
+  DELETE_MEME: "/admin/memes/:id/delete",
 };
 
 const API_ROUTES = {
-    HOME: '/',
-    TEST: '/test',
-    LOGIN: '/login',
-    REGISTER: '/register',
-    LOGOUT: '/logout',
-    FORGOT_PASSWORD: '/forgotPassword',
-    RESET_PASSWORD: '/resetPassword',
-    SEND_VERIFICATION_EMAIL: '/sendVerificationEmail',
-    VERIFY_EMAIL: '/verifyEmail'
+  HOME: "/",
+  TEST: "/test",
+  LOGIN: "/login",
+  REGISTER: "/register",
+  LOGOUT: "/logout",
+  FORGOT_PASSWORD: "/forgotPassword",
+  RESET_PASSWORD: "/resetPassword",
+  SEND_VERIFICATION_EMAIL: "/sendVerificationEmail",
+  VERIFY_EMAIL: "/verifyEmail",
 };
 
 export {
-    BASE_URL,
-    USER_API_ROUTES,
-    MEME_API_ROUTES,
-    TEMPLATE_API_ROUTES,
-    ADMIN_API_ROUTES,
-}
-
+  BASE_URL,
+  API_ROUTES,
+  USER_API_ROUTES,
+  MEME_API_ROUTES,
+  TEMPLATE_API_ROUTES,
+  ADMIN_API_ROUTES,
+};
 
 /*
 

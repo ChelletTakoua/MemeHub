@@ -46,10 +46,8 @@ class UserController
             //get the user
             $user=UserTableManager::getUserById($id);
             if ($user) {
-            //get memes
-            $memes= MemeTableManager::getMemeByUserId($id);
             // Build a success response with the user details
-            $response = ApiResponseBuilder::buildSuccessResponse(["user"=>$user,"memes"=>$memes]);
+            $response = ApiResponseBuilder::buildSuccessResponse(["user"=>$user]);
             // Output the response as JSON
             echo json_encode($response);}
             else {

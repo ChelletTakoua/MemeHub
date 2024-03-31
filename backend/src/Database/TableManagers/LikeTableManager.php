@@ -25,6 +25,7 @@ class LikeTableManager extends TableManager
         }
         return $likes;
     }
+
     // specific get methods
     /**
      * Get like from database based on id
@@ -63,6 +64,23 @@ class LikeTableManager extends TableManager
         return [];
     }
 
+    /**
+     * Get like from database based on meme_id and user_id
+     * @param int $meme_id
+     * @param int $user_id
+     * @return Like|null
+     */
+    static public function getLikeByMemeIdAndUserId(int $meme_id, int $user_id): ?Like
+    {
+
+        $likes = self::getLike(["meme_id" => $meme_id, "user_id" => $user_id]);
+        if (!empty($likes)) {
+            return $likes[0];
+        }
+        return null;
+
+    }
+
     //--------verify existence methods----------------
     /**
      * Check if like exists in database based on id
@@ -91,6 +109,16 @@ class LikeTableManager extends TableManager
         return !empty( self::getLikeByUserId($user_id) ) ;
     }
 
+    /**
+     * Check if like exists in database based on meme_id and user_id
+     * @param int $meme_id
+     * @param int $user_id
+     * @return bool
+     */
+    static public function likeExistsByMemeIdAndUserId(int $meme_id, int $user_id): bool{
+        return !empty( self::getLikeByMemeIdAndUserId($meme_id, $user_id) ) ;
+    }
+
     //--------add methods----------------
     /**
      * Add like to database with parameters given as arguments
@@ -99,28 +127,51 @@ class LikeTableManager extends TableManager
      * @return Like|null
      */
     static public function addLike(int $meme_id, int $user_id): ?Like{
-        if( self::likeExistsByMemeId($meme_id) && self::likeExistsByUserId($user_id) ){
+
+        if( self::getLikeByMemeIdAndUserId($meme_id, $user_id) ){
             return null;
         }
-        $queryObject = DatabaseQuery::executeQuery("insert","likes",["meme_id","user_id"],[$meme_id,$user_id]);
+        $queryObject = DatabaseQuery::executeQuery("insert","likes",["meme_id" => $meme_id ,"user_id" =>$user_id ]);
         return new Like($queryObject['id'],$meme_id,$user_id);
+
     }
 
     //--------delete methods----------------
-
+    // general delete method
     /**
-     * Delete like from database based on id
-     * @param int $id
+     * Delete like from database based on parameters given in $params preformatted as an associative array
+     * @param array $params
      * @return bool
      */
+    static public function deleteLike(array $params): bool{
+
+        if(empty($params)){
+            return false;
+        }
+        else{
+            if(! empty(self::getLike($params))){
+                DatabaseQuery::executeQuery("delete","likes",[],$params);
+                return true;
+            }
+        }
+        return false;
+
+    }
+
+
+    // specific delete methods
     static public function deleteLikeById(int $id): bool{
-        return DatabaseQuery::executeQuery("delete","likes",["id" => $id]);
+        return self::deleteLike(["id" => $id]);
     }
     static public function deleteLikeByMemeId(int $meme_id): bool{
-        return DatabaseQuery::executeQuery("delete","likes",["meme_id" => $meme_id]);
+        return self::deleteLike(["meme_id" => $meme_id]);
     }
     static public function deleteLikeByUserId(int $user_id): bool{
-        return DatabaseQuery::executeQuery("delete","likes",["user_id" => $user_id]);
+        return self::deleteLike(["user_id" => $user_id]);
+    }
+
+    static public function deleteLikeByMemeIdAndUserId(int $meme_id, int $user_id): bool{
+        return self::deleteLike(["meme_id" => $meme_id, "user_id" => $user_id]);
     }
     //--------save/retrive methods----------------
     public function save($model)

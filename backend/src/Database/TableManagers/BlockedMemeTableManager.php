@@ -64,11 +64,13 @@ class BlockedMemeTableManager extends TableManager
      */
     static public function getBlockedMemeByAdminId(int $admin_id):   array
     {
+
         $blockedMemes = self::getBlockedMeme(["admin_id" => $admin_id]);
         if(!empty($blockedMemes)){
             return $blockedMemes;
         }
         return [];
+
     }
     /**
      * Get blocked meme from database based on report_id given as parameter
@@ -77,11 +79,13 @@ class BlockedMemeTableManager extends TableManager
      */
     static public function getBlockedMemeByReportId(int $report_id): ?  BlockedMeme
     {
+
         $blockedMemes = self::getBlockedMeme(["report_id" => $report_id]);
         if(!empty($blockedMemes)){
             return $blockedMemes[0];
         }
         return null;
+
     }
 
     //--------verify existence methods----------------
@@ -144,6 +148,7 @@ class BlockedMemeTableManager extends TableManager
         return new BlockedMeme($id,$meme_id,$admin_id,$report_id);
     }
     //--------delete methods----------------
+    // general delete method
     /**
      * Delete blocked meme from database based on parameters given in $params
      * @param array $params
@@ -154,9 +159,11 @@ class BlockedMemeTableManager extends TableManager
         if( empty(self::getBlockedMeme($params)) ){
             return false;
         }
-        DatabaseQuery::executeQuery("delete","blocked_memes",$params);
+        DatabaseQuery::executeQuery("delete","blocked_memes",[],$params);
         return true;
     }
+
+    // specific delete methods
     /**
      * Delete blocked meme from database based on id
      * @param int $id
@@ -193,9 +200,9 @@ class BlockedMemeTableManager extends TableManager
     {
         return self::deleteBlockedMeme(["report_id" => $report_id]);
     }
+
+
     //--------save/retrieve methods----------------
-
-
     public function save($model)
     {
         echo "BlockedMemesTableManager save method called";
@@ -205,4 +212,5 @@ class BlockedMemeTableManager extends TableManager
     {
         return self::getBlockedMemeById($id);
     }
+
 }

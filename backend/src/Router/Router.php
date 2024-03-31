@@ -44,6 +44,12 @@ class Router
         $this->routes["DELETE"][] = $route;
         return $route;
     }
+    public function options($path, $callable, $roles = [])
+    {
+        $route = new Route($path, $callable, $roles);
+        $this->routes["OPTIONS"][] = $route;
+        return $route;
+    }
 
 
     public function run()
@@ -93,4 +99,5 @@ class Router
 
     //TODO: add an option to print the routes in the console for debugging (print each route and if it's matched or not)
 
-}// TODO: php returns errors and wornings
+
+}

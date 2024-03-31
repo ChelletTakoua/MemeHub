@@ -17,7 +17,7 @@ export default function LikeButton() {
         reset: true,
         reverse: liked,
         delay: liked ? 250 : 0,
-        config: { tension: 400, friction: 20, precision: 0.0001 },
+        config: { tension: 250, friction: 50, precision: 0.0001 },
     });
 
     return (

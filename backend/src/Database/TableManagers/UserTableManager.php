@@ -219,6 +219,9 @@ class UserTableManager extends TableManager
     static public function updateEmail($id,$email){
         self::updateUser(["email" => $email], ["id" => $id]);
     }
+    static public function updateProfilePic($id,$profile_pic){
+        self::updateUser(["profile_pic" => $profile_pic], ["id" => $id]);
+    }
 
 
     //--------delete methods----------------

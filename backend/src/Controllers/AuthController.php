@@ -5,7 +5,8 @@ namespace Controllers;
 use Exceptions\HttpExceptions\BadRequestException;
 use Authentication\Auth;   
 use Utils\RequestHandler;
-
+use Exceptions\HttpExceptions\UserRegistrationException;
+use Utils\ApiResponseBuilder;
 class AuthController
 {
     /**

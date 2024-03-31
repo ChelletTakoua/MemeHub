@@ -6,6 +6,7 @@ use Exceptions\HttpExceptions\NotLoggedInException;
 use Exceptions\HttpExceptions\UnauthorizedException;
 use Models\User;
 use Database\TableManagers\UserTableManager;
+use Exceptions\HttpExceptions\UserRegistrationException;
 
 class Auth
 {
@@ -151,5 +152,13 @@ class Auth
         }
 
         return $this->activeUser;
+    }
+    /**
+     * Get the active user's ID
+     * @return int
+     */
+    public static function getActiveUserId()
+    {
+        return $_SESSION['user_id'];
     }
 }

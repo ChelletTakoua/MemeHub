@@ -77,6 +77,16 @@ class Route implements JsonSerializable {
     }
 
     public function call(){
+
+        // if $callable is a php file, then include it
+        if (is_string($this->callable) && str_contains($this->callable, '.php')) {
+            if (!file_exists($this->callable)) {
+                throw new \Exception("File not found: $this->callable");
+            }
+            include $this->callable;
+            return null;
+        }
+
         //si $callable est de la forme ExampleController@exemple
         if (is_string($this->callable) && strpos($this->callable, '@') !== false){
             $params = explode('@', $this->callable);

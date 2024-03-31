@@ -132,6 +132,9 @@ class ReportTableManager extends TableManager
     static public function updateReportMemeId(int $id, int $meme_id): void{
         self::updateReport(["meme_id" => $meme_id], ["id" => $id]);
     }
+    static public function updateReportStatus(int $id, string $status): void{
+        self::updateReport(["status" => $status], ["id" => $id]);
+    }
 
 
     //--------save/retrieve methods----------------

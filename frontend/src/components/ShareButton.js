@@ -5,17 +5,17 @@ import { useSpring, animated } from 'react-spring';
 export default function ShareButton(){
     const [showNotification, setShowNotification] = useState(false);
     const [isFading, setIsFading] = useState(false);
-    const fade = useSpring({opacity: isFading ? 0 : 1});
+    const fade = useSpring({opacity: isFading ? 1 : 0});
 
     const copyLink = () => {
         navigator.clipboard.writeText(window.location.href);
         setShowNotification(true);
-        setIsFading(false);
-        setTimeout(() => setIsFading(true), 2000); // Start fading out after 2 seconds
+        setTimeout(() => setIsFading(true), 100); // Start fading in after a short delay
+        setTimeout(() => setIsFading(false), 2000); // Start fading out after 2 seconds
     }
 
     useEffect(() => {
-        if (isFading) {
+        if (!isFading) {
             const timer = setTimeout(() => setShowNotification(false), 1000); // Hide notification after 1 second
             return () => clearTimeout(timer);
         }

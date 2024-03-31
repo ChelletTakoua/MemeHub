@@ -89,7 +89,7 @@ _______________________________________________________________
 |    (done)- find a way to save an image in the database (profile picture)
 |    (done)- make the delete of foreign keys cascade in the database
 |    (done)- add a verified column to users table in database
-|    - add isVerified method to UserTableManager
+|    (done)- add isVerified method to UserTableManager
 _______________________________________________________________
 
 

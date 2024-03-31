@@ -3,7 +3,9 @@
 namespace Controllers;
 
 use Exceptions\HttpExceptions\BadRequestException;
-use Authentication\Auth;   
+use Authentication\Auth;
+use Exceptions\HttpExceptions\LoginFailedException;
+use Utils\ApiResponseBuilder;
 use Utils\RequestHandler;
 use Exceptions\HttpExceptions\UserRegistrationException;
 use Utils\ApiResponseBuilder;
@@ -17,7 +19,7 @@ class AuthController
     * If login is successful, it returns a success response with the user details.
     * If the required fields are not present in the request body, it throws a BadRequestException.
     *
-    * @throws BadRequestException If 'username' and 'password' are not provided in the request body.
+    * @throws BadRequestException|LoginFailedException If 'username' and 'password' are not provided in the request body.
     */
     public function login() 
     {

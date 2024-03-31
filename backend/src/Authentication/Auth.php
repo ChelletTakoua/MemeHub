@@ -27,7 +27,7 @@ class Auth
         // Retrieve the user from the database using the provided username
         $user = UserTableManager::getUserByUsername($username);
         // If the user is found and the provided password matches the user's password
-        if (!empty($user) && password_verify($password, $user->getPassword())) {
+        if (!empty($user) && password_verify($password, $user->getPassword()) && $user->getIsVerified()) {
             // Store the user's ID in the session
             $_SESSION['user_id'] = $user->getId();
             // Set the active user to the logged-in user
@@ -39,6 +39,10 @@ class Auth
         else if (!empty($user)) {
             // Throw a LoginFailedException with the message "Incorrect password"
             throw new LoginFailedException("Incorrect password");
+        }
+        else if (!empty($user) && !$user->getIsVerified()) {
+            // Throw a LoginFailedException with the message "User not verified"
+            throw new LoginFailedException("User not verified");
         }
         // If the user is not found
         else {

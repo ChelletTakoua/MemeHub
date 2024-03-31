@@ -262,6 +262,18 @@ class UserTableManager extends TableManager
         return self::getUserById($id);
     }
 
+
+    /**
+     * Update is_verified column in database based on user id
+     * @param int $userId
+     * @param bool $isVerified
+     * @return void
+     */
+    public static function updateIsVerified(int $userId,bool $isVerified = true)
+    {
+        self::updateUser(["is_verified" => $isVerified], ["id" => $userId]);
+    }
+
     public function save($model) //todo: to move if not used
     {
         echo "UserTableManager save method called";

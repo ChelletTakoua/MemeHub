@@ -2,6 +2,7 @@
 
 namespace Controllers;
 
+use Authentication\AuthKeyGenerator;
 use Exceptions\HttpExceptions\BadRequestException;
 use Authentication\Auth;
 use Exceptions\HttpExceptions\LoginFailedException;
@@ -92,6 +93,21 @@ class AuthController
             // Throw a BadRequestException if 'username', 'email', and 'password' are not provided
             throw new BadRequestException("Username, email and password must be provided");
         }
+    }
+
+
+    /**
+     * Verifies the JWK token and returns the user object.
+     * @return void
+     * InvalidTokenException
+     */
+    public function verifyToken()
+    {
+        $token = RequestHandler::getJsonRequestBody()['token'];
+        $user = AuthKeyGenerator::getUserFromToken($token);
+        $response = ApiResponseBuilder::buildSuccessResponse(["user"=>$user]);
+        echo json_encode($response);
+
     }
 
     public function forgotPassword()

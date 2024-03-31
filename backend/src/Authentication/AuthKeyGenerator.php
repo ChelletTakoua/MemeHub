@@ -11,7 +11,13 @@ use Utils\JWT;
 
 class AuthKeyGenerator
 {
-    public static function encodeJWK($user, $exp = 3600): string
+    /**
+     * Encodes a JWK token.
+     * @param User $user The user to encode in the JWK token.
+     * @param int $exp The expiration time of the token in seconds.
+     * @return string The encoded JWK token.
+     */
+    public static function encodeJWK(User $user, int $exp = 3600): string
     {
         $config = include __DIR__ . '/../config/keys.php';
         $secretKey = $config['secret_key'];
@@ -52,6 +58,7 @@ class AuthKeyGenerator
 
 
     /**
+     * Fetches the user from the database using the JWK token.
      * @throws HttpException
      * @throws InvalidTokenException
      */

@@ -1,8 +1,11 @@
 <?php
 namespace Mailing;
 
+use Authentication\AuthKeyGenerator;
 use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\Exception;
+use Utils\JWT;
+
 require 'phpmailer/src/Exception.php';
 require 'phpmailer/src/PHPMailer.php';
 require 'phpmailer/src/SMTP.php';
@@ -12,7 +15,7 @@ class Mail{
     //TODO: ma trajja3ch echo fi function sendMail,
     // juste na77i el block try catch w t5alli elli i3ayet lel function yhandli el exception w yrajja3 success response
     // to naatik taamel controller elli lehi bl mail bch tmess chwaya mn kol haja
-
+    // Rod les 2 methodes mtaa resetPassword w forgotPassword ye5dhou user fel parametre
 
 
     /**
@@ -80,6 +83,11 @@ class Mail{
      * @throws Exception If an error occurs while sending the email.
      */
     static public function sendAccountCreatedMail($to,$username){
+
+        // use this link
+        $link = "http://localhost:3000/verify-email?token=".AuthKeyGenerator::encodeJWK($user, 3600);
+
+
         Self::sendMailFile($to,"Welcome to Memehub !",'account-created.html',["username"=>$username]);
     }
 
@@ -93,6 +101,12 @@ class Mail{
      * @throws Exception If an error occurs while sending the email.
      */
     static public function sendPasswordResetMail($to,$username){
+
+        //hedha howa el link (to nzidou nchoufou fl front kifeh bch naamlou bedhabt)
+        // probably bch nfetchiw el 'localhost:3000' mn fichier config ( same thing fl fonction lo5ra)
+        $link = "http://localhost:3000/reset-password?token=".AuthKeyGenerator::encodeJWK($user, 3600);
+
+
         Self::sendMailFile($to,"password reset",'password-reset.html',["username"=>$username]);
     }
 

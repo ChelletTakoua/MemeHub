@@ -18,10 +18,7 @@ export default function Navbar() {
           <Link to="/">Home</Link>
         </li>
         <li className="py-2 px-3">
-          <Link to="/about">About</Link>
-        </li>
-        <li className="py-2 px-3">
-          <Link to="/contact">Contact</Link>
+          <Link to="/about">About us</Link>
         </li>
       </ul>
       <div className="flex gap-4">

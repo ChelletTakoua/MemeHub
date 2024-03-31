@@ -10,7 +10,7 @@ class Router
 {
 
     public $url;
-    private $routes = []; // liste des routes
+    public $routes = []; // liste des routes
 
     public function __construct()
     {

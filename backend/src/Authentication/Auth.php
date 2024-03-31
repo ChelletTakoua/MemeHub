@@ -36,7 +36,7 @@ class Auth
             return $user;
         } 
         // If the user is found but the password does not match
-        else if (!empty($user)) {
+        else if (!empty($user) && !password_verify($password, $user->getPassword()))  {
             // Throw a LoginFailedException with the message "Incorrect password"
             throw new LoginFailedException("Incorrect password");
         }

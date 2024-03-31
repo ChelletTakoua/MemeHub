@@ -7,7 +7,7 @@ import Register from "./pages/Register";
 import AdminDashboard from "./pages/AdminDashboard";
 import MemeEdit from "./pages/MemeEdit";
 import Profile from "./pages/Profile";
-import Contact from "./pages/ContactUs";
+import About from "./pages/AboutUs";
 import Footer from "./components/Footer";
 import { AppContext } from "./context/AppContext";
 import "./App.css";
@@ -21,7 +21,7 @@ function App() {
       <main className="app-main">
         <Routes>
           <Route path="/" element={<Home />} />
-          <Route path="/contact" element={<Contact />} />
+          <Route path="/about" element={<About />} />
           {!user && (
             <>
               <Route path="/login" element={<Login />} />

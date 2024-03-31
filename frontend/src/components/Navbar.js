@@ -1,11 +1,12 @@
 import trollFace from "../images/troll_face.png";
 import { Link } from "react-router-dom";
-import { useContext } from "react";
+import { useContext, useEffect } from "react";
 import { AppContext } from "../context/AppContext";
 import { FaPlusCircle } from "react-icons/fa";
 
 export default function Navbar() {
-  const { user, logout, toast } = useContext(AppContext);
+  const { user, logout } = useContext(AppContext);
+
   return (
     <nav className="flex items-center justify-between py-4 px-8 bg-white bg-gradient-to-r from-algae to-grass shadow-2xl md:h-40 lg:h-28 lg:px-28 ">
       <Link to="/" className="flex items-center gap-4">
@@ -41,9 +42,8 @@ export default function Navbar() {
             </Link>
             <Link
               to="/"
-              onClick={() => {
-                logout();
-                toast.success("Come back soon!");
+              onClick={async () => {
+                await logout();
               }}
             >
               <button className="bg-red-600 hover:bg-red-700 text-white font-bold py-2 px-4 rounded">

@@ -40,8 +40,8 @@ const Register = () => {
     } else if (password === "") {
       toast.error("Password is required.");
       return false;
-    } else if (password.length < 8) {
-      toast.error("Password must be at least 8 characters long.");
+    } else if (password.length < 6) {
+      toast.error("Password must be at least 6 characters long.");
       return false;
     } else if (passwordConfirm === "") {
       toast.error("Please confirm your password.");
@@ -56,16 +56,7 @@ const Register = () => {
   const handleSubmit = async (event) => {
     event.preventDefault();
     if (validateForm()) {
-      // const data = await login(username, password);
-      const data = { status: false, msg: "Registration successful." };
-
-      if (data.status === false) {
-        toast.error(data.msg);
-      } else if (data.status === true) {
-        navigate("/");
-      } else {
-        toast.error("Something went wrong");
-      }
+      await register(username, email, password);
     }
   };
 

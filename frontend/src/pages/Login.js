@@ -1,16 +1,13 @@
 import trollFace from "../images/troll_face.png";
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { AppContext } from "../context/AppContext";
-
-import { useNavigate } from "react-router-dom";
 
 const Login = () => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
 
-  const { login, setUser, toast } = useContext(AppContext);
-  const navigate = useNavigate();
+  const { login, toast } = useContext(AppContext);
 
   const handleUsernameChange = (e) => {
     setUsername(e.target.value);
@@ -34,19 +31,7 @@ const Login = () => {
   const handleSubmit = async (event) => {
     event.preventDefault();
     if (validateForm()) {
-      // const data = await login(username, password);
-
-      const data = { status: true, msg: "Login successful." };
-
-      if (data.status === false) {
-        toast.error(data.msg);
-      } else if (data.status === true) {
-        setUser({ id: 1, username: "test", email: "example@e.com" });
-        toast.success(`Welcome back, ${username}`);
-        navigate("/");
-      } else {
-        toast.error("Something went wrong");
-      }
+      await login(username, password);
     }
   };
 

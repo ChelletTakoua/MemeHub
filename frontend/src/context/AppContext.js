@@ -1,99 +1,77 @@
 import { createContext, useState, useEffect, useCallback } from "react";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import axios from "axios";
+import { api } from "../services/api";
+import { useNavigate } from "react-router-dom";
 
 const AppContext = createContext();
 
 const AppProvider = ({ children }) => {
   const [user, setUser] = useState(null);
   const [error, setError] = useState(null);
-  const [isLoading, setIsLoading] = useState(true);
 
-  const base = axios.create({
-    baseURL: "localhost:8000",
-  });
-
-  const checkAuth = useCallback(async () => {
-    try {
-      setIsLoading(true);
-      const res = await base.get("/api/check-auth.php", {
-        withCredentials: true,
-      });
-      setUser(res.data.user);
-    } catch (error) {
-      setUser(null);
-    } finally {
-      setIsLoading(false);
-    }
-  }, [setUser, setIsLoading]);
+  const navigate = useNavigate();
 
   useEffect(() => {
-    setUser({
-      id: 1,
-      username: "test",
-      email: "example@test.com",
-    });
-    checkAuth();
-  }, [setUser, checkAuth]);
+    // checkAuth();
+    // for testing purposes
+  }, []);
 
-  const register = async (username, password) => {
+  // const checkAuth = useCallback(async () => {
+  //   try {
+  //     const res = await api.getUserAuth();
+  //     setUser(res.data.user);
+  //   } catch (error) {
+  //     setUser(null);
+  //   } finally {
+  //   }
+  // }, []);
+
+  const register = async (username, email, password) => {
     try {
-      setIsLoading(true);
-      const res = await base.post(
-        "/api/register.php",
-        {
-          username,
-          password,
-        },
-        { withCredentials: true }
-      );
-      setUser(res.data.user);
+      await api.register({ username, email, password });
+      setUser(null);
       setError(null);
+      toast.success(
+        `${username} registered successfully! Please verify your email and login.`
+      );
+      navigate("/login");
+      window.scrollTo(0, 0);
     } catch (error) {
       setUser(null);
-      setError(error.response.data);
-    } finally {
-      setIsLoading(false);
+      setError(error.response?.data.message);
+      toast.error(error.response?.data.message);
     }
   };
 
   const login = async (username, password) => {
     try {
-      setIsLoading(true);
-      const res = await base.post(
-        "/api/login.php",
-        {
-          username,
-          password,
-        },
-        { withCredentials: true }
-      );
-      setUser(res.data.user);
+      const res = await api.login({ username, password });
+      setUser(res?.data.data.user);
       setError(null);
+      toast.success(`Welcome back, ${username}`);
+      navigate("/");
     } catch (error) {
       setUser(null);
-      setError(error.response.data);
-    } finally {
-      setIsLoading(false);
+      setError(error.response?.data.message);
+      toast.error(error.response?.data.message);
     }
   };
 
   const logout = async () => {
     try {
-      setIsLoading(true);
+      await api.logout();
       setUser(null);
-      await base.get("/api/logout.php", { withCredentials: true });
+      toast.success("Come back soon!");
+      navigate("/");
     } catch (error) {
       setUser(null);
-    } finally {
-      setIsLoading(false);
     }
   };
 
   return (
     <AppContext.Provider
-      value={{ user, setUser, toast, register, login, logout }}
+      value={{ user, setUser, error, setError, register, login, logout, toast }}
     >
       {children}
       <ToastContainer

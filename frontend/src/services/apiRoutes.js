@@ -1,7 +1,7 @@
 const BASE_URL = "http://localhost:8000/";
 
 const USER_API_ROUTES = {
-  CHECK_AUTH: "/test",
+  CHECK_AUTH: "/checkAuth",
   GET_USER_PROFILE: "/user/:id",
   MODIFY_PASSWORD: "/user/profile/modifyPassword",
   EDIT_PROFILE: "/user/profile/edit",
@@ -13,6 +13,7 @@ const MEME_API_ROUTES = {
   GET_MEME_BY_ID: "/memes/:id",
   GET_USER_MEMES: "/memes/user/:id",
   ADD_MEME: "/memes",
+  MODIFY_MEME: "/memes/:id/modify",
   LIKE_MEME: "/memes/:id/like",
   DISLIKE_MEME: "/memes/:id/dislike",
   REPORT_MEME: "/memes/:id/report",

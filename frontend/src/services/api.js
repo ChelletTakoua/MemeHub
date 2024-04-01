@@ -26,7 +26,7 @@ export const api = {
 
 export const userApi = {
   getUserAuth: () => {
-    return base.get(USER_API_ROUTES["CHECH_AUTH"]);
+    return base.get(USER_API_ROUTES["CHECK_AUTH"]);
   },
   getUserProfile: (userId) =>
     base.get(USER_API_ROUTES["GET_USER_PROFILE"].replace(":id", userId)),
@@ -44,12 +44,17 @@ export const memeApi = {
   getUserMemes: (userId) =>
     base.get(MEME_API_ROUTES["GET_USER_MEMES"].replace(":id", userId)),
   addMeme: (memeData) => base.post(MEME_API_ROUTES["ADD_MEME"], memeData),
+  modifyMeme: (memeId, memeData) =>
+    base.post(MEME_API_ROUTES["MODIFY_MEME"].replace(":id", memeId), memeData),
   likeMeme: (memeId) =>
     base.post(MEME_API_ROUTES["LIKE_MEME"].replace(":id", memeId)),
   dislikeMeme: (memeId) =>
     base.post(MEME_API_ROUTES["DISLIKE_MEME"].replace(":id", memeId)),
-  reportMeme: (memeId) =>
-    base.post(MEME_API_ROUTES["REPORT_MEME"].replace(":id", memeId)),
+  reportMeme: (memeId, reportData) =>
+    base.post(
+      MEME_API_ROUTES["REPORT_MEME"].replace(":id", memeId),
+      reportData
+    ),
   deleteMeme: (memeId) =>
     base.delete(MEME_API_ROUTES["DELETE_MEME"].replace(":id", memeId)),
 };

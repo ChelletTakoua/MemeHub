@@ -1,11 +1,11 @@
 <?php
 
 
-function logError($e)
+function logError($e,$red=true)
 {
     // Log the error message, file, line number, class, method, and stack trace
     $logMessage = sprintf(
-        "\033[31mError: %s in %s on line %d\n%s\n%s::%s\nStack trace:\n%s\n\nLink to code: vscode://file/%s:%d\033[0m",
+        ( $red ? "\e[0;31m" : "" ) . "Error: %s in %s on line %d\n%s\n%s::%s\nStack trace:\n%s\n\nLink to code: vscode://file/%s:%d" . ( $red ? "\033[0m" : "" ),
         $e->getMessage(),
         $e->getFile(),
         $e->getLine(),
@@ -25,7 +25,10 @@ function errorHandler($e)
     if (! $e instanceof \Exceptions\HttpExceptions\HttpException) {
         logError($e);
             $e = new \Exceptions\HttpExceptions\InternalServerErrorException();
+    }else{
+        logError($e,false);
     }
+
 
     header('Content-Type: application/json');
     $response = \Utils\ApiResponseBuilder::buildErrorResponse($e->getMessage(), $e->getHttpResponseCode());

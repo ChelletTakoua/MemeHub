@@ -16,6 +16,22 @@ use Models\Meme;
 use Models\Report;
 use Exceptions\HttpExceptions\Exception;
 
+
+//TODO: mariem wala chidhii:  el memes elli yarj3ou lezem ykouni trié selon el date de creation decroissant (les plus récents en premier)
+//TODO: CHIDHI: check getMemeById (line zone 55), kenet twiiiiiiila oghser kifeh wallet:
+//        1) el meme (wala array mtaa meme) directement t7otha fl buildSuccessResponse,
+//                el logique edhika yaamalha el meme automatiquement (9oul lmariem tfassarlek el jsonSerialize)
+//               srry nsit lli ma 9olnelekch 3leha el faza, 9oul l maryem tfasserhelek 5tr ena w louey re9din
+//        2) les conditions mtaa el error 7othom melloul,
+//               maanetha fi3oudh ma twalli el fonction lkolha fi wost if/elseif/else
+//                  + les conditions yabdew de5lin b3adhhom w mch wadh7in,
+//               twalli t7ot (generalement fi awwel el fonction) block 'if' saghroun fih juste el condition mtaa el erreur wl throw, w tkammel el fonction 3ala eses mefemmech erreur
+//                exemple:
+//                      if(!isset($meme)) {
+//                         throw new NotFoundException("Meme not found");
+//                      }
+//
+
 class MemeController
 {
     /**
@@ -30,41 +46,7 @@ class MemeController
     {
         // Retrieve all memes from the database
         $memes = MemeTableManager::getMeme();
-        $memesArray = [];
-        try {
-                
-                // Iterate over each meme
-                foreach ($memes as $meme) {
-                    // Retrieve likes for the meme
-                    $likes = LikeTableManager::getLikeByMemeId($meme->getId());
-                    // Create an array to store like IDs and user IDs
-                    $likeData = [];
-                    foreach ($likes as $like) {
-                        $likeData[] = [
-                            "id" => $like->getId(),
-                            "user_id" => $like->getUserId()
-                        ];
-                    }
-                // Create an associative array with the meme's data
-                $memeData = [
-                    "id" => $meme->getId(),
-                    "url" => (TemplateTableManager::getTemplateById($meme->getTemplateId()))->getUrl(),
-                    "user_id" => $meme->getUserId(),
-                    "nb_likes" => $likeData,
-                    "creation_date" => $meme->getCreationDate(),
-                    "text_blocks" => TextBlockTableManager::getTextBlockByMemeId($meme->getId()),
-                    "result_img" => $meme->getResultImg(),
-                ];
-                // Add the meme's data to the memes array
-                $memesArray[] = $memeData;
-            }
-                
-                
-            } catch (\Exception $e) {
-                // If there's an error while retrieving the meme's data, throw a BadRequestException
-                throw new BadRequestException('Failed to get meme from the database', 500);
-            }
-        // Build a success response with the memes array
+
         $response = ApiResponseBuilder::buildSuccessResponse(["memes" => $memes]);
         echo json_encode($response);
     }

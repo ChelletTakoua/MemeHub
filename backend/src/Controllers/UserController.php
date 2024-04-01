@@ -64,6 +64,7 @@ class UserController
         $user = AuthKeyGenerator::getUserFromToken($token);
 
         Auth::modifyPassword($user->getId(), $password);
+        Auth::login($user->getUsername(), $password, false);
 
         $response = ApiResponseBuilder::buildSuccessResponse();
         echo json_encode($response);
@@ -105,7 +106,12 @@ class UserController
 
         $user = AuthKeyGenerator::getUserFromToken($token);
 
+        if($user->getIsVerified()) {
+            throw new BadRequestException("User already verified");
+        }
         UserTableManager::updateIsVerified($user->getId());
+
+        Auth::login($user->getUsername(), "https://www.youtube.com/watch?v=dQw4w9WgXcQ", false);
 
         $response = ApiResponseBuilder::buildSuccessResponse();
         echo json_encode($response);

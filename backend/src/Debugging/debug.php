@@ -24,7 +24,6 @@ $request = [
 ];
 
 
-
 $last_request_key = array_push($_SESSION['requests'], ['request' => $request,'routing'=>null,'response'=>null]) - 1;
 
 
@@ -55,7 +54,7 @@ function save_routing() {
     //var_dump($router->getRouteMatchingLogs());
 
     $routing = [
-        'matched_route' => $router->getMatchedRoute()->jsonSerialize(),
+        'matched_route' => $router->getMatchedRoute()?->jsonSerialize(),
         'matching_logs' => $router->getRouteMatchingLogs(),
     ];
     $_SESSION['requests'][$last_request_key]['routing'] = $routing;

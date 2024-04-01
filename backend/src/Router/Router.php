@@ -25,7 +25,7 @@ class Router
     /**
      * Add a new route to the router with the GET method
      * @param string $path the path of the route
-     * @param string $callable the function to call when the route is matched, can be a string like "Controller@function" or a closure or a path to a php file
+     * @param string|callable $callable the function to call when the route is matched, can be a string like "Controller@function" or a closure or a path to a php file
      * @param array $roles the roles that can access this route
      * @param bool $developmentMode if true, the route will only be added if the server is in development mode
      * @return void
@@ -42,7 +42,7 @@ class Router
     /**
      * Add a new route to the router with the POST method
      * @param string $path the path of the route
-     * @param string $callable the function to call when the route is matched, can be a string like "Controller@function" or a closure or a path to a php file
+     * @param string|callable $callable the function to call when the route is matched, can be a string like "Controller@function" or a closure or a path to a php file
      * @param array $roles the roles that can access this route
      * @param bool $developmentMode if true, the route will only be added if the server is in development mode
      * @return void
@@ -60,7 +60,7 @@ class Router
     /**
      * Add a new route to the router with the PUT method
      * @param string $path the path of the route
-     * @param string $callable the function to call when the route is matched, can be a string like "Controller@function" or a closure or a path to a php file
+     * @param string|callable $callable the function to call when the route is matched, can be a string like "Controller@function" or a closure or a path to a php file
      * @param array $roles the roles that can access this route
      * @param bool $developmentMode if true, the route will only be added if the server is in development mode
      * @return void
@@ -77,18 +77,27 @@ class Router
     /**
      * Add a new route to the router with the DELETE method
      * @param string $path the path of the route
-     * @param string $callable the function to call when the route is matched, can be a string like "Controller@function" or a closure or a path to a php file
+     * @param string|callable $callable the function to call when the route is matched, can be a string like "Controller@function" or a closure or a path to a php file
      * @param array $roles the roles that can access this route
      * @param bool $developmentMode if true, the route will only be added if the server is in development mode
      * @return void
      */
-    public function delete(string $path, string $callable, array $roles = [], bool $developmentMode = false)
+    public function delete(string $path, callable|string $callable, array $roles = [], bool $developmentMode = false)
     {
         if($developmentMode && !self::$devMode) return;
 
         $route = new Route($path, $callable, $roles);
         $this->routes["DELETE"][] = $route;
     }
+
+    /**
+     * Add a new route to the router with the OPTIONS method
+     * @param string $path the path of the route
+     * @param string|callable $callable the function to call when the route is matched, can be a string like "Controller@function" or a closure or a path to a php file
+     * @param array $roles the roles that can access this route
+     * @param bool $developmentMode if true, the route will only be added if the server is in development mode
+     * @return void
+     */
     public function options($path, $callable, $roles = [], $developmentMode = false)
     {
         if($developmentMode && !self::$devMode) return;

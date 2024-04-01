@@ -80,7 +80,7 @@ class Mail{
      */
     static public function sendAccountCreatedMail(User $user): void{
 
-        $link = "http://localhost:3000/verify-email?token=".AuthKeyGenerator::encodeJWK($user, 3600);
+        $link = "http://localhost:3000/verifyEmail?token=".AuthKeyGenerator::encodeJWK($user, 3600);
 
 
         Self::sendMailFile($user->getEmail(), "Welcome to Memehub !", 'account-created.html', [
@@ -100,7 +100,7 @@ class Mail{
 
         //hedha howa el link (to nzidou nchoufou fl front kifeh bch naamlou bedhabt)
         // probably bch nfetchiw el 'localhost:3000' mn fichier config ( same thing fl fonction lo5ra)
-        $link = "http://localhost:3000/reset-password?token=".AuthKeyGenerator::encodeJWK($user, 3600);
+        $link = "http://localhost:3000/resetPassword?token=".AuthKeyGenerator::encodeJWK($user, 3600);
 
         Self::sendMailFile($user->getEmail(), "password reset", 'password-reset.html', [
             "username" => $user->getUsername(),

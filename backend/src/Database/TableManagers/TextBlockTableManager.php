@@ -19,12 +19,13 @@ class TextBlockTableManager extends TableManager
         $queryObjects = DatabaseQuery::executeQuery("select","text_blocks",[],$params);
         $textBlocks = [];
         foreach ($queryObjects as $queryObject ) {
-            $textBlocks[] = new TextBlock($queryObject['id'],
-                                        $queryObject['text'],
-                                        $queryObject['x'],
-                                        $queryObject['y'],
-                                        $queryObject['font_size'],
-                                        $queryObject['meme_id']);
+            $textBlocksData= [
+                "id"=>$queryObject['id'],
+                "text"=>$queryObject['text'],
+                "x"=> $queryObject['x'],
+                "y"=>$queryObject['y'],
+                "font_size"=>$queryObject['font_size'],];
+            $textBlocks[] = $textBlocksData;
         }
         return $textBlocks;
 

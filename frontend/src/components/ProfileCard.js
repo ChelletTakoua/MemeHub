@@ -2,16 +2,15 @@ import React, { useState } from "react";
 import ReportButton from "../components/ReportButton";
 import LikeButton from "../components/LikeButton";
 import ShareButton from "../components/ShareButton";
-import { BsFillSendFill } from "react-icons/bs";
 import { FaEdit, FaTrash } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
-import DraggableText from "./DraggableText";
 import MemeImg from "./MemeImg";
+import { memeApi } from "../services/api";
+import ReportBox from "./ReportBox";
 
 const ProfileCard = ({ isOwner, meme, memes, setMemes }) => {
-  const [showReport, setShowReport] = useState(false);
   const [enlargedImage, setEnlargedImage] = useState(null);
-  const [inputBoxes, setInputBoxes] = useState(meme.text_blocks);
+  const [showReport, setShowReport] = useState(false);
   const navigate = useNavigate();
 
   const toggleImageSize = (event) => {
@@ -38,12 +37,9 @@ const ProfileCard = ({ isOwner, meme, memes, setMemes }) => {
     setShowReport((showReport) => !showReport);
   };
 
-  const handleSendReport = () => {
-    // Add your report logic here
-  };
-
-  const deleteMeme = (memeToDelete) => {
-    setMemes(memes.filter((meme) => meme !== memeToDelete));
+  const deleteMeme = async () => {
+    await memeApi.deleteMeme(meme.id);
+    setMemes(memes.filter((m) => m.id !== meme.id));
   };
 
   const modifyMeme = () => {
@@ -53,9 +49,8 @@ const ProfileCard = ({ isOwner, meme, memes, setMemes }) => {
     <div className="bg-white rounded-lg shadow-md flex flex-col justify-between ">
       <MemeImg
         key={meme?.id}
-        memeData={meme}
-        inputBoxes={inputBoxes}
-        setInputBoxes={setInputBoxes}
+        onClick={toggleImageSize}
+        image={`data:image/jpeg;base64,${meme?.result_img}`}
       />
       {isOwner ? (
         <div className="flex justify-between px-12 py-4 ">
@@ -77,24 +72,15 @@ const ProfileCard = ({ isOwner, meme, memes, setMemes }) => {
       ) : (
         <div className="px-6 py-4">
           <div className="flex items-center">
-            <LikeButton nbLikes={meme.nb_likes.length} memeId={meme.id} />
+            <LikeButton likes={meme.nb_likes} memeId={meme.id} />
             <ShareButton />
             <ReportButton onReportClick={handleReportClick} />
           </div>
-          {showReport && (
-            <div className="mt-4 flex flex-row  justify-end space-x-5 items-start">
-              <textarea
-                className="p-2 rounded w-1/2 h-20 border-black border-2 bg-gray-300"
-                placeholder="Write a report..."
-              />
-              <button
-                className="mt-2 p-2 text-greens-200 text-2xl hover:text-greens-300 active:text-nightgreen"
-                onSubmit={handleSendReport}
-              >
-                <BsFillSendFill />
-              </button>
-            </div>
-          )}
+          <ReportBox
+            memeId={meme.id}
+            showReport={showReport}
+            setShowReport={setShowReport}
+          />
         </div>
       )}
     </div>

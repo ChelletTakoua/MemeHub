@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useContext, useEffect } from "react";
 import { Route, Routes } from "react-router-dom";
 import Navbar from "./components/Navbar";
 import Home from "./pages/Home";
@@ -13,7 +13,11 @@ import { AppContext } from "./context/AppContext";
 import "./App.css";
 
 function App() {
-  const { user } = useContext(AppContext);
+  const { user, checkAuth } = useContext(AppContext);
+
+  useEffect(() => {
+    checkAuth();
+  }, [checkAuth]);
 
   return (
     <div className="app">
@@ -34,9 +38,10 @@ function App() {
               <Route path="/create" element={<MemeEdit />} />
             </>
           )}
-          <Route path="/admin" element={<AdminDashboard />} />
           <Route path="/profile/:id" element={<Profile />} />
-          <Route path="/admin" element={<AdminDashboard />} />
+          {user?.role === "admin" && (
+            <Route path="/admin" element={<AdminDashboard />} />
+          )}
           <Route path="*" element={<h1>Not Found</h1>} />
         </Routes>
       </main>

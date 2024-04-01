@@ -17,7 +17,7 @@ export default function InputBox({ inputBox, setInputBoxes }) {
   function handleFontSizeChange(e) {
     setInputBoxes((prev) =>
       prev.map((box) =>
-        box.id === inputBox.id ? { ...box, fontSize: e.target.value } : box
+        box.id === inputBox.id ? { ...box, font_size: e.target.value } : box
       )
     );
   }
@@ -42,7 +42,7 @@ export default function InputBox({ inputBox, setInputBoxes }) {
         </div>
         <div>
           <select
-            value={inputBox.fontSize}
+            value={inputBox.font_size}
             className="p-8 placeholder:text-zinc-400 text-white bg-transparent border-zinc-400 border-white border-4 rounded-2xl placeholder:text-gray flex-1 lg:text-xl lg:border-2 lg:py-4 lg:px-6 lg:rounded-lg"
             onChange={handleFontSizeChange}
           >

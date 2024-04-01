@@ -1,26 +1,36 @@
 import { useContext, useEffect, useState } from "react";
+import * as htmlToImage from "html-to-image";
 import InputBox from "./InputBox";
 import MemeImg from "./MemeImg";
 import DownloadBtn from "./DownloadBtn";
 import SaveBtn from "./SaveBtn";
 import { FaArrowLeft } from "react-icons/fa";
 import { AppContext } from "../context/AppContext";
+import { memeApi } from "../services/api";
+import { useNavigate, useParams } from "react-router-dom";
 
 // currMeme and setBrowse are for creating a new meme
 export default function Meme({ currMeme = null, setBrowse = null }) {
   const { user } = useContext(AppContext);
+  const navigate = useNavigate();
+  const { id } = useParams("id");
 
   const [inputBoxes, setInputBoxes] = useState([]);
 
   useEffect(() => {
-    if (currMeme) {
-      setInputBoxes(currMeme.inputBoxes);
+    if (id) {
+      setInputBoxes(currMeme?.inputBoxes);
     } else {
       setInputBoxes([
-        { id: new Date().getTime(), text: "", fontSize: 4, x: 0, y: 0 },
+        {
+          text: "Modify it!",
+          font_size: "2xl",
+          x: 0,
+          y: 0,
+        },
       ]);
     }
-  }, [setInputBoxes, currMeme]);
+  }, [setInputBoxes, id, currMeme?.inputBoxes]);
 
   // Add a new input box
   function handleAddInputBox(e) {
@@ -28,18 +38,39 @@ export default function Meme({ currMeme = null, setBrowse = null }) {
     setInputBoxes((prev) => [
       ...prev,
       {
-        id: new Date().getTime(),
+        id: Date.now(),
         text: "",
-        fontSize: 4,
+        font_size: "xl",
         x: 0,
         y: 0,
       },
     ]);
   }
 
-  // Save the meme
-  function handleSave() {
-    // Logic here TODOdodo tan dodo tan dododododododooooo dododdooodoooo
+  async function handleSave() {
+    const res = await htmlToImage.toPng(document.querySelector("#meme"), {
+      quality: 1,
+    });
+    const result_img = res.split(",")[1];
+
+    if (id) {
+      const memeDataUpdate = {
+        text_blocks: inputBoxes,
+        result_img,
+      };
+      await memeApi?.modifyMeme(+id, memeDataUpdate);
+    } else {
+      const memeData = {
+        ...currMeme,
+        text_blocks: inputBoxes,
+        result_img,
+      };
+      delete memeData.url;
+      delete memeData.title;
+      delete memeData.inputBoxes;
+      await memeApi.addMeme(memeData);
+    }
+    navigate(`/profile/${user.id}`);
   }
 
   return (
@@ -57,7 +88,7 @@ export default function Meme({ currMeme = null, setBrowse = null }) {
         <div className="flex flex-col items-start">
           <div>
             <MemeImg
-              memeData={currMeme}
+              image={currMeme?.url ? currMeme.url : currMeme?.template?.url}
               inputBoxes={inputBoxes}
               setInputBoxes={setInputBoxes}
             />
@@ -65,9 +96,9 @@ export default function Meme({ currMeme = null, setBrowse = null }) {
         </div>
         <div className="flex flex-col gap-8 flex-1">
           <form className="flex flex-col gap-8 h-min">
-            {inputBoxes?.map((inputBox) => (
+            {inputBoxes?.map((inputBox, index) => (
               <InputBox
-                key={inputBox.id}
+                key={index}
                 inputBox={inputBox}
                 setInputBoxes={setInputBoxes}
               />

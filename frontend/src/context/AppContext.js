@@ -1,7 +1,7 @@
-import { createContext, useState, useEffect, useCallback } from "react";
+import { createContext, useState, useCallback } from "react";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import { api } from "../services/api";
+import { api, userApi } from "../services/api";
 import { useNavigate } from "react-router-dom";
 
 const AppContext = createContext();
@@ -12,20 +12,14 @@ const AppProvider = ({ children }) => {
 
   const navigate = useNavigate();
 
-  useEffect(() => {
-    // checkAuth();
-    // for testing purposes
-  }, []);
-
-  // const checkAuth = useCallback(async () => {
-  //   try {
-  //     const res = await api.getUserAuth();
-  //     setUser(res.data.user);
-  //   } catch (error) {
-  //     setUser(null);
-  //   } finally {
-  //   }
-  // }, []);
+  const checkAuth = useCallback(async () => {
+    try {
+      const res = await userApi.getUserAuth();
+      setUser(res.data.data.user);
+    } catch (error) {
+      setUser(null);
+    }
+  }, [setUser]);
 
   const register = async (username, email, password) => {
     try {
@@ -71,7 +65,17 @@ const AppProvider = ({ children }) => {
 
   return (
     <AppContext.Provider
-      value={{ user, setUser, error, setError, register, login, logout, toast }}
+      value={{
+        user,
+        setUser,
+        error,
+        setError,
+        register,
+        login,
+        logout,
+        checkAuth,
+        toast,
+      }}
     >
       {children}
       <ToastContainer

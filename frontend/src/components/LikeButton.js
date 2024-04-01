@@ -4,9 +4,9 @@ import { IoMdHeartEmpty, IoMdHeart } from "react-icons/io";
 import { memeApi } from "../services/api";
 import { AppContext } from "../context/AppContext";
 
-export default function LikeButton({ memeId, nbLikes }) {
-  const [liked, setLiked] = useState(false);
-  const [likes, setLikes] = useState(nbLikes);
+export default function LikeButton({ memeId, likes, userLikedIt = false }) {
+  const [liked, setLiked] = useState(userLikedIt);
+  const [nbLikes, setNbLikes] = useState(likes);
 
   const { user } = useContext(AppContext);
 
@@ -16,7 +16,7 @@ export default function LikeButton({ memeId, nbLikes }) {
     } else {
       await memeApi.dislikeMeme(memeId);
     }
-    setLikes((likes) => (liked ? likes - 1 : likes + 1));
+    setNbLikes((nbLikes) => (liked ? nbLikes - 1 : nbLikes + 1));
     setLiked((liked) => !liked);
   };
 
@@ -46,7 +46,7 @@ export default function LikeButton({ memeId, nbLikes }) {
             <IoMdHeartEmpty className="hover:scale-110" size={33} />
           ))}
       </animated.div>
-      <span className="ml-1 text-1xl">{likes} likes</span>
+      <span className="ml-1 text-1xl">{nbLikes} likes</span>
     </div>
   );
 }

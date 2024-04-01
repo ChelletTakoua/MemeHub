@@ -28,6 +28,8 @@ export default function Browse({ memes, setCurrMeme, setBrowse }) {
         key={meme.id}
         className="cursor-pointer p-4"
         onClick={() => {
+          meme.template_id = meme.id;
+          delete meme.id;
           setCurrMeme(meme);
           setBrowse(false);
         }}

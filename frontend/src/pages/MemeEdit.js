@@ -14,12 +14,10 @@ export default function MemeEdit() {
   const { id } = useParams("id");
   const { user } = useContext(AppContext);
 
-  //-----------------------------
   useEffect(() => {
     const fetchTemplates = async () => {
       try {
         const res = await templateApi.getAllTemplates();
-        console.log(res);
         setMemes(res?.data.data.templates);
       } catch (error) {
         console.error("Error fetching data:", error);
@@ -33,7 +31,6 @@ export default function MemeEdit() {
         memeData.inputBoxes = res?.data.data.meme.text_blocks;
         delete memeData.text_blocks;
         setCurrMeme(memeData);
-        console.log(memeData);
       } catch (error) {
         console.error("Error fetching data:", error);
         navigate("/");
@@ -46,8 +43,7 @@ export default function MemeEdit() {
     } else {
       fetchTemplates();
     }
-  }, []);
-  //-----------------------------
+  }, [setBrowse, setMemes, setCurrMeme, id, user, navigate]);
 
   return (
     <div className="flex flex-col justify-between bg-palenight">

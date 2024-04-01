@@ -46,7 +46,7 @@ class TextBlockTableManager extends TableManager
         if(!empty($textBlocks)){
             return $textBlocks;
         }
-        return null;
+        return [];
     }
 
     //--------verify existence methods----------------

@@ -2,11 +2,12 @@
 namespace Models;
 use Utils\Proxy;
 class Report extends Model {
-    private $status;
-    private $reason;
+    private string $status;
+    private string $reason;
     private $report_date;
-    private $meme;
-    private $user;
+    private Proxy $meme;
+    private Proxy $user;
+
 
     public function __construct($id, $reason, $report_date, $meme_id, $user_id, $status) {
         parent::__construct($id);
@@ -22,10 +23,12 @@ class Report extends Model {
     public function getMemeId(){
         return $this->meme->getId();
     }
-    public function getUser(){ 
+    public function getUser(): Model
+    {
         return $this->user->getInstance();
     }
-    public function getMeme(){ 
+    public function getMeme(): Model
+    {
         return $this->meme->getInstance();
     }
 

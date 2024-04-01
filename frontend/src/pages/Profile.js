@@ -54,7 +54,16 @@ const Profile = () => {
       fetchUser(id);
     }
     fetchMemes(id);
-  }, [setEmail, setUsername, setProfileImage, setRegDate, isOwner, id, user]);
+  }, [
+    setEmail,
+    setUsername,
+    setProfileImage,
+    setRegDate,
+    navigate,
+    isOwner,
+    id,
+    user,
+  ]);
 
   const handleImageUpload = (event) => {
     if (isOwner) {

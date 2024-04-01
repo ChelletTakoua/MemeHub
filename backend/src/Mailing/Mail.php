@@ -2,6 +2,7 @@
 namespace Mailing;
 
 use Authentication\AuthKeyGenerator;
+use Exceptions\HttpExceptions\MailException;
 use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\Exception;
 use Utils\JWT;
@@ -12,35 +13,43 @@ require 'phpmailer/src/PHPMailer.php';
 require 'phpmailer/src/SMTP.php';
 
 class Mail{
- 
-    // juste na77i el block try catch w t5alli elli i3ayet lel function yhandli el exception w yrajja3 success response
+
     /**
      * Sends an email.
      *
      * @param string $to The recipient email address.
      * @param string $subject The subject of the email.
      * @param string $message The content of the email.
-     * @throws Exception If an error occurs while sending the email.
+     *
+     * @throws MailException
      */
     static public function sendMail(string $to, string $subject, string $message): void{
-        $config = include __DIR__ . '/../config/mailing.php';
-        $mail=new PHPMailer(true);
 
-        $mail->isSMTP();
-        $mail->Host=$config['Host'];
-        $mail->SMTPAuth=$config['SMTPAuth'];
-        $mail->Username=$config['Username'];
-        $mail->Password=$config['Password'];
-        $mail->SMTPSecure=$config['SMTPSecure'];
-        $mail->Port=$config['Port'];
-        $mail->setFrom('chellettakoua@gmail.com');
+        try {
+            $config = include __DIR__ . '/../config/mailing.php';
+            $mail=new PHPMailer(true);
 
-        $mail->addAddress($to);
-        $mail->Subject=$subject;
-        $mail->Body=$message;
-        $mail->isHTML(true);
+            $mail->isSMTP();
+            $mail->Host=$config['Host'];
+            $mail->SMTPAuth=$config['SMTPAuth'];
+            $mail->Username=$config['Username'];
+            $mail->Password=$config['Password'];
+            $mail->SMTPSecure=$config['SMTPSecure'];
+            $mail->Port=$config['Port'];
+            $mail->setFrom('chellettakoua@gmail.com');
 
-        $mail->send();
+            $mail->addAddress($to);
+            $mail->Subject=$subject;
+            $mail->Body=$message;
+            $mail->isHTML(true);
+
+            $mail->send();
+
+        }catch (Exception $e){
+            throw new MailException("An error occurred while sending the email");
+
+        }
+
     }
 
 
@@ -51,7 +60,7 @@ class Mail{
      * @param string $subject The subject of the email.
      * @param string $path The path to the file to be attached.
      * @param array $attributes Additional attributes to be replaced in the file content.
-     * @throws Exception If an error occurs while sending the email.
+     * @throws MailException If an error occurs while sending the email.
      */
 
     static public function sendMailFile(string $to, string $subject, string $path, array $attributes = []): void{
@@ -66,9 +75,8 @@ class Mail{
      /**
      * Sends a welcome email to a newly created account, containing a verification link.
      *
-     * @param string $to The recipient email address.
-     * @param string $username The username of the newly created account.
-     * @throws Exception If an error occurs while sending the email.
+     * @param User $user The user to send the email to.
+      * @throws MailException If an error occurs while sending the email.
      */
     static public function sendAccountCreatedMail(User $user): void{
 
@@ -85,9 +93,8 @@ class Mail{
     /**
      * Sends an email for password reset.
      *
-     * @param string $to The recipient email address.
-     * @param string $username The username associated with the account.
-     * @throws Exception If an error occurs while sending the email.
+     * @param User $user The user to send the email to.
+     * @throws MailException If an error occurs while sending the email.
      */
     static public function sendPasswordResetMail(User $user): void {
 

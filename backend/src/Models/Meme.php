@@ -8,14 +8,16 @@ class Meme extends Model{
     private $user;
     private $creation_date;
     private $nb_likes;
+    private $result_img;
 
-    public function __construct($id, $template_id, $custom_title, $user_id, $creation_date) {
+    public function __construct($id, $template_id, $custom_title, $user_id, $creation_date,$result_img) {
         parent::__construct($id);
         $this->template = new Proxy($template_id, 'Template');
         $this->custom_title = $custom_title;
         $this->user = new Proxy($user_id, 'User');
         $this->creation_date = $creation_date;
         $this->nb_likes = 0;
+        $this->result_img = $result_img;
     }
     public function getUserId(){
         return $this->user->getId();
@@ -43,6 +45,9 @@ class Meme extends Model{
     {
         return $this->nb_likes;
     }
+    public function getResultImg(){
+        return $this->result_img;
+    }
   
 
     /**
@@ -57,6 +62,7 @@ class Meme extends Model{
             'user' => $this->user,
             'creation_date' => $this->creation_date,
             'nb_likes' => $this->nb_likes,
+            'result_img' => $this->result_img
         ];
     }
 

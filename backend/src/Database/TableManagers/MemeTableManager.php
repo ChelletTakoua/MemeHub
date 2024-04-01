@@ -26,7 +26,8 @@ class MemeTableManager extends TableManager
                 $queryObject['template_id'],
                 $queryObject['custom_title'],
                 $queryObject['user_id'],
-                $queryObject['creation_date']);
+                $queryObject['creation_date'],
+                $queryObject['result_img']);
         }
         return $memes;
     }
@@ -99,11 +100,12 @@ class MemeTableManager extends TableManager
      * @param int $template_id
      * @param string $custom_title
      * @param int $user_id
+     * @param string $result_img
      * @return Meme|null
      */
-    static public function addMeme(int $template_id, string $custom_title, int $user_id): ?Meme
+    static public function addMeme(int $template_id, string $custom_title, int $user_id, string $result_img): ?Meme
     {
-        DatabaseQuery::executeQuery("insert","memes",["template_id"=>$template_id,"custom_title"=>$custom_title,"user_id"=>$user_id]);
+        DatabaseQuery::executeQuery("insert","memes",["template_id"=>$template_id,"custom_title"=>$custom_title,"user_id"=>$user_id,"result_img"=>$result_img]);
         $id = DatabaseQuery::getLastInsertId();
         return self::getMemeById($id);
     }
@@ -136,6 +138,10 @@ class MemeTableManager extends TableManager
     static public function updateMemeUserId(int $id, int $user_id): ?Meme
     {
         return self::updateMeme($id,["user_id"=>$user_id]);
+    }
+    static public function updateMemeResultImg(int $id, string $result_img): ?Meme
+    {
+        return self::updateMeme($id,["result_img"=>$result_img]);
     }
 
     //--------delete method----------------

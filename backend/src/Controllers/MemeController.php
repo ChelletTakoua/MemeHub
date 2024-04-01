@@ -66,9 +66,7 @@ class MemeController
             }
         // Build a success response with the memes array
         $response = ApiResponseBuilder::buildSuccessResponse(["memes" => $memesArray]);
-        $cleanedResponse = mb_convert_encoding($response, 'UTF-8', 'UTF-8');
-        // Encode the response as JSON and output it
-        echo json_encode($cleanedResponse);
+        echo json_encode($response);
     }
 
     /**
@@ -166,9 +164,8 @@ class MemeController
         
         // Build a success response with the memes array
         $response = ApiResponseBuilder::buildSuccessResponse(["memes" => $memesArray]);
-        $cleanedResponse = mb_convert_encoding($response, 'UTF-8', 'UTF-8');
         // Encode the response as JSON and output it
-        echo json_encode($cleanedResponse);
+        echo json_encode($response);
     }
 
 

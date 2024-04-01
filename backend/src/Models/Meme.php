@@ -1,5 +1,7 @@
 <?php
 namespace Models;
+use Database\TableManagers\LikeTableManager;
+use Database\TableManagers\TemplateTableManager;
 use Database\TableManagers\TextBlockTableManager;
 use Utils\Proxy;
 class Meme extends Model{
@@ -56,13 +58,14 @@ class Meme extends Model{
     public function jsonSerialize(): array
     {
         return [
-            'id' => parent::getId(),
-            'template' => $this->template,
-            'custom_title' => $this->custom_title,
-            'user' => $this->user,
-            'creation_date' => $this->creation_date,
-            'nb_likes' => $this->nb_likes,
-            'result_img' => $this->result_img
+            "id" => $this->getId(),
+            "template" => $this->template,
+            "user_id" => $this->getUserId(),
+            "nb_likes" => $this->nb_likes,
+            "liked" => LikeTableManager::likeExistsByMemeIdAndUserId($this->getId(), $this->user->getId()),
+            "creation_date" => $this->getCreationDate(),
+            "text_blocks" => TextBlockTableManager::getTextBlockByMemeId($this->getId()),
+            "result_img" => $this->getResultImg(),
         ];
     }
 

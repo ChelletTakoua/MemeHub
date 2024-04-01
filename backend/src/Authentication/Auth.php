@@ -7,6 +7,8 @@ use Exceptions\HttpExceptions\UnauthorizedException;
 use Exceptions\HttpExceptions\UserRegistrationException;
 use Models\User;
 use Database\TableManagers\UserTableManager;
+use Exceptions\HttpExceptions\BadRequestException;
+use Exceptions\HttpExceptions\NotFoundException;
 
 class Auth
 {
@@ -118,8 +120,7 @@ class Auth
 
     public static function isLoggedIn(): bool
     {
-        return true;// for testing purposes
-        // Check if a user is logged in (e.g., check session or token)
+        // Check if a user is logged in 
         return isset($_SESSION['user_id']);
     }
 
@@ -162,13 +163,12 @@ class Auth
      * @return User
      * @throws NotLoggedInException
      */
-    public function getActiveUser(): User
+    public static function getActiveUser(): User
     {
         // If activeUser is already set, return it
         if (self::$activeUser !== null) {
             return self::$activeUser;
         }
-
         if (!self::isLoggedIn()) {
             throw new NotLoggedInException();
         }

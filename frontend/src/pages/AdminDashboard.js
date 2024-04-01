@@ -1,22 +1,42 @@
-import React, { useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
+import { AppContext } from "../context/AppContext";
+import { adminApi } from "../services/api";
 
 const AdminDashboard = () => {
   const [selectedButton, setSelectedButton] = useState("Pending");
-  const [reports, setReports] = useState([
-    {
-      id: 1,
-      userName: "John Doe",
-      details: "Inappropriate content",
-    },
-    {
-      id: 2,
-      userName: "Jane Doe",
-      details: "Spam",
-    },
-  ]);
+  const [reports, setReports] = useState([]);
 
-  const handleDelete = (reportId) => {
-    setReports(reports.filter((report) => report.id !== reportId));
+  const { toast } = useContext(AppContext);
+
+  useEffect(() => {
+    const fetchReports = async () => {
+      try {
+        const res = await adminApi.getAllReports();
+        setReports(res.data.data.reports);
+      } catch (error) {
+        console.error("Error fetching data:", error);
+        toast.error("Failed to fetch reports");
+      }
+    };
+    fetchReports();
+  }, [toast]);
+
+  const handleIgnore = async (reportId) => {
+    try {
+      await adminApi.ignoreReport(reportId);
+      toast.success("Report ignored successfully");
+    } catch (error) {
+      toast.error("Failed to ignore report");
+    }
+  };
+
+  const handleResolve = async (reportId) => {
+    try {
+      await adminApi.resolveReport(reportId);
+      toast.success("Report resolved successfully");
+    } catch (error) {
+      toast.error("Failed to resolve report");
+    }
   };
 
   return (
@@ -102,44 +122,53 @@ const AdminDashboard = () => {
                   </tr>
                 </thead>
                 <tbody className="bg-white divide-y">
-                  {reports.map((report) => (
-                    <tr className="text-gray-700" key={report.id}>
-                      <td className="px-4 py-3">{report.id}</td>
-                      <td className="px-4 py-3">{report.userName}</td>
-                      <td className="px-4 py-3">{report.details}</td>
-                      <td className="px-4 py-3">
-                        <button className="text-blue-600 hover:text-blue-900 mr-2">
-                          View
-                        </button>
-                        <button className="text-green-600 hover:text-green-900 mr-2">
-                          Resolve
-                        </button>
-                        <button
-                          className="text-red-600 hover:text-red-900"
-                          onClick={() => handleDelete(report.id)}
-                        >
-                          Ignore
-                        </button>
-                      </td>
-                    </tr>
-                  ))}
+                  {reports
+                    .filter(
+                      (report) => report.status === selectedButton.toLowerCase()
+                    )
+                    .map((report) => (
+                      <tr className="text-gray-700" key={report.id}>
+                        <td className="px-4 py-3">{report.id}</td>
+                        <td className="px-4 py-3">{report.user.username}</td>
+                        <td className="px-4 py-3">{report.reason}</td>
+                        {selectedButton.toLowerCase() === "pending" && (
+                          <td className="px-4 py-3">
+                            <button className="text-blue-600 hover:text-blue-900 mr-2">
+                              View
+                            </button>
+                            <button
+                              className="text-green-600 hover:text-green-900 mr-2"
+                              onClick={() => handleResolve(report.id)}
+                            >
+                              Resolve
+                            </button>
+                            <button
+                              className="text-red-600 hover:text-red-900"
+                              onClick={() => handleIgnore(report.id)}
+                            >
+                              Ignore
+                            </button>
+                          </td>
+                        )}
+                      </tr>
+                    ))}
                 </tbody>
               </table>
             </div>
           </div>
         </section>
-        <section class="mb-8">
-          <h2 class="text-xl font-semibold mb-2">Website Statistics</h2>
-          <div class="bg-white p-4 shadow-lg rounded-lg">
+        <section className="mb-8">
+          <h2 className="text-xl font-semibold mb-2">Website Statistics</h2>
+          <div className="bg-white p-4 shadow-lg rounded-lg">
             <p>Here you can view statistics about the website.</p>
-            <div class="grid grid-cols-2 gap-4">
-              <div class="p-4 bg-gray-100 rounded-lg">
-                <h3 class="font-semibold text-lg">Number of Users</h3>
-                <p class="text-gray-500">12345</p>
+            <div className="grid grid-cols-2 gap-4">
+              <div className="p-4 bg-gray-100 rounded-lg">
+                <h3 className="font-semibold text-lg">Number of Users</h3>
+                <p className="text-gray-500">12345</p>
               </div>
-              <div class="p-4 bg-gray-100 rounded-lg">
-                <h3 class="font-semibold text-lg">Total Memes Posted</h3>
-                <p class="text-gray-500">67890</p>
+              <div className="p-4 bg-gray-100 rounded-lg">
+                <h3 className="font-semibold text-lg">Total Memes Posted</h3>
+                <p className="text-gray-500">67890</p>
               </div>
             </div>
           </div>

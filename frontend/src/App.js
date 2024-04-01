@@ -11,6 +11,7 @@ import About from "./pages/AboutUs";
 import Footer from "./components/Footer";
 import { AppContext } from "./context/AppContext";
 import "./App.css";
+import NotFound from "./pages/NotFound";
 
 function App() {
   const { user, checkAuth } = useContext(AppContext);
@@ -42,7 +43,7 @@ function App() {
           {user?.role === "admin" && (
             <Route path="/admin" element={<AdminDashboard />} />
           )}
-          <Route path="*" element={<h1>Not Found</h1>} />
+          <Route path="*" element={<NotFound />} />
         </Routes>
       </main>
       <Footer />

@@ -5,7 +5,7 @@ class Report extends Model {
     private string $status;
     private string $reason;
     private $report_date;
-    private Proxy $meme;
+    private $meme_id;
     private Proxy $user;
 
 
@@ -13,7 +13,7 @@ class Report extends Model {
         parent::__construct($id);
         $this->reason = $reason;
         $this->report_date = $report_date;
-        $this->meme = new Proxy($meme_id, 'Meme');
+        $this->meme_id = $meme_id;
         $this->user= new Proxy($user_id, 'User');
         $this->status = $status;
     }
@@ -21,15 +21,11 @@ class Report extends Model {
         return $this->user->getId();
     }
     public function getMemeId(){
-        return $this->meme->getId();
+        return $this->meme_id;
     }
     public function getUser(): Model
     {
         return $this->user->getInstance();
-    }
-    public function getMeme(): Model
-    {
-        return $this->meme->getInstance();
     }
 
     public function getReason() {
@@ -54,7 +50,7 @@ class Report extends Model {
             'id' => parent::getId(),
             'reason' => $this->reason,
             'report_date' => $this->report_date,
-            'meme' => $this->meme->getId(),
+            'meme' => $this->meme_id->getId(),
             'user' => $this->user,
             'status' => $this->status
         ];

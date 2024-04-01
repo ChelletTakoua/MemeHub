@@ -36,8 +36,7 @@ class ReportController
             ReportTableManager::updateReportStatus($id, "resolved");
             
             //block the meme
-            $meme= $report->getMeme();
-            $meme_id=$meme->getId();
+            $meme_id= $report->getMemeId();
             $blockedMeme= BlockedMemeTableManager::addBlockedMeme($meme_id, $report->getUserId(), $id);
             // Build a success response
             $response = ApiResponseBuilder::buildSuccessResponse();

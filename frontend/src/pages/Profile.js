@@ -127,7 +127,8 @@ const Profile = () => {
               type="file"
               onChange={handleImageUpload}
               disabled={!isOwner}
-              className={`${isOwner ? "" : "hidden"} mb-4`}
+              className={`${isOwner ? "" : "hidden"} mb-4 w-full px-3 py-2 text-white bg-gray-800 rounded shadow-lg 
+                        active:text-gray-500 cursor-pointer hover:bg-gray-700 hover:text-gray-200 hover:shadow-md hover:active:bg-gray-800 hover:active:text-white hover:active:shadow-lg hover:active:cursor-pointer hover:active:transition-all`}
             />
             <img
               src={`data:image/jpeg;base64,${profileImage}`}

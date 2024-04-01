@@ -106,7 +106,7 @@ class Route implements JsonSerializable {
     }
 
     public function validateAccess() {
-        return; // TODO: to remove this line (it's just for testing purposes to allow all requests to pass through)
+        //return; // TODO: to remove this line (it's just for testing purposes to allow all requests to pass through)
         if(in_array('guest', $this->roles)){
             return;
         }

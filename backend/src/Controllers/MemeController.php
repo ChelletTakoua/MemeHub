@@ -31,9 +31,9 @@ class MemeController
         // Retrieve all memes from the database
         $memes = MemeTableManager::getMeme();
         $memesArray = [];
-        // Iterate over each meme
-        foreach ($memes as $meme) {
-            try {
+        try {
+                
+                // Iterate over each meme
                 foreach ($memes as $meme) {
                     // Retrieve likes for the meme
                     $likes = LikeTableManager::getLikeByMemeId($meme->getId());
@@ -64,11 +64,11 @@ class MemeController
                 // If there's an error while retrieving the meme's data, throw a BadRequestException
                 throw new BadRequestException('Failed to get meme from the database', 500);
             }
-        }
         // Build a success response with the memes array
         $response = ApiResponseBuilder::buildSuccessResponse(["memes" => $memesArray]);
+        $cleanedResponse = mb_convert_encoding($response, 'UTF-8', 'UTF-8');
         // Encode the response as JSON and output it
-        echo json_encode($response);
+        echo json_encode($cleanedResponse);
     }
 
     /**
@@ -114,7 +114,7 @@ class MemeController
             }
             // Encode the response as JSON and output it
             $response = ApiResponseBuilder::buildSuccessResponse(["memes" => $memeData]);
-            echo json_encode($response);
+        echo json_encode($response);
         } else {
             // If the meme does not exist, throw a NotFoundException
             throw new NotFoundException("Meme not found");
@@ -133,7 +133,6 @@ class MemeController
         // Retrieve all memes from the database associated with the user ID
         $memes = MemeTableManager::getMemeByUserId($id);
         $memesArray = [];
-        foreach ($memes as $meme) {
             try {
                 foreach ($memes as $meme) {
                     // Retrieve likes for the meme
@@ -164,11 +163,12 @@ class MemeController
                 // If there's an error while retrieving the meme's data, throw a BadRequestException
                 throw new BadRequestException('Failed to get meme from the database', 500);
             }
-        }
+        
         // Build a success response with the memes array
         $response = ApiResponseBuilder::buildSuccessResponse(["memes" => $memesArray]);
+        $cleanedResponse = mb_convert_encoding($response, 'UTF-8', 'UTF-8');
         // Encode the response as JSON and output it
-        echo json_encode($response);
+        echo json_encode($cleanedResponse);
     }
 
 

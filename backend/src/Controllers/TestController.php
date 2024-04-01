@@ -2,9 +2,6 @@
 
 namespace Controllers;
 
-
-
-
 use Authentication\AuthKeyGenerator;
 use Cassandra\Date;
 use Database\DatabaseConnection;
@@ -26,27 +23,8 @@ class TestController
     //use this method if you want to test some code, call it with route /test
     public function testMethod()
     {
-
-
-       $user = UserTableManager::getUserById(1);
-
-        $jwk = AuthKeyGenerator::encodeJWK($user);
-
-        echo $jwk;
-/*
-        $decoded = AuthKeyGenerator::getUserFromToken($jwk);
-
-        var_dump($user);
-        echo "\n\n\n";
-        var_dump($decoded);
-*/
-
-
-
-
-
+        //test code here
+        UserTableManager::updateUser(["username" => "test"] , ["id" => 1]);
     }
-
-
 
 }

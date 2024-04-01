@@ -32,6 +32,9 @@ class ReportTableManager extends TableManager
 
     // specific get methods
     static public function getReportById(int $id): ?Report{
+        if ($id < 0) {
+            return null;
+        }
         $reports = self::getReport(["id" => $id]);
         if(!empty($reports)){
             return $reports[0];
@@ -40,6 +43,9 @@ class ReportTableManager extends TableManager
     }
 
     static public function getReportByMemeId(int $meme_id): ?array{
+        if (!MemeTableManager::memeExists($meme_id)) {
+            return null;
+        }
         $reports = self::getReport(["meme_id" => $meme_id]);
         if(!empty($reports)){
             return $reports;
@@ -48,6 +54,9 @@ class ReportTableManager extends TableManager
     }
 
     static public function getReportByUserId(int $user_id): ?array{
+        if (!UserTableManager::verifyExistenceById($user_id)) {
+            return null;
+        }
         $reports = self::getReport(["user_id" => $user_id]);
         if(!empty($reports)){
             return $reports;
@@ -56,14 +65,19 @@ class ReportTableManager extends TableManager
     }
     
     static public function getReportByStatus(string $status): ?array{
-        $reports = self::getReport(["status" => $status]);
-        if(!empty($reports)){
-            return $reports;
+        if ($status == "pending" || $status == "resolved" || $status == "ignored") {
+            $reports = self::getReport(["status" => $status]);
+            if (!empty($reports)) {
+                return $reports;
+            }
         }
         return null;
     }
 
     static public function getReportByMemeIdAndUserId(int $meme_id, int $user_id): ?Report{
+        if (!UserTableManager::verifyExistenceById($user_id) || !MemeTableManager::memeExists($meme_id)) {
+            return null;
+        }
         $reports = self::getReport(["meme_id" => $meme_id, "user_id" => $user_id]);
         if(!empty($reports)){
             return $reports[0];
@@ -87,6 +101,7 @@ class ReportTableManager extends TableManager
      * @return Report|null
      */
     static public function addReport(string $reason, int $meme_id, int $user_id): ?Report{
+
         if( empty( MemeTableManager::memeExists($meme_id) )
             || empty( UserTableManager::verifyExistenceById($user_id) )
             || !empty(self::getReportByMemeIdAndUserId($meme_id, $user_id) ))
@@ -97,6 +112,7 @@ class ReportTableManager extends TableManager
         DatabaseQuery::executeQuery("insert", "reports", ["reason" => $reason, "meme_id" => $meme_id, "user_id" => $user_id]);
         $id = DatabaseQuery::getLastInsertId();
         return self::getReportById($id);
+
     }
 
 
@@ -115,14 +131,23 @@ class ReportTableManager extends TableManager
 
     // specific delete methods
     static public function deleteReportById(int $id): void{
+        if ($id < 0) {
+            return;
+        }
         self::deleteReport(["id" => $id]);
     }
 
     static public function deleteReportByMemeId(int $meme_id): void{
+        if (!MemeTableManager::memeExists($meme_id)) {
+            return;
+        }
         self::deleteReport(["meme_id" => $meme_id]);
     }
 
     static public function deleteReportByUserId(int $user_id): void{
+        if (!UserTableManager::verifyExistenceById($user_id)) {
+            return;
+        }
         self::deleteReport(["user_id" => $user_id]);
     }
 
@@ -142,13 +167,22 @@ class ReportTableManager extends TableManager
 
     // specific update methods
     static public function updateReportReason(int $id, string $reason): void{
+        if ($id < 0 ) {
+            return;
+        }
         self::updateReport(["reason" => $reason], ["id" => $id]);
     }
 
     static public function updateReportMemeId(int $id, int $meme_id): void{
+        if ($id < 0 || !MemeTableManager::memeExists($meme_id)) {
+            return;
+        }
         self::updateReport(["meme_id" => $meme_id], ["id" => $id]);
     }
     static public function updateReportStatus(int $id, string $status): void{
+        if ($id < 0 || ($status != "pending" && $status != "resolved" && $status != "ignored")) {
+            return;
+        }
         self::updateReport(["status" => $status], ["id" => $id]);
     }
 

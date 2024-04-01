@@ -37,6 +37,9 @@ class BlockedMemeTableManager extends TableManager
      */
     static public function getBlockedMemeById(int $id): ?  BlockedMeme
     {
+        if($id < 0){
+            return null;
+        }
         $blockedMemes = self::getBlockedMeme(["id" => $id]);
         if(!empty($blockedMemes)){
             return $blockedMemes[0];
@@ -51,6 +54,9 @@ class BlockedMemeTableManager extends TableManager
      */
     static public function getBlockedMemeByMemeId(int $meme_id):   array
     {
+        if(!MemeTableManager::memeExists($meme_id)){
+            return [];
+        }
         $blockedMemes = self::getBlockedMeme(["meme_id" => $meme_id]);
         if(!empty($blockedMemes)){
             return $blockedMemes;
@@ -64,7 +70,9 @@ class BlockedMemeTableManager extends TableManager
      */
     static public function getBlockedMemeByAdminId(int $admin_id):   array
     {
-
+        if(!UserTableManager::verifyExistenceById($admin_id)){
+            return [];
+        }
         $blockedMemes = self::getBlockedMeme(["admin_id" => $admin_id]);
         if(!empty($blockedMemes)){
             return $blockedMemes;
@@ -79,7 +87,9 @@ class BlockedMemeTableManager extends TableManager
      */
     static public function getBlockedMemeByReportId(int $report_id): ?  BlockedMeme
     {
-
+        if( $report_id < 0 && !ReportTableManager::reportExists($report_id) ){
+            return null;
+        }
         $blockedMemes = self::getBlockedMeme(["report_id" => $report_id]);
         if(!empty($blockedMemes)){
             return $blockedMemes[0];
@@ -138,7 +148,7 @@ class BlockedMemeTableManager extends TableManager
      */
     static public function addBlockedMeme(int $meme_id, int $admin_id, int $report_id): ?BlockedMeme
     {
-        if( self::blockedMemeExistsByMemeId($meme_id) ){
+        if( self::blockedMemeExistsByMemeId($meme_id) || !UserTableManager::verifyExistenceById($admin_id) || !ReportTableManager::reportExists($report_id)) {
             return null;
         }
         DatabaseQuery::executeQuery("insert","blocked_memes",["meme_id"=>$meme_id,"admin_id"=>$admin_id,"report_id"=>$report_id]);
@@ -171,6 +181,9 @@ class BlockedMemeTableManager extends TableManager
      */
     static public function deleteBlockedMemeById(int $id): bool
     {
+        if($id <= 0){
+            return false;
+        }
         return self::deleteBlockedMeme(["id" => $id]);
     }
     /**
@@ -180,6 +193,9 @@ class BlockedMemeTableManager extends TableManager
      */
     static public function deleteBlockedMemeByMemeId(int $meme_id): bool
     {
+        if(!self::blockedMemeExistsByMemeId($meme_id)){
+            return false;
+        }
         return self::deleteBlockedMeme(["meme_id" => $meme_id]);
     }
     /**
@@ -189,6 +205,9 @@ class BlockedMemeTableManager extends TableManager
      */
     static public function deleteBlockedMemeByAdminId(int $admin_id): bool
     {
+        if(!self::blockedMemeExistsByAdminId($admin_id)){
+            return false;
+        }
         return self::deleteBlockedMeme(["admin_id" => $admin_id]);
     }
     /**
@@ -198,6 +217,9 @@ class BlockedMemeTableManager extends TableManager
      */
     static public function deleteBlockedMemeByReportId(int $report_id): bool
     {
+        if(!self::blockedMemeExistsByReportId($report_id)){
+            return false;
+        }
         return self::deleteBlockedMeme(["report_id" => $report_id]);
     }
 

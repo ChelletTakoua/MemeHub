@@ -33,9 +33,11 @@ class LikeTableManager extends TableManager
      * @return Like|null
      */
     static public function getLikeById(int $id): ?Like{
-        $likes = self::getLike(["id" => $id]);
-        if(!empty($likes)){
-            return $likes[0];
+        if($id > 0){
+            $likes = self::getLike(["id" => $id]);
+            if(!empty($likes)){
+                return $likes[0];
+            }
         }
         return null;
     }
@@ -45,9 +47,11 @@ class LikeTableManager extends TableManager
      * @return Like[]
      */
     static public function getLikeByMemeId(int $meme_id): ?array{
-        $likes = self::getLike(["meme_id" => $meme_id]);
-        if(!empty($likes)){
-            return $likes;
+        if( MemeTableManager::memeExists($meme_id)){
+            $likes = self::getLike(["meme_id" => $meme_id]);
+            if(!empty($likes)){
+                return $likes;
+            }
         }
         return [];
     }
@@ -57,9 +61,11 @@ class LikeTableManager extends TableManager
      * @return Like[]
      */
     static public function getLikeByUserId(int $user_id): ?array{
-        $likes = self::getLike(["user_id" => $user_id]);
-        if(!empty($likes)){
-            return $likes;
+        if( UserTableManager::verifyExistenceById($user_id)){
+            $likes = self::getLike(["user_id" => $user_id]);
+            if(!empty($likes)){
+                return $likes;
+            }
         }
         return [];
     }
@@ -72,13 +78,14 @@ class LikeTableManager extends TableManager
      */
     static public function getLikeByMemeIdAndUserId(int $meme_id, int $user_id): ?Like
     {
-
+        if(!UserTableManager::verifyExistenceById($user_id) || !MemeTableManager::memeExists($meme_id)){
+            return null;
+        }
         $likes = self::getLike(["meme_id" => $meme_id, "user_id" => $user_id]);
         if (!empty($likes)) {
             return $likes[0];
         }
         return null;
-
     }
 
     //--------verify existence methods----------------
@@ -128,7 +135,7 @@ class LikeTableManager extends TableManager
      */
     static public function addLike(int $meme_id, int $user_id): ?Like{
 
-        if( self::getLikeByMemeIdAndUserId($meme_id, $user_id) ){
+        if( self::likeExistsByMemeIdAndUserId($meme_id, $user_id)){
             return null;
         }
         $queryObject = DatabaseQuery::executeQuery("insert","likes",["meme_id" => $meme_id ,"user_id" =>$user_id ]);
@@ -162,17 +169,31 @@ class LikeTableManager extends TableManager
 
     // specific delete methods
     static public function deleteLikeById(int $id): bool{
+        if($id <= 0){
+            return false;
+        }
         return self::deleteLike(["id" => $id]);
     }
     static public function deleteLikeByMemeId(int $meme_id): bool{
+        if(!self::likeExistsByMemeId($meme_id)){
+            return false;
+        }
         return self::deleteLike(["meme_id" => $meme_id]);
     }
     static public function deleteLikeByUserId(int $user_id): bool{
+        if(!self::likeExistsByUserId($user_id)){
+            return false;
+        }
         return self::deleteLike(["user_id" => $user_id]);
     }
 
     static public function deleteLikeByMemeIdAndUserId(int $meme_id, int $user_id): bool{
+
+        if(!self::likeExistsByMemeIdAndUserId($meme_id, $user_id)){
+            return false;
+        }
         return self::deleteLike(["meme_id" => $meme_id, "user_id" => $user_id]);
+
     }
     //--------save/retrive methods----------------
     public function save($model)

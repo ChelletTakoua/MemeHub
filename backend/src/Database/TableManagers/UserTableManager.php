@@ -45,9 +45,11 @@ class UserTableManager extends TableManager
      */
     static public function getUserById(int $id): ?User
     {
-        $users = self::getUser(["id" => $id]);
-        if(!empty($users)){
-            return $users[0];
+        if($id > 0){
+            $users = self::getUser(["id" => $id]);
+            if(!empty($users)){
+                return $users[0];
+            }
         }
         return null;
     }
@@ -59,11 +61,12 @@ class UserTableManager extends TableManager
      */
     static public function getUserByEmail(string $email): ?User
     {
-        $users = self::getUser(["email" => $email]);
-        if(!empty($users)){
-            return $users[0];
+        if(!empty($email)){
+            $users = self::getUser(["email" => $email]);
+            if(!empty($users)){
+                return $users[0];
+            }
         }
-
         return null;
 
     }
@@ -75,11 +78,12 @@ class UserTableManager extends TableManager
      */
     static public function getUserByUsername(string $username): ?User
     {
-        $users = self::getUser(["username" => $username]);
-        if(!empty($users)){
-            return $users[0];
+        if(!empty($username)){
+            $users = self::getUser(["username" => $username]);
+            if(!empty($users)){
+                return $users[0];
+            }
         }
-
         return null;
 
     }
@@ -91,9 +95,11 @@ class UserTableManager extends TableManager
      */
     static public function getUserByRole(string $role): array
     {
-        $users = self::getUser(["role" => $role]);
-        if(!empty($users)){
-            return $users;
+        if(!empty($role)){
+            $users = self::getUser(["role" => $role]);
+            if(!empty($users)){
+                return $users;
+            }
         }
         return [];
     }
@@ -105,11 +111,15 @@ class UserTableManager extends TableManager
      */
     static public function getUserByRegDate(string $reg_date): array
     {
-        $users = self::getUser(["reg_date" => $reg_date]);
-        if(!empty($users)){
-            return $users;
+
+        if(!empty($reg_date) && preg_match("/\d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2}/", $reg_date)) {
+            $users = self::getUser(["reg_date" => $reg_date]);
+            if (!empty($users)) {
+                return $users;
+            }
         }
         return [];
+
     }
 
 
@@ -153,7 +163,9 @@ class UserTableManager extends TableManager
      */
     static public function verifyUserIsVerified(int $id): bool
     {
-
+        if($id <= 0){
+            return false;
+        }
         $user = self::getUserById($id);
         if(!empty($user)){
             return $user->getIsVerified();
@@ -172,7 +184,10 @@ class UserTableManager extends TableManager
      */
     static public function addUser(string $username, string $email,string $password): ?User //to database
     {
-        if( self::verifyExistenceByUserName($username) || self::verifyExistenceByEmail($email) ){
+        if( empty($username) || empty($email) || empty($password) ){
+            return null;
+        }
+        else if( self::verifyExistenceByUserName($username) || self::verifyExistenceByEmail($email) ){
             return null;
         }
 
@@ -208,7 +223,11 @@ class UserTableManager extends TableManager
 
     // specific update methods
     static public function updateRole($id,$role){
-        self::updateUser(["role" => $role], ["id" => $id]);
+
+        if ($id > 0 && empty($role) ) {
+            self::updateUser(["role" => $role], ["id" => $id]);
+        }
+
     }
 
     static public function updatePassword($id,$password){

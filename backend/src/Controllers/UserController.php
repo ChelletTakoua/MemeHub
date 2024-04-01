@@ -5,11 +5,13 @@ namespace Controllers;
 use Authentication\Auth;
 use Authentication\AuthKeyGenerator;
 use Database\TableManagers\MemeTableManager;
+use Exception;
 use Exceptions\HttpExceptions\BadRequestException;
 use Exceptions\HttpExceptions\InvalidTokenException;
 use Exceptions\HttpExceptions\NotFoundException;
 use Database\TableManagers\UserTableManager;
 use Exceptions\HttpExceptions\NotLoggedInException;
+use HttpException;
 use Mailing\Mail;
 use Utils\RequestHandler;
 use Utils\ApiResponseBuilder;
@@ -26,7 +28,7 @@ class UserController
      */
     public function forgotPassword(string $username):void {
         try {
-            $user = UserTableManager::getByUsername($username);
+            $user = UserTableManager::getUserByUsername($username);
             if ($user == null) {
                 throw new NotFoundException("User not found");
             }
@@ -43,7 +45,7 @@ class UserController
      * It takes a token and a new password from the request body
      * @return void
      * @throws BadRequestException if the token or password is not provided
-     * @throws InvalidTokenException
+     * @throws InvalidTokenException|\Exceptions\HttpExceptions\HttpException
      */
     public function resetPassword() {
 
@@ -77,7 +79,7 @@ class UserController
      */
     public function sendVerificationEmail(string $username):void{
         try {
-            $user = UserTableManager::getByUsername($username);
+            $user = UserTableManager::getUserByUsername($username);
             if ($user == null) {
                 throw new NotFoundException("User not found");
             }
@@ -94,7 +96,7 @@ class UserController
      * It takes a token from the request body
      * @return void
      * @throws BadRequestException if the token is not provided
-     * @throws InvalidTokenException if the token is invalid
+     * @throws InvalidTokenException|\Exceptions\HttpExceptions\HttpException if the token is invalid
      */
     public function verifyEmail() {
 

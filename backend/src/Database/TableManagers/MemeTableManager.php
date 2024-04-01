@@ -35,6 +35,9 @@ class MemeTableManager extends TableManager
     // specific get methods
     static public function getMemeById(int $id): ?Meme
     {
+        if($id < 0){
+            return null;
+        }
         $memes = self::getMeme(["id" => $id]);
         if(!empty($memes)){
             return $memes[0];
@@ -44,32 +47,42 @@ class MemeTableManager extends TableManager
 
     static public function getMemeByTemplateId(int $template_id): ?array
     {
-        $memes = self::getMeme(["template_id" => $template_id]);
-        return $memes;
+        if (!TemplateTableManager::templateExists($template_id)) {
+            return null;
+        }
+        return self::getMeme(["template_id" => $template_id]);
     }
 
     static public function getMemeByUserId(int $user_id): ?array
     {
-        $memes = self::getMeme(["user_id" => $user_id]);
-        return $memes;
+        if (!UserTableManager::verifyExistenceById($user_id)) {
+            return null;
+        }
+        return self::getMeme(["user_id" => $user_id]);
     }
 
     static public function getMemeByCreationDate(string $creation_date): ?array
     {
-        $memes = self::getMeme(["creation_date" => $creation_date]);
-        return $memes;
+        if(empty($creation_date) || preg_match("/\d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2}/", $creation_date) ){
+            return null;
+        }
+        return self::getMeme(["creation_date" => $creation_date]);
     }
 
     static public function getMemeByCustomTitle(string $custom_title): ?array
     {
-        $memes = self::getMeme(["custom_title" => $custom_title]);
-        return $memes;
+        if(empty($custom_title)){
+            return null;
+        }
+        return self::getMeme(["custom_title" => $custom_title]);
     }
 
     static public function getMemeByNbLikes(int $nb_likes): ?array
     {
-        $memes = self::getMeme(["nb_likes" => $nb_likes]);
-        return $memes;
+        if($nb_likes < 0){
+            return null;
+        }
+        return self::getMeme(["nb_likes" => $nb_likes]);
     }
 
     //--------verify existence methods----------------
@@ -105,6 +118,9 @@ class MemeTableManager extends TableManager
      */
     static public function addMeme(int $template_id, string $custom_title, int $user_id, string $result_img ): ?Meme
     {
+        if(!UserTableManager::verifyExistenceById($user_id) || !TemplateTableManager::templateExists($template_id)){
+            return null;
+        }
         DatabaseQuery::executeQuery("insert","memes",["template_id"=>$template_id,"custom_title"=>$custom_title,"user_id"=>$user_id,"result_img"=>$result_img]);
         $id = DatabaseQuery::getLastInsertId();
         return self::getMemeById($id);
@@ -120,6 +136,9 @@ class MemeTableManager extends TableManager
      */
     static public function updateMeme(int $id, array $attributes): ?Meme
     {
+        if(!self::memeExists($id)){
+            return null;
+        }
         DatabaseQuery::executeQuery("update","memes",$attributes,["id"=>$id]);
         return self::getMemeById($id);
     }
@@ -127,20 +146,32 @@ class MemeTableManager extends TableManager
     // specific update methods
     static public function updateMemeTemplateId(int $id, int $template_id): ?Meme
     {
+        if(!TemplateTableManager::templateExists($template_id) || !self::memeExists($id)){
+            return null;
+        }
         return self::updateMeme($id,["template_id"=>$template_id]);
     }
 
     static public function updateMemeCustomTitle(int $id, string $custom_title): ?Meme
     {
+        if(empty($custom_title) || !self::memeExists($id)){
+            return null;
+        }
         return self::updateMeme($id,["custom_title"=>$custom_title]);
     }
 
     static public function updateMemeUserId(int $id, int $user_id): ?Meme
     {
+        if(!UserTableManager::verifyExistenceById($user_id) || !self::memeExists($id)){
+            return null;
+        }
         return self::updateMeme($id,["user_id"=>$user_id]);
     }
     static public function updateMemeResultImg(int $id, string $result_img): ?Meme
     {
+        if(empty($result_img) || !self::memeExists($id)){
+            return null;
+        }
         return self::updateMeme($id,["result_img"=>$result_img]);
     }
 
@@ -151,6 +182,9 @@ class MemeTableManager extends TableManager
      */
     static public function deleteMeme(int $id): void
     {
+        if(!self::memeExists($id)){
+            return;
+        }
         DatabaseQuery::executeQuery("delete","memes",[],["id"=>$id]);
     }
 

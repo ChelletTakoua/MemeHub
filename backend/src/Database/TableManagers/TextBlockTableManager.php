@@ -16,6 +16,7 @@ class TextBlockTableManager extends TableManager
      */
     static public function getTextBlock(array $params=[]): array
     {
+
         $queryObjects = DatabaseQuery::executeQuery("select","text_blocks",[],$params);
         $textBlocks = [];
         foreach ($queryObjects as $queryObject ) {
@@ -33,18 +34,22 @@ class TextBlockTableManager extends TableManager
     // specific get methods
     static public function getTextBlockById(int $id): ?TextBlock
     {
-        $textBlocks = self::getTextBlock(["id" => $id]);
-        if(!empty($textBlocks)){
-            return $textBlocks[0];
+        if( $id>0){
+            $textBlocks = self::getTextBlock(["id" => $id]);
+            if(!empty($textBlocks)){
+                return $textBlocks[0];
+            }
         }
         return null;
     }
 
     static public function getTextBlockByMemeId(int $meme_id): ?array
     {
-        $textBlocks = self::getTextBlock(["meme_id" => $meme_id]);
-        if(!empty($textBlocks)){
-            return $textBlocks;
+        if( $meme_id>0){
+            $textBlocks = self::getTextBlock(["meme_id" => $meme_id]);
+            if(!empty($textBlocks)){
+                return $textBlocks;
+            }
         }
         return [];
     }
@@ -72,10 +77,18 @@ class TextBlockTableManager extends TableManager
      */
     static public function addTextBlock(string $text, int $x, int $y, string $font_size, int $meme_id): ?TextBlock
     {
+
+        if( ! self::textBlockExistsByMemeId($meme_id) ){
+            return null;
+        }
+        else if(empty($text) || empty($font_size) || !is_numeric($x) || !is_numeric($y)){
+            return null;
+        }
         DatabaseQuery::executeQuery("insert", "text_blocks",
                                     ["text" => $text, "x" => $x, "y" => $y, "font_size" => $font_size , "meme_id" => $meme_id]);
         $id = DatabaseQuery::getLastInsertId();
         return self::getTextBlockById($id);
+
     }
 
     //--------update methods----------------
@@ -86,28 +99,45 @@ class TextBlockTableManager extends TableManager
      * @param array $conditions
      */
     static public function updateTextBlock(array $params=[], array $conditions=[]){
-        if(!empty($params) && !empty($conditions)) {
+
+        if( !empty($params) && !empty($conditions) && self::verifyExistenceById($conditions["id"]) ){
             DatabaseQuery::executeQuery("update", "text_blocks", $params, $conditions);
         }
+
     }
 
     // specific update methods
     static public function updateTextBlockText(int $id, string $text){
+        if(empty($text)){
+            return;
+        }
         self::updateTextBlock(["text" => $text], ["id" => $id]);
     }
     static public function updateTextBlockX(int $id, int $x){
+        if(!is_numeric($x)){
+            return;
+        }
         self::updateTextBlock(["x" => $x], ["id" => $id]);
     }
 
     static public function updateTextBlockY(int $id, int $y){
+        if(!is_numeric($y)){
+            return;
+        }
         self::updateTextBlock(["y" => $y], ["id" => $id]);
     }
 
     static public function updateTextBlockFontSize(int $id, string $font_size){
+        if(empty($font_size)){
+            return;
+        }
         self::updateTextBlock(["font_size" => $font_size], ["id" => $id]);
     }
 
     static public function updateTextBlockXY(int $id, int $x, int $y){
+        if(!is_numeric($x) || !is_numeric($y)){
+            return;
+        }
         self::updateTextBlock(["x" => $x, "y" => $y], ["id" => $id]);
     }
 
@@ -125,15 +155,28 @@ class TextBlockTableManager extends TableManager
 
     // specific delete methods
     static public function deleteTextBlockById(int $id){
+        if( !self::textBlockExists($id) ){
+            return;
+        }
         self::deleteTextBlock(["id" => $id]);
     }
 
     static public function deleteTextBlockByText(string $text){
+        if(empty($text)){
+            return;
+        }
         self::deleteTextBlock(["text" => $text]);
     }
     static public function deleteTextBlockByMemeId(int $meme_id){
         self::deleteTextBlock(["meme_id" => $meme_id]);
     }
+
+    //--------verify existence methods----------------
+    private static function verifyExistenceById($id): bool
+    {
+        return (!empty (self::getTextBlockById($id)));
+    }
+
 
     //--------save and retrieve methods----------------
 

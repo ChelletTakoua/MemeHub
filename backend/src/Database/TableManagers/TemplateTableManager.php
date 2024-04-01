@@ -27,27 +27,37 @@ class TemplateTableManager extends TableManager
 
     // specific get methods
     static public function getTemplateById(int $id): ?Template{
-        $templates = self::getTemplate(["id" => $id]);
-        if(!empty($templates)){
-            return $templates[0];
+        if( $id>0) {
+            $templates = self::getTemplate(["id" => $id]);
+            if (!empty($templates)) {
+                return $templates[0];
+            }
         }
         return null;
     }
 
     static public function getTemplateByURL(string $URL): ?Template{
-        $templates = self::getTemplate(["URL" => $URL]);
-        if(!empty($templates)){
-            return $templates[0];
+        if( !empty($URL) ){
+            $templates = self::getTemplate(["URL" => $URL]);
+            if( !empty($templates) ){
+                return $templates[0];
+            }
         }
+
         return null;
+
     }
 
     static public function getTemplateByTitle(string $title): ?array{
+        if( empty($title) ){
+            return null;
+        }
         $templates = self::getTemplate(["title" => $title]);
         if(!empty($templates)){
             return $templates;
         }
         return null;
+
     }
 
     //--------verify existence methods----------------
@@ -68,12 +78,14 @@ class TemplateTableManager extends TableManager
      * @return Template|null
      */
     static public function addTemplate(string $title, string $URL): ?Template{
-        if( self::getTemplateByURL($URL) != null ){
+
+        if( empty($title) || empty($URL) || self::templateExistsByURL($URL) ){
             return null;
         }
-        $queryObject = DatabaseQuery::executeQuery("insert","templates",["title" => $title, "URL" => $URL]);
+        DatabaseQuery::executeQuery("insert","templates",["title" => $title, "URL" => $URL]);
         $id = DatabaseQuery::getLastInsertId();
         return new Template($id, $title, $URL);
+
     }
 
 
@@ -82,23 +94,36 @@ class TemplateTableManager extends TableManager
     static public function updateTemplate(array $params = [] , array $conditions = []): void{
         if( !empty($params) && !empty($conditions) )
             DatabaseQuery::executeQuery("update","templates",$params,$conditions);
+
     }
 
     // specific update methods
     static public function updateTemplateTitle(int $id, string $title): void{
+        if( empty($title) || $id<1){
+            return;
+        }
         self::updateTemplate(["title" => $title], ["id" => $id]);
     }
 
     static public function updateTemplateURL(string $id, string $URL): void{
+        if( empty($URL) || $id<1){
+            return;
+        }
         self::updateTemplate(["URL" => $URL], ["id" => $id]);
     }
 
     //--------delete methods----------------
     static public function deleteTemplateById(int $id): void{
+        if( $id<1 ){
+            return;
+        }
         DatabaseQuery::executeQuery("delete","templates",[],["id" => $id]);
     }
 
     static public function deleteTemplateByURL(string $URL): void{
+        if( empty($URL) ){
+            return;
+        }
         DatabaseQuery::executeQuery("delete","templates",[],["URL" => $URL]);
     }
 

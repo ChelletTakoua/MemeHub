@@ -4,6 +4,8 @@ import Moment from "react-moment";
 import ProfileCard from "../components/ProfileCard";
 import { AppContext } from "../context/AppContext";
 import { memeApi, userApi } from "../services/api";
+import { Link } from "react-router-dom";
+import { FaPlusCircle } from "react-icons/fa";
 
 const Profile = () => {
   const { user, setUser, toast } = useContext(AppContext);
@@ -179,6 +181,19 @@ const Profile = () => {
             <div className="w-3/4">
               <h3 className="text-xl font-bold mt-4 text-white">My Memes</h3>
               <div className="grid grid-cols-3 gap-4 mt-2">
+                {memes.length === 0 && ( // If there are no memes //TODO: make this better
+                  <div className="flex flex-col items-center justify-center gap-4">
+                  <div className="text-black">No memes to show.</div>
+                    <Link to="/create">
+                      <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
+                        <span className="flex gap-2 items-center">
+                          <FaPlusCircle />
+                          Add a Meme
+                        </span>
+                      </button>
+                    </Link>
+                  </div>
+                )}
                 {memes?.map((meme) => (
                   <ProfileCard
                     key={meme.id}

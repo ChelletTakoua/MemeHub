@@ -1,5 +1,5 @@
 import React, { useContext, useEffect } from "react";
-import { Route, Routes } from "react-router-dom";
+import { Route, Routes, useLocation } from "react-router-dom";
 import Navbar from "./components/Navbar";
 import Home from "./pages/Home";
 import Login from "./pages/Login";
@@ -8,6 +8,7 @@ import AdminDashboard from "./pages/AdminDashboard";
 import MemeEdit from "./pages/MemeEdit";
 import Profile from "./pages/Profile";
 import About from "./pages/AboutUs";
+import VerifyEmail from "./pages/VerifyEmail";
 import Footer from "./components/Footer";
 import { AppContext } from "./context/AppContext";
 import "./App.css";
@@ -20,13 +21,19 @@ function App() {
     checkAuth();
   }, [checkAuth]);
 
+  const location = useLocation();
+  const hideNavbar = (location.pathname === "/verifyEmail") || (location.pathname === "/resetPassword");
+
+  
+
   return (
     <div className="app">
-      <Navbar />
+      {!hideNavbar && <Navbar />}
       <main className="app-main">
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/about" element={<About />} />
+          <Route path="/verifyEmail" element={<VerifyEmail />} />
           {!user && (
             <>
               <Route path="/login" element={<Login />} />

@@ -35,7 +35,18 @@ export const userApi = {
   editUserProfile: (userData) =>
     base.post(USER_API_ROUTES["EDIT_PROFILE"], userData),
   deleteUserProfile: () => base.delete(USER_API_ROUTES["DELETE_PROFILE"]),
+  sendVerifEmail: (username) => base.post(USER_API_ROUTES["SEND_VERIF_EMAIL"].replace(":username", username)),
+  verifyEmail: (token) => base.post(USER_API_ROUTES["VERIFY_EMAIL"], { token }),
+  forgotPassword: (username) => base.post(USER_API_ROUTES["FORGOT_PASSWORD"].replace(":username", username)),
+  resetPassword: (token,password) => base.post(USER_API_ROUTES["RESET_PASSWORD"], { token, password }),
 };
+
+/*
+SEND_VERIF_EMAIL: "/sendVerificationEmail/:username",
+  VERIFY_EMAIL: "/verifyEmail",
+  FORGOT_PASSWORD: "/forgotPassword/:username",
+  RESET_PASSWORD: "/resetPassword",
+*/
 
 export const memeApi = {
   getAllMemes: () => base.get(MEME_API_ROUTES["GET_ALL_MEMES"]),

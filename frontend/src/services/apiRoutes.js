@@ -6,6 +6,10 @@ const USER_API_ROUTES = {
   MODIFY_PASSWORD: "/user/profile/modifyPassword",
   EDIT_PROFILE: "/user/profile/edit",
   DELETE_PROFILE: "/user/profile",
+  SEND_VERIF_EMAIL: "/sendVerificationEmail/:username",
+  VERIFY_EMAIL: "/verifyEmail",
+  FORGOT_PASSWORD: "/forgotPassword/:username",
+  RESET_PASSWORD: "/resetPassword",
 };
 
 const MEME_API_ROUTES = {

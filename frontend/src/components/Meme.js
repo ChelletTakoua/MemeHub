@@ -75,7 +75,7 @@ export default function Meme({ currMeme = null, setBrowse = null }) {
 
   return (
     <section className="relative">
-      {setBrowse && (
+      {!id && (
         <button
           onClick={() => setBrowse(true)}
           className="absolute top-5 left-48 flex items-center gap-2 justify-center w-40 rounded-full bg-white bg-gradient-to-r from-algae to-grass px-4 py-2 text-white mb-2 text-lg"

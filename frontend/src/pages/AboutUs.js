@@ -19,7 +19,7 @@ const About = () => {
         <form
           action="mailto:chadhagrami1@gmail.com"
           method="post"
-          enctype="text/plain"
+          encType="text/plain"
         >
           <div className="flex items-center justify-center">
             <button

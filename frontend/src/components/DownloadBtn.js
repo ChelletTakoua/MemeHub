@@ -4,11 +4,10 @@ export default function DownloadBtn() {
   function download() {
     htmlToImage
       .toPng(document.querySelector("#meme"), { quality: 1 })
-      .then(function (data) {
-        console.log(data);
-        let link = document.createElement("a");
-        link.download = "meme.png";
-        link.href = data;
+      .then(function (dataUrl) {
+        var link = document.createElement("a");
+        link.download = "meme.jpeg";
+        link.href = dataUrl;
         link.click();
       });
   }

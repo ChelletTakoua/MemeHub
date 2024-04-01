@@ -11,11 +11,11 @@ const Profile = () => {
   const { id } = useParams("id");
   const isOwner = user?.id === +id;
 
-  const [username, setUsername] = useState(null);
-  const [email, setEmail] = useState(null);
+  const [username, setUsername] = useState("");
+  const [email, setEmail] = useState("");
   const [profileImage, setProfileImage] = useState(null);
-  const [regDate, setRegDate] = useState(null);
-  const [memes, setMemes] = useState(null);
+  const [regDate, setRegDate] = useState("");
+  const [memes, setMemes] = useState([]);
 
   const usernameChanged = useRef(false);
   const emailChanged = useRef(false);
@@ -133,7 +133,7 @@ const Profile = () => {
               <h2 className="text-2xl font-bold mt-4 text-white">{username}</h2>
             )}
             <p className="text-gray-300">
-              Joined: <Moment durationFromNow>{regDate}</Moment>
+              Joined: <Moment fromNow>{new Date(regDate)}</Moment>
             </p>
             <p className="text-gray-300">
               Total Memes Contributed: {memes ? memes.length : 0}

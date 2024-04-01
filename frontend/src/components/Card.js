@@ -46,10 +46,10 @@ export default function Card({ meme }) {
             <p className="text-gray-700 text-base ml-2"></p>
             <p className="text-zinc-100 font-bold">{username}</p>
             <p className="text-gray-400">
-              <Moment fromNow>{meme?.creation_date}</Moment>
+              <Moment fromNow>{new Date(meme?.creation_date)}</Moment>
             </p>
           </div>
-          <OptionsButton memeId={meme?.id} />
+          <OptionsButton memeResultImg={meme?.result_img} />
         </div>
         <MemeImg
           key={meme?.id}

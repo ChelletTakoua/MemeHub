@@ -1,56 +1,61 @@
 import trollFace from "../images/troll_face.png";
-import youvemadeit from "../images/YOUVEmADEIT.jpeg";
-import React, { useContext, useEffect, useState } from 'react';
-import { userApi } from '../services/api';
+import React, { useContext, useEffect, useMemo, useState } from "react";
+import { userApi } from "../services/api";
 import { Link } from "react-router-dom";
 import { AppContext } from "../context/AppContext";
-import { useLocation } from 'react-router-dom';
-
+import { useLocation } from "react-router-dom";
 
 const VerifyEmail = () => {
-
-    const VerificationStatus = {
-        PENDING: 0,
-        USER_ALREADY_VERIFIED: 402,
-        VERIFIED: 200,
-        FAILED_TO_VERIFY: 500,
-        TOKEN_EXPIRED: 408,
-        INVALID_TOKEN: 403,
+  const VerificationStatus = useMemo(() => {
+    return {
+      PENDING: 0,
+      USER_ALREADY_VERIFIED: 402,
+      VERIFIED: 200,
+      FAILED_TO_VERIFY: 500,
+      TOKEN_EXPIRED: 408,
+      INVALID_TOKEN: 403,
     };
+  }, []);
 
-    const location = useLocation();
-    const searchParams = new URLSearchParams(location.search);
-    const token = searchParams.get('token');
-    const [verificationStatus, setVerificationStatus] = useState(VerificationStatus.PENDING);
-    const {toast} = useContext(AppContext);
+  const location = useLocation();
+  const searchParams = new URLSearchParams(location.search);
+  const token = searchParams.get("token");
+  const [verificationStatus, setVerificationStatus] = useState(
+    VerificationStatus.PENDING
+  );
+  const { toast } = useContext(AppContext);
 
-    useEffect(() => {
-        const verifEmail = async () => {
-          try {
-            const res = await userApi.verifyEmail(token);
-            console.log("Verif sent:", res);
-            setVerificationStatus(VerificationStatus.VERIFIED);
-            toast.success("Your account has been verified successfully.");
-          } catch (error) {
-            toast.error(error.response?.data.message)
-            if (error.response?.status === VerificationStatus.USER_ALREADY_VERIFIED) {
-              setVerificationStatus(VerificationStatus.USER_ALREADY_VERIFIED);
-            } else if (error.response?.status === VerificationStatus.TOKEN_EXPIRED) {
-              setVerificationStatus(VerificationStatus.TOKEN_EXPIRED);
-            } else if (error.response?.status === VerificationStatus.INVALID_TOKEN) {
-              setVerificationStatus(VerificationStatus.INVALID_TOKEN);
-            } else {
-              setVerificationStatus(VerificationStatus.FAILED_TO_VERIFY);
-            }
-          }
-        };
-        verifEmail();
-      }, []);
+  useEffect(() => {
+    const verifEmail = async () => {
+      try {
+        const res = await userApi.verifyEmail(token);
+        console.log("Verif sent:", res);
+        setVerificationStatus(VerificationStatus.VERIFIED);
+        toast.success("Your account has been verified successfully.");
+      } catch (error) {
+        toast.error(error.response?.data.message);
+        if (
+          error.response?.status === VerificationStatus.USER_ALREADY_VERIFIED
+        ) {
+          setVerificationStatus(VerificationStatus.USER_ALREADY_VERIFIED);
+        } else if (
+          error.response?.status === VerificationStatus.TOKEN_EXPIRED
+        ) {
+          setVerificationStatus(VerificationStatus.TOKEN_EXPIRED);
+        } else if (
+          error.response?.status === VerificationStatus.INVALID_TOKEN
+        ) {
+          setVerificationStatus(VerificationStatus.INVALID_TOKEN);
+        } else {
+          setVerificationStatus(VerificationStatus.FAILED_TO_VERIFY);
+        }
+      }
+    };
+    verifEmail();
+  }, [setVerificationStatus, toast, token, VerificationStatus]);
 
-
-
-    return (
-     <section className="bg-palenight">
+  return (
+    <section className="bg-palenight">
       <div className="flex flex-col items-center space-y-5 justify-center px-6 py-8 mx-auto md:h-screen lg:py-0">
         <Link
           to="/"
@@ -66,23 +71,29 @@ const VerifyEmail = () => {
               Account Verification
             </h1>
             <p className="mb-8 text-gray-300 text-xl ">
-                {verificationStatus === VerificationStatus.PENDING && "Your account is being verified. Please wait..."}
-                {verificationStatus === VerificationStatus.USER_ALREADY_VERIFIED && "Your account is already verified."}
-                {verificationStatus === VerificationStatus.VERIFIED && "Your account has been verified successfully."}
-                {verificationStatus === VerificationStatus.FAILED_TO_VERIFY && "Failed to verify your account. Please try again."}
-                {verificationStatus === VerificationStatus.TOKEN_EXPIRED && "Verification token has expired. We have sent you another verification email with a new token."}
-                {verificationStatus === VerificationStatus.INVALID_TOKEN && "Invalid verification token. Please try again."}
+              {verificationStatus === VerificationStatus.PENDING &&
+                "Your account is being verified. Please wait..."}
+              {verificationStatus ===
+                VerificationStatus.USER_ALREADY_VERIFIED &&
+                "Your account is already verified."}
+              {verificationStatus === VerificationStatus.VERIFIED &&
+                "Your account has been verified successfully."}
+              {verificationStatus === VerificationStatus.FAILED_TO_VERIFY &&
+                "Failed to verify your account. Please try again."}
+              {verificationStatus === VerificationStatus.TOKEN_EXPIRED &&
+                "Verification token has expired. We have sent you another verification email with a new token."}
+              {verificationStatus === VerificationStatus.INVALID_TOKEN &&
+                "Invalid verification token. Please try again."}
             </p>
-            <p className="mb-8">Welcome to MemeHub!<br></br> Who came first, the chicken or the egg?<br></br> It doesn't matter! It's meming time! </p>
-            
+            <p className="mb-8">
+              Welcome to MemeHub!<br></br> Who came first, the chicken or the
+              egg?<br></br> It doesn't matter! It's meming time!{" "}
+            </p>
           </div>
         </div>
-
-
       </div>
-       
     </section>
-    );
+  );
 };
 
 export default VerifyEmail;

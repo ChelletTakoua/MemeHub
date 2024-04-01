@@ -30,6 +30,7 @@ class MemeController
     {
         // Retrieve all memes from the database
         $memes = MemeTableManager::getMeme();
+        $memesArray[] = [];
         // Iterate over each meme
         foreach ($memes as $meme) {
             try {
@@ -54,9 +55,11 @@ class MemeController
                     "text_blocks" => TextBlockTableManager::getTextBlockByMemeId($meme->getId()),
                     "result_img" => $meme->getResultImg(),
                 ];
-            }
                 // Add the meme's data to the memes array
                 $memesArray[] = $memeData;
+            }
+                
+                
             } catch (\Exception $e) {
                 // If there's an error while retrieving the meme's data, throw a BadRequestException
                 throw new BadRequestException('Failed to get meme from the database', 500);
@@ -129,6 +132,7 @@ class MemeController
     {
         // Retrieve all memes from the database associated with the user ID
         $memes = MemeTableManager::getMemeByUserId($id);
+        $memesArray[] = [];
         foreach ($memes as $meme) {
             try {
                 foreach ($memes as $meme) {
@@ -152,9 +156,10 @@ class MemeController
                     "text_blocks" => TextBlockTableManager::getTextBlockByMemeId($meme->getId()),
                     "result_img" => $meme->getResultImg(),
                 ];
-            }
                 // Add the meme's data to the memes array
                 $memesArray[] = $memeData;
+            }
+                
             } catch (\Exception $e) {
                 // If there's an error while retrieving the meme's data, throw a BadRequestException
                 throw new BadRequestException('Failed to get meme from the database', 500);

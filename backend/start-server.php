@@ -2,33 +2,50 @@
 
 require_once 'src/Database/DatabaseConnection.php';
 
-define('ENVIRONMENT', (in_array('--dev', $argv)) ? 'development' : 'production');
-// TODO: maybe change sth in the config file
 
+/**
+ * Updates the development mode in the config file.
+ *
+ * @param array $argv The command line arguments.
+ * @return void
 
-try {
-    $db = Database\DatabaseConnection::getInstance();
-} catch (PDOException $e) {
-    echo ( "\033[31mDatabase connection error: " . $e->getMessage() . "\033[0m\n");
-    echo ( "\033[33mCheck your database configuration in src/config/database.php\033[0m\n");
-    die();
+ */
+function updateDevMode($argv)
+{
+    $configFile = __DIR__ . '/src/config/app.php';
+    $config = include $configFile;
 
+    $devIndex = array_search('--dev=true', $argv);
+    if ($devIndex !== false) {
+        $config['development_mode'] = true;
+        file_put_contents($configFile, '<?php return ' . var_export($config, true) . ';');
+        return;
+    }
+
+    $devIndex = array_search('--dev=false', $argv);
+    if ($devIndex !== false) {
+        $config['development_mode'] = false;
+        file_put_contents($configFile, '<?php return ' . var_export($config, true) . ';');
+    }
 }
-echo "\nDatabase connection successful.\n\n";
 
 
-if (ENVIRONMENT === 'development') {
-    echo "Development mode enabled. Debugging features are enabled.\n";
-} else {
-    echo "Production mode enabled. Debugging features are disabled.\n";
+function connectToDatabase(){
+        try {
+        $db = Database\DatabaseConnection::getInstance();
+    } catch (PDOException $e) {
+        echo ( "\033[31mDatabase connection error: " . $e->getMessage() . "\033[0m\n");
+        echo ( "\033[33mCheck your database configuration in src/config/database.php\033[0m\n");
+        die();
+
+    }
+    echo "\nDatabase connection successful.\n\n";
 }
 
 
 
-
-
-
-
+connectToDatabase();
+updateDevMode($argv);
 
 
 $appConfig = include __DIR__ . '/src/config/app.php';

@@ -1,6 +1,12 @@
 <?php
 
-//TODO: add condition if dev mode is enabled
+// if the development mode is not enabled, we don't need to do anything
+$appConfig = include __DIR__ . '/../config/app.php';
+
+if ( ! $appConfig['development_mode']) {
+    return;
+}
+
 
 if (!isset($_SESSION['requests'])) {
     $_SESSION['requests'] = [];

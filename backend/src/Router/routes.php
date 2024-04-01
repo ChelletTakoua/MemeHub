@@ -30,12 +30,14 @@ $router->get('/checkAuth', "AuthController@checkAuth", ['guest','user', 'admin']
 $router->get('/verifyToken', "AuthController@verifyToken", ['guest']);
 
 // routes to send email of forgot password, and route for reset password with token
-$router->post('/forgotPassword', "UserController@forgotPassword", ['guest']); // send email with token
+$router->post('/forgotPassword/:username', "UserController@forgotPassword", ['guest']); // send email with token
 $router->post('/resetPassword', "UserController@resetPassword", ['guest']); // reset password with token
 
 // verify email after registration
-$router->get('/sendVerificationEmail', "UserController@sendVerificationEmail", ['user', 'admin']); // send verification email
+$router->post('/sendVerificationEmail/:username', "UserController@sendVerificationEmail", ['guest']); // send verification email
 $router->post('/verifyEmail', "UserController@verifyEmail", ['guest']); // verify email (token in the url?)
+
+
 
 
 $router->get('/user/:id', "UserController@getUserProfile", ['guest','user', 'admin']); // get user profile

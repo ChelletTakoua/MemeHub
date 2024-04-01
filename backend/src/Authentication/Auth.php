@@ -24,33 +24,39 @@ class Auth
     * @return User The logged-in user.
     * @throws LoginFailedException If the password is incorrect or the user is not found.
     */
-    public static function login(string $username, string $password): User
+    public static function login(string $username, string $password, $requirePassword = true): User
     {
-        // Retrieve the user from the database using the provided username
+
         $user = UserTableManager::getUserByUsername($username);
-        // If the user is found and the provided password matches the user's password
-        if (!empty($user) && password_verify($password, $user->getPassword()) && $user->getIsVerified()) {
-            // Store the user's ID in the session
-            $_SESSION['user_id'] = $user->getId();
-            // Set the active user to the logged-in user
-            self::$activeUser = $user;
-            // Return the user
-            return $user;
-        } 
-        // If the user is found but the password does not match
-        else if (!empty($user) && !password_verify($password, $user->getPassword()))  {
-            // Throw a LoginFailedException with the message "Incorrect password"
-            throw new LoginFailedException("Incorrect password");
-        }
-        else if (!empty($user) && !$user->getIsVerified()) {
-            // Throw a LoginFailedException with the message "User not verified"
-            throw new LoginFailedException("User not verified");
-        }
-        // If the user is not found
-        else {
-            // Throw a LoginFailedException with the message "User not found"
+
+        if(empty($user)){
             throw new LoginFailedException("User not found");
         }
+        if ( $requirePassword && !password_verify($password, $user->getPassword())) {
+            throw new LoginFailedException("Incorrect password");
+        }
+        if (!$user->getIsVerified()) {
+            throw new LoginFailedException("User not verified");
+        }
+
+        self::setSessionUser($user);
+        return $user;
+
+
+    }
+
+
+
+    private static function setSessionUserId($userId): void
+    {
+        $_SESSION['user_id'] = $userId;
+        self::$activeUser = null;
+    }
+
+    private static function setSessionUser($user): void
+    {
+        $_SESSION['user_id'] = $user->getId();
+        self::$activeUser = $user;
     }
 
     /**

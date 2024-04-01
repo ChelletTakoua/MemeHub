@@ -180,7 +180,7 @@ class MemeController
         // Retrieve the JSON request body
         $requestBody = RequestHandler::getJsonRequestBody();
         // Check if the request body is not empty if the user is logged in
-        if (!empty($requestBody) && !isset($_SESSION['user_id'])&& isset($requestBody['result_img']) && isset($requestBody['text_blocks'])){
+        if (!empty($requestBody) && isset($_SESSION['user_id'])&& isset($requestBody['result_img']) && isset($requestBody['text_blocks'])){
             //add the text blocks
             TextBlockTableManager::deleteTextBlockByMemeId($id);
             foreach ($requestBody['text_blocks'] as $textBlock) {

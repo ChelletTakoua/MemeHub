@@ -30,7 +30,7 @@ class MemeController
     {
         // Retrieve all memes from the database
         $memes = MemeTableManager::getMeme();
-        $memesArray[] = [];
+        $memesArray = [];
         // Iterate over each meme
         foreach ($memes as $meme) {
             try {
@@ -132,7 +132,7 @@ class MemeController
     {
         // Retrieve all memes from the database associated with the user ID
         $memes = MemeTableManager::getMemeByUserId($id);
-        $memesArray[] = [];
+        $memesArray = [];
         foreach ($memes as $meme) {
             try {
                 foreach ($memes as $meme) {

@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useRef, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import Moment from "react-moment";
 import ProfileCard from "../components/ProfileCard";
 import { AppContext } from "../context/AppContext";
@@ -21,6 +21,8 @@ const Profile = () => {
   const emailChanged = useRef(false);
   const profileImageChanged = useRef(false);
 
+  const navigate = useNavigate();
+
   useEffect(() => {
     const fetchUser = async (id) => {
       try {
@@ -30,7 +32,7 @@ const Profile = () => {
         setProfileImage(res?.data.data.user.profile_pic);
         setRegDate(res?.data.data.user.reg_dat);
       } catch (error) {
-        console.error("Error fetching data:", error);
+        navigate("/not_found");
       }
     };
 

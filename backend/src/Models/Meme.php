@@ -41,7 +41,7 @@ class Meme extends Model{
         return $this->creation_date;
     }
 
-    public function getNbLikes(): int
+    public function getNbLikes()
     {
         return $this->nb_likes;
     }

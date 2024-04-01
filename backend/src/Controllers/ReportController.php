@@ -38,7 +38,8 @@ class ReportController
             //block the meme
             $meme= $report->getMeme();
             $meme_id=$meme->getId();
-            $blockedMeme= BlockedMemeTableManager::addBlockedMeme($meme_id, $report->getUserId(), $id);
+            $user_id=$meme->getUserId();
+            $blockedMeme= BlockedMemeTableManager::addBlockedMeme($meme_id, $user_id, $id);
             // Build a success response
             $response = ApiResponseBuilder::buildSuccessResponse();
             echo json_encode($response);

@@ -177,35 +177,25 @@ class MemeController
     }
     public function modifyMeme($id)
     {
-        // Retrieve the JSON request body
         $requestBody = RequestHandler::getJsonRequestBody();
-        // Check if the request body is not empty if the user is logged in
-        if (!empty($requestBody) && isset($_SESSION['user_id'])&& isset($requestBody['result_img']) && isset($requestBody['text_blocks'])){
-            //add the text blocks
-            TextBlockTableManager::deleteTextBlockByMemeId($id);
-            foreach ($requestBody['text_blocks'] as $textBlock) {
-                $textBlock=TextBlockTableManager::addTextBlock($textBlock['text'], $textBlock['x'], $textBlock['y'], $textBlock['font_size'], $id);
-            }
-            // Try to update the meme to the database
-            $meme = MemeTableManager::updateMemeResultImg($id,$requestBody['result_img'] );
-            
-            // Check if the meme was successfully added
-            if (!empty($meme)) {
-                // Build a success response with the new meme's data
-                $response = ApiResponseBuilder::buildSuccessResponse();
-                // Encode the response as JSON and output it
-                echo json_encode($response);
-            } else {
-                // If the meme was not mofified successfully, throw a BadRequestException
-                throw new BadRequestException('Failed to modify meme to the database', 500);
-            }
-        } else if (!isset($_SESSION['user_id'])) {
-            // If the user is not logged in, throw a NotLoggedInException
+        if (!isset($_SESSION['user_id'])) {
             throw new NotLoggedInException('User not logged in');
-        } else {
-            // If the request body is invalid, throw a BadRequestException
+        }
+        if(empty($requestBody) ||  !isset($requestBody['result_img']) || !isset($requestBody['text_blocks'])){
             throw new BadRequestException('Invalid request body', 400);
         }
+
+        TextBlockTableManager::deleteTextBlockByMemeId($id);
+        foreach ($requestBody['text_blocks'] as $textBlock) {
+            $textBlock=TextBlockTableManager::addTextBlock($textBlock['text'], $textBlock['x'], $textBlock['y'], $textBlock['font_size'], $id);
+        }
+        $meme = MemeTableManager::updateMemeResultImg($id,$requestBody['result_img'] );
+        if (empty($meme)) {
+            throw new BadRequestException('Failed to modify meme to the database', 500);
+        }
+
+        $response = ApiResponseBuilder::buildSuccessResponse();
+        echo json_encode($response);
     }
 
     /**

@@ -103,7 +103,7 @@ class MemeTableManager extends TableManager
      * @param string $result_img
      * @return Meme|null
      */
-    static public function addMeme(int $template_id, string $custom_title, int $user_id, string $result_img): ?Meme
+    static public function addMeme(int $template_id, string $custom_title, int $user_id, string $result_img ): ?Meme
     {
         DatabaseQuery::executeQuery("insert","memes",["template_id"=>$template_id,"custom_title"=>$custom_title,"user_id"=>$user_id,"result_img"=>$result_img]);
         $id = DatabaseQuery::getLastInsertId();

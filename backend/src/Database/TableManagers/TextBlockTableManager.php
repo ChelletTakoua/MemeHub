@@ -131,6 +131,9 @@ class TextBlockTableManager extends TableManager
     static public function deleteTextBlockByText(string $text){
         self::deleteTextBlock(["text" => $text]);
     }
+    static public function deleteTextBlockByMemeId(int $meme_id){
+        self::deleteTextBlock(["meme_id" => $meme_id]);
+    }
 
     //--------save and retrieve methods----------------
 

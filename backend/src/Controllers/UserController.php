@@ -7,6 +7,7 @@ use Authentication\AuthKeyGenerator;
 use Database\TableManagers\MemeTableManager;
 use Exception;
 use Exceptions\HttpExceptions\BadRequestException;
+use Exceptions\HttpExceptions\ExpiredTokenException;
 use Exceptions\HttpExceptions\InvalidTokenException;
 use Exceptions\HttpExceptions\NotFoundException;
 use Database\TableManagers\UserTableManager;
@@ -79,17 +80,14 @@ class UserController
      * @throws HttpException If an error occurs during the process.
      */
     public function sendVerificationEmail(string $username):void{
-        try {
-            $user = UserTableManager::getUserByUsername($username);
-            if ($user == null) {
-                throw new NotFoundException("User not found");
-            }
-            Mail::sendAccountCreatedMail($user);
-            $response = ApiResponseBuilder::buildSuccessResponse();
-            echo json_encode($response);
-        } catch (Exception $e) {
-            throw new HttpException;
+        $user = UserTableManager::getUserByUsername($username);
+        if ($user == null) {
+             throw new NotFoundException("User not found");
         }
+        Mail::sendAccountCreatedMail($user);
+        $response = ApiResponseBuilder::buildSuccessResponse();
+        echo json_encode($response);
+
     }
 
     /**
@@ -102,12 +100,21 @@ class UserController
     public function verifyEmail() {
 
         $requestBody = RequestHandler::getJsonRequestBody();
+        if(!isset($requestBody['token'])) {
+            throw new BadRequestException("Token must be provided");
+        }
         $token = $requestBody['token'];
 
-        $user = AuthKeyGenerator::getUserFromToken($token);
+        try{
+            $user = AuthKeyGenerator::getUserFromToken($token);
+        } catch (ExpiredTokenException $e) {
+            $user = AuthKeyGenerator::getUserFromToken($token, false);
+            Mail::sendAccountCreatedMail($user);
+            throw $e;
+        }
 
         if($user->getIsVerified()) {
-            throw new BadRequestException("User already verified");
+            throw new BadRequestException("User already verified",402);
         }
         UserTableManager::updateIsVerified($user->getId());
 

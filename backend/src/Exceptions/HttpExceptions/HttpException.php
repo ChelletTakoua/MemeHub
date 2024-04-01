@@ -2,8 +2,12 @@
 
 namespace Exceptions\HttpExceptions;
 
-//this class is used to throw exceptions with a specific HTTP response code
-class HttpException extends \Exception // maybe rename to FrontendException
+/**
+ * Class HttpException is the base class for all HTTP exceptions.
+ * HTTP exceptions represent an HTTP error status code to be returned to the client.
+ * @package Exceptions\HttpExceptions
+ */
+class HttpException extends \Exception
 {
     protected $httpResponseCode;
 

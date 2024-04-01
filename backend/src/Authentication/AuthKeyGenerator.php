@@ -4,6 +4,7 @@ namespace Authentication;
 
 use Database\TableManagers\UserTableManager;
 use Exception;
+use Exceptions\HttpExceptions\ExpiredTokenException;
 use Exceptions\HttpExceptions\HttpException;
 use Exceptions\HttpExceptions\InvalidTokenException;
 use Models\User;
@@ -62,7 +63,7 @@ class AuthKeyGenerator
      * @throws HttpException
      * @throws InvalidTokenException
      */
-    public static function getUserFromToken(string $jwk): User
+    public static function getUserFromToken(string $jwk,bool $expires = true): User
     {
         $decoded = self::decodeJWK($jwk);
         $userId = $decoded['userId'];
@@ -77,8 +78,8 @@ class AuthKeyGenerator
         if ($user === null || $user->getUsername() !== $username || $user->getEmail() !== $email) {
             throw new InvalidTokenException();
         }
-        if (time() > $decoded['exp']) {
-            throw new InvalidTokenException("Token expired");
+        if ($expires && $decoded['exp'] < time()) {
+            throw new ExpiredTokenException();
         }
 
 

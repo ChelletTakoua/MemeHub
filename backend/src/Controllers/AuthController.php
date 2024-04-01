@@ -112,7 +112,11 @@ class AuthController
 
     public static function checkAuth()
     {
-        $user = Auth::getActiveUser();
+        
+        $user = null;
+        if(Auth::isLoggedIn()){
+            $user = Auth::getActiveUser();
+        }
         $response = ApiResponseBuilder::buildSuccessResponse(["user" => $user]);
         echo json_encode($response);
     }

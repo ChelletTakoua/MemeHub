@@ -16,6 +16,8 @@ class Route implements JsonSerializable {
     private $params = [];
     private $roles;
 
+    private $matchingStatus = 'not checked';
+
     public function __construct($path, $callable, $roles = []) {
         $this->path = trim($path, '/');
         $this->callable = $callable;
@@ -62,6 +64,7 @@ class Route implements JsonSerializable {
 
         //if path is * then match all, this is just an easy way to implement a catch all route
         if ($this->path === '*') {
+            $this->matchingStatus = 'matched';
             return true;
         }
 
@@ -69,11 +72,14 @@ class Route implements JsonSerializable {
         $path = preg_replace('#:([\w]+)#', '([^/]+)', $this->path);
         $regex = "#^$path$#i";
         if(!preg_match($regex, $url, $matches)){
+            $this->matchingStatus = 'not matched';
             return false;
         }
         array_shift($matches);
         $this->matches = $matches;
+        $this->matchingStatus = 'matched';
         return true;
+
     }
 
     public function call(){
@@ -121,7 +127,31 @@ class Route implements JsonSerializable {
         return [
             'path' => '/'.$this->path,
             'roles' => $this->roles,
-            'callable' => $this->getCallable()
+            'callable' => $this->getCallable(),
+            'matchingStatus' => $this->matchingStatus,
+            'matches' => $this->getMatchesAssoc(),
         ];
+    }
+
+
+    /**
+     * This method returns the associative array of the matches, the keys are the names of the parameters read from the path and the values are the values of the matches
+     * @return array
+     */
+
+    public function getMatchesAssoc(): array
+    {
+        if($this->matchingStatus !== 'matched') return [];
+
+        $matchesAssoc = [];
+        $path = explode('/', $this->path);
+        $i=0;
+        foreach ($path as $key => $value) {
+            if (str_starts_with($value, ':')) {
+                $matchesAssoc[substr($value, 1)] = $this->matches[$i];
+                $i++;
+            }
+        }
+        return $matchesAssoc;
     }
 }

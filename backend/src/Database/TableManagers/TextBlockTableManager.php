@@ -78,10 +78,7 @@ class TextBlockTableManager extends TableManager
     static public function addTextBlock(string $text, int $x, int $y, string $font_size, int $meme_id): ?TextBlock
     {
 
-        if( ! self::textBlockExistsByMemeId($meme_id) ){
-            return null;
-        }
-        else if(empty($text) || empty($font_size) || !is_numeric($x) || !is_numeric($y)){
+        if(empty($text) || empty($font_size) || !is_numeric($x) || !is_numeric($y)){
             return null;
         }
         DatabaseQuery::executeQuery("insert", "text_blocks",

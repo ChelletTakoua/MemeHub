@@ -153,11 +153,13 @@ class UserTableManager extends TableManager
      */
     static public function verifyUserIsVerified(int $id): bool
     {
+
         $user = self::getUserById($id);
         if(!empty($user)){
             return $user->getIsVerified();
         }
         return false;
+
     }
 
     //--------add method----------------
@@ -194,13 +196,14 @@ class UserTableManager extends TableManager
     //--------update methods----------------
     // general update method
     /**
-     * Update user in database based on parameters given in $params and conditions given in $conditions
+     * Update user in database based on parameters given in $params and conditions given in $conditions where the user id must be provided
      * @param array $params
      * @param array $conditions
      */
     static public function updateUser(array $params=[], array $conditions=[]){
-        if(! empty($params) && ! empty($conditions) )
+        if(! empty($params) && ! empty($conditions) && self::verifyExistenceById($conditions["id"]) )
             DatabaseQuery::executeQuery("update","users",$params,$conditions);
+
     }
 
     // specific update methods

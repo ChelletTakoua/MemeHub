@@ -27,6 +27,7 @@ class UserController
      * @throws HttpException If an error occurs during the process.
      */
     public function forgotPassword(string $username):void {
+<<<<<<< Updated upstream
         try {
             $user = UserTableManager::getUserByUsername($username);
             if ($user == null) {
@@ -37,7 +38,19 @@ class UserController
             echo json_encode($response);
         }catch (Exception $e) {
             throw new HttpException;
+=======
+        $user = UserTableManager::getUserByUsername($username);
+        if ($user == null) {
+            throw new NotFoundException("User not found");
+>>>>>>> Stashed changes
         }
+
+
+        Mail::sendPasswordResetMail($user);
+
+        $response = ApiResponseBuilder::buildSuccessResponse();
+        echo json_encode($response);
+
     }
 
     /**
@@ -65,6 +78,7 @@ class UserController
 
         Auth::modifyPassword($user->getId(), $password);
 
+
         $response = ApiResponseBuilder::buildSuccessResponse();
         echo json_encode($response);
 
@@ -78,6 +92,7 @@ class UserController
      * @throws HttpException If an error occurs during the process.
      */
     public function sendVerificationEmail(string $username):void{
+<<<<<<< Updated upstream
         try {
             $user = UserTableManager::getUserByUsername($username);
             if ($user == null) {
@@ -88,7 +103,21 @@ class UserController
             echo json_encode($response);
         } catch (Exception $e) {
             throw new HttpException;
+=======
+        $user = UserTableManager::getUserByUsername($username);
+        if ($user == null) {
+            throw new NotFoundException("User not found");
+>>>>>>> Stashed changes
         }
+
+        if($user->getIsVerified()){
+            throw new BadRequestException("User is already verified");
+        }
+
+        Mail::sendAccountCreatedMail($user);
+        $response = ApiResponseBuilder::buildSuccessResponse();
+        echo json_encode($response);
+
     }
 
     /**
@@ -105,7 +134,13 @@ class UserController
 
         $user = AuthKeyGenerator::getUserFromToken($token);
 
+        if($user->getIsVerified()){
+            throw new BadRequestException("User is already verified");
+        }
+
         UserTableManager::updateIsVerified($user->getId());
+
+        Auth::login($user->getUsername(), $user->getPassword(), false);
 
         $response = ApiResponseBuilder::buildSuccessResponse();
         echo json_encode($response);

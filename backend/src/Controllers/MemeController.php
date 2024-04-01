@@ -79,44 +79,12 @@ class MemeController
      */
     public function getMemeById($id)
     {
-        // Retrieve the meme from the database by its ID
         $meme = MemeTableManager::getMemeById($id);
-        // Check if the meme exists
-        if (!empty($meme)) {
-            try {
-                
-                    // Retrieve likes for the meme
-                    $likes = LikeTableManager::getLikeByMemeId($meme->getId());
-                    // Create an array to store like IDs and user IDs
-                    $likeData = [];
-                    foreach ($likes as $like) {
-                        $likeData[] = [
-                            "id" => $like->getId(),
-                            "user_id" => $like->getUserId()
-                        ];
-                    }
-                // Create an associative array with the meme's data
-                $memeData = [
-                    "id" => $meme->getId(),
-                    "url" => (TemplateTableManager::getTemplateById($meme->getTemplateId()))->getUrl(),
-                    "user_id" => $meme->getUserId(),
-                    "nb_likes" => $likeData,
-                    "creation_date" => $meme->getCreationDate(),
-                    "text_blocks" => TextBlockTableManager::getTextBlockByMemeId($meme->getId()),
-                    "result_img" => $meme->getResultImg(),
-                ];
-            }
-             catch (\Exception $e) {
-                // If there's an error while retrieving the meme's data, throw a BadRequestException
-                throw new BadRequestException('Failed to get meme from the database', 500);
-            }
-            // Encode the response as JSON and output it
-            $response = ApiResponseBuilder::buildSuccessResponse(["memes" => $memeData]);
-        echo json_encode($response);
-        } else {
-            // If the meme does not exist, throw a NotFoundException
+        if(!isset($meme)) {
             throw new NotFoundException("Meme not found");
         }
+        $response = ApiResponseBuilder::buildSuccessResponse(["meme" => $meme]);
+        echo json_encode($response);
     }
 
     /**

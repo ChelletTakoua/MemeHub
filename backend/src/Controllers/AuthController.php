@@ -13,16 +13,16 @@ use Exceptions\HttpExceptions\UserRegistrationException;
 class AuthController
 {
     /**
-    * Logs in a user.
-    *
-    * This function retrieves the request body as JSON and checks if it contains 'username' and 'password'.
-    * If these fields are prese nt, it sanitizes the username, then attempts to log in the user using these details.
-    * If login is successful, it returns a success response with the user details.
-    * If the required fields are not present in the request body, it throws a BadRequestException.
-    *
-    * @throws BadRequestException|LoginFailedException If 'username' and 'password' are not provided in the request body.
-    */
-    public function login() 
+     * Logs in a user.
+     *
+     * This function retrieves the request body as JSON and checks if it contains 'username' and 'password'.
+     * If these fields are prese nt, it sanitizes the username, then attempts to log in the user using these details.
+     * If login is successful, it returns a success response with the user details.
+     * If the required fields are not present in the request body, it throws a BadRequestException.
+     *
+     * @throws BadRequestException|LoginFailedException If 'username' and 'password' are not provided in the request body.
+     */
+    public function login()
     {
         // Get the JSON request body
         $requestBody = RequestHandler::getJsonRequestBody();
@@ -34,12 +34,12 @@ class AuthController
             // Sanitize the username
             $username = filter_var($username, FILTER_SANITIZE_SPECIAL_CHARS);
             // Attempt to log in the user
-            $user=Auth::login($username, $password);
+            $user = Auth::login($username, $password);
             // Build a success response with the user details
-            $response = ApiResponseBuilder::buildSuccessResponse(["user"=>$user]);
+            $response = ApiResponseBuilder::buildSuccessResponse(["user" => $user]);
             // Output the response as JSON
             echo json_encode($response);
-        }else {
+        } else {
             // Throw a BadRequestException if 'username' and 'password' are not provided
             throw new BadRequestException("Username and password must be provided");
         }
@@ -47,10 +47,10 @@ class AuthController
 
 
     /**
-    * Logs out the current user.
-    *
-    * This function calls the logout method of the Auth class to log out the user, then terminates the script execution.
-    */
+     * Logs out the current user.
+     *
+     * This function calls the logout method of the Auth class to log out the user, then terminates the script execution.
+     */
     public function logout()
     {
         // Call the logout method of the Auth class to log out the user
@@ -61,15 +61,15 @@ class AuthController
 
 
     /**
-    * Registers a new user.
-    *
-    * This function retrieves the request body as JSON and checks if it contains 'username', 'email', and 'password'.
-    * If these fields are present, it sanitizes the username and email, then attempts to register the user using these details.
-    * If registration is successful, it logs in the user and returns a success response with the user details.
-    * If the required fields are not present in the request body, it throws a BadRequestException.
-    *
-    * @throws BadRequestException If 'username', 'email', and 'password' are not provided in the request body.
-    */
+     * Registers a new user.
+     *
+     * This function retrieves the request body as JSON and checks if it contains 'username', 'email', and 'password'.
+     * If these fields are present, it sanitizes the username and email, then attempts to register the user using these details.
+     * If registration is successful, it logs in the user and returns a success response with the user details.
+     * If the required fields are not present in the request body, it throws a BadRequestException.
+     *
+     * @throws BadRequestException If 'username', 'email', and 'password' are not provided in the request body.
+     */
     public static function register()
     {
         // Get the JSON request body
@@ -84,12 +84,12 @@ class AuthController
             $username = filter_var($username, FILTER_SANITIZE_SPECIAL_CHARS);
             $email = filter_var($email, FILTER_SANITIZE_EMAIL);
             // Register the user    
-            Auth::register($username, $password,$email);
+            Auth::register($username, $password, $email);
             // Build a success response with the user details
             $response = ApiResponseBuilder::buildSuccessResponse();
             // Output the response as JSON
             echo json_encode($response);
-        }else{
+        } else {
             // Throw a BadRequestException if 'username', 'email', and 'password' are not provided
             throw new BadRequestException("Username, email and password must be provided");
         }
@@ -105,9 +105,16 @@ class AuthController
     {
         $token = RequestHandler::getJsonRequestBody()['token'];
         $user = AuthKeyGenerator::getUserFromToken($token);
-        $response = ApiResponseBuilder::buildSuccessResponse(["user"=>$user]);
+        $response = ApiResponseBuilder::buildSuccessResponse(["user" => $user]);
         echo json_encode($response);
+    }
 
+
+    public static function checkAuth()
+    {
+        $user = Auth::getActiveUser();
+        $response = ApiResponseBuilder::buildSuccessResponse(["user" => $user]);
+        echo json_encode($response);
     }
 
     public function forgotPassword()

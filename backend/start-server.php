@@ -2,6 +2,10 @@
 
 require_once 'src/Database/DatabaseConnection.php';
 
+define('ENVIRONMENT', (in_array('--dev', $argv)) ? 'development' : 'production');
+// TODO: maybe change sth in the config file
+
+
 try {
     $db = Database\DatabaseConnection::getInstance();
 } catch (PDOException $e) {
@@ -11,6 +15,20 @@ try {
 
 }
 echo "\nDatabase connection successful.\n\n";
+
+
+if (ENVIRONMENT === 'development') {
+    echo "Development mode enabled. Debugging features are enabled.\n";
+} else {
+    echo "Production mode enabled. Debugging features are disabled.\n";
+}
+
+
+
+
+
+
+
 
 
 $appConfig = include __DIR__ . '/src/config/app.php';
@@ -23,8 +41,12 @@ for ($i = 0; $i < 10; $i++) {
     usleep(250000);
 }
 
+
+
+
 echo "\033[2K\r";
 exec("php -S $host:$port -t public/");
+
 
 
 

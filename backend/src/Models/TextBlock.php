@@ -52,7 +52,6 @@ class TextBlock extends Model{
             'x' => $this->x,
             'y' => $this->y,
             'font_size' => $this->font_size,
-            'meme' => $this->meme,
         ];
     }
 }

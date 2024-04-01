@@ -51,7 +51,7 @@ class Meme extends Model{
   
 
     /**
-     * @return array {id: , template: , custom_title: , user: , creation_date: , nb_likes: }
+     * @return array {id: , template: , custom_title: , user: , creation_date: , nb_likes:,result_img: }
      */
     public function jsonSerialize(): array
     {

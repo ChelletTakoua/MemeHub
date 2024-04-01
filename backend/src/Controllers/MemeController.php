@@ -65,7 +65,7 @@ class MemeController
                 throw new BadRequestException('Failed to get meme from the database', 500);
             }
         // Build a success response with the memes array
-        $response = ApiResponseBuilder::buildSuccessResponse(["memes" => $memesArray]);
+        $response = ApiResponseBuilder::buildSuccessResponse(["memes" => $memes]);
         echo json_encode($response);
     }
 

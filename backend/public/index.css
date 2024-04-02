@@ -171,3 +171,40 @@ button {
 .ms {
   font-family: "Comic Sans MS", sans-serif;
 }
+
+.inline-box {
+  margin-bottom: 30px;
+  background-color: #e6e6e6;
+  padding: 10px;
+  font-size: 1.2em;
+  border-radius: 5px;
+  display: inline-block;
+}
+
+.error {
+  color: red;
+  font-weight: bold;
+  font-size: 1em;
+
+}
+
+.error-message {
+  font-family: monospace;
+  font-size: 3em;
+  font-weight: bold;
+  color: red;
+}
+
+.timestamp {
+  padding-bottom: 0;
+  padding-top: 4%;
+}
+
+.inline-box-error {
+  margin: 0 auto;
+  background-color: #e6e6e6;
+  padding: 10px;
+  font-size: 1.2em;
+  border-radius: 5px;
+  display: inline-block;
+}

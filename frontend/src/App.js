@@ -19,6 +19,11 @@ function App() {
   const [isLoading, setIsLoading] = useState(false);
   const { user, checkAuth } = useContext(AppContext);
 
+  const location = useLocation();
+  const hideNavbar =
+    location.pathname === "/verifyEmail" ||
+    location.pathname === "/resetPassword";
+
   useEffect(() => {
     const init = async () => {
       try {
@@ -32,13 +37,8 @@ function App() {
         }, 1000);
       }
     };
-    init();
-  }, [checkAuth]);
-
-  const location = useLocation();
-  const hideNavbar =
-    location.pathname === "/verifyEmail" ||
-    location.pathname === "/resetPassword";
+    !hideNavbar && init();
+  }, [checkAuth, hideNavbar]);
 
   return isLoading ? (
     <Loading />

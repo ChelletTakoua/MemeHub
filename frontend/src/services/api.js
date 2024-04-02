@@ -48,13 +48,6 @@ export const userApi = {
     base.post(USER_API_ROUTES["RESET_PASSWORD"], { token, password }),
 };
 
-/*
-SEND_VERIF_EMAIL: "/sendVerificationEmail/:username",
-  VERIFY_EMAIL: "/verifyEmail",
-  FORGOT_PASSWORD: "/forgotPassword/:username",
-  RESET_PASSWORD: "/resetPassword",
-*/
-
 export const memeApi = {
   getAllMemes: () => base.get(MEME_API_ROUTES["GET_ALL_MEMES"]),
   getMemeById: (memeId) =>

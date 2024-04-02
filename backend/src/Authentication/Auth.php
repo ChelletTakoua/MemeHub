@@ -36,7 +36,7 @@ class Auth
             throw new LoginFailedException("Incorrect password");
         }
         if (!$user->getIsVerified()) {
-            throw new LoginFailedException("User not verified");
+            throw new LoginFailedException("User not verified", 403);
         }
 
         self::setSessionUser($user);

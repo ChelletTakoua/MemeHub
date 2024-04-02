@@ -25,6 +25,9 @@ Models don't have a logic on their own. They are structures that represent entit
 ### TableManagers:
 TableManagers are responsible for managing the interaction between the backend and the database. They contain methods for performing CRUD operations on the database.
 
+## HttpExceptions:
+HttpExceptions are exceptions that are thrown when an error occurs during the processing of an HTTP request. They contain an HTTP status code and a message that is returned to the client.
+
 ### Utils:
 Utils contains utility classes that are used throughout the application.
 
@@ -36,13 +39,19 @@ Config contains configuration files for the application.
 ## Other Classes and Files:
     
 - **DatabaseConnection.php:**
-        Responsible for establishing a connection to the database.
+    Responsible for establishing a connection to the database.
 - **autoload.php:**
     Autoloads all classes in the project.
 - **headers.php:**
     Sets the headers for the response.
 - **jwt.php:**
     Handles JWT token generation and validation.
+- **RequestHandler.php:**
+    Is user to get the request data and handle it. (query parameters & body)
+- **ApiResponseBuilder.php:**
+    Builds the response of the API.
+- 
+
 
 
 

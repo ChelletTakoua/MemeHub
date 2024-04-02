@@ -1,35 +1,29 @@
 import trollFace from "../images/troll_face.png";
-import React, { useContext, useEffect, useMemo, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { userApi } from "../services/api";
-import { Link } from "react-router-dom";
+import { Link, useSearchParams } from "react-router-dom";
 import { AppContext } from "../context/AppContext";
-import { useLocation } from "react-router-dom";
 
 const VerifyEmail = () => {
-  const VerificationStatus = useMemo(() => {
-    return {
-      PENDING: 0,
-      USER_ALREADY_VERIFIED: 402,
-      VERIFIED: 200,
-      FAILED_TO_VERIFY: 500,
-      TOKEN_EXPIRED: 408,
-      INVALID_TOKEN: 403,
-    };
-  }, []);
+  const VerificationStatus = {
+    PENDING: 0,
+    USER_ALREADY_VERIFIED: 402,
+    VERIFIED: 200,
+    FAILED_TO_VERIFY: 500,
+    TOKEN_EXPIRED: 408,
+    INVALID_TOKEN: 403,
+  };
 
-  const location = useLocation();
-  const searchParams = new URLSearchParams(location.search);
+  const [searchParams] = useSearchParams();
   const token = searchParams.get("token");
-  const [verificationStatus, setVerificationStatus] = useState(
-    VerificationStatus.PENDING
-  );
+
+  const [verificationStatus, setVerificationStatus] = useState(0);
   const { toast } = useContext(AppContext);
 
   useEffect(() => {
     const verifEmail = async () => {
       try {
-        const res = await userApi.verifyEmail(token);
-        console.log("Verif sent:", res);
+        await userApi.verifyEmail(token);
         setVerificationStatus(VerificationStatus.VERIFIED);
         toast.success("Your account has been verified successfully.");
       } catch (error) {
@@ -52,7 +46,16 @@ const VerifyEmail = () => {
       }
     };
     verifEmail();
-  }, [setVerificationStatus, toast, token, VerificationStatus]);
+  }, [
+    VerificationStatus.FAILED_TO_VERIFY,
+    VerificationStatus.INVALID_TOKEN,
+    VerificationStatus.TOKEN_EXPIRED,
+    VerificationStatus.USER_ALREADY_VERIFIED,
+    VerificationStatus.VERIFIED,
+    setVerificationStatus,
+    toast,
+    token,
+  ]);
 
   return (
     <section className="bg-palenight">

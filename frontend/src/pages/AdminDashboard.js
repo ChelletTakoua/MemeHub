@@ -33,18 +33,18 @@ const AdminDashboard = () => {
         setStats((prev) => {
           return {
             ...prev,
-            totalUsers: res.data.data.users.length,
+            totalUsers: res?.data.data.users.length,
           };
         });
         // Update the admins list
-        setAdmins(res.data.data.users.filter((user) => user.role === "admin"));
+        setAdmins(res?.data.data.users.filter((user) => user.role === "admin"));
 
         // Fetch the total memes
         const resMemes = await memeApi.getAllMemes();
         setStats((prev) => {
           return {
             ...prev,
-            totalMemes: resMemes.data.data.memes.length,
+            totalMemes: resMemes?.data.data.memes.length,
           };
         });
       } catch (error) {

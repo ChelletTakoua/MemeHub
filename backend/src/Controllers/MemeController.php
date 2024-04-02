@@ -28,13 +28,13 @@ class MemeController
      */
     public function getAllMemes()
     {
-        // Retrieve all memes from the database
         $memes = MemeTableManager::getMeme();
-        // Sort the retrieved memes by their creation date
-        $memes = MemeTableManager::sortMemesByDate($memes);
-        // Build a success response with the sorted memes
+        usort($memes, function ($a, $b) {
+            return $b->getCreationDate() <=> $a->getCreationDate();
+        });
+
         $response = ApiResponseBuilder::buildSuccessResponse(["memes" => $memes]);
-        // Send the response as a JSON string
+
         echo json_encode($response);
     }
 
@@ -48,15 +48,12 @@ class MemeController
      */
     public function getMemeById($id)
     {
-        // Retrieve the meme with the given ID from the database
         $meme = MemeTableManager::getMemeById($id);
-        // If the meme is not found, throw a NotFoundException
         if (!isset($meme)) {
             throw new NotFoundException("Meme not found");
         }
-        // Build a success response with the found meme
+
         $response = ApiResponseBuilder::buildSuccessResponse(["meme" => $meme]);
-        // Send the response as a JSON string
         echo json_encode($response);
     }
 
@@ -69,43 +66,12 @@ class MemeController
      */
     public function getUserMemes($id)
     {
-        // Retrieve all memes from the database associated with the user ID
         $memes = MemeTableManager::getMemeByUserId($id);
-        // Sort the memes by date using the MemeTableManager's sortMemesByDate function
-        $meme = MemeTableManager::sortMemesByDate($memes);
-        $memesArray = [];
-        try {
-            foreach ($memes as $meme) {
-                // Retrieve likes for the meme
-                $likes = LikeTableManager::getLikeByMemeId($meme->getId());
-                // Create an array to store like IDs and user IDs
-                $likeData = [];
-                foreach ($likes as $like) {
-                    $likeData[] = [
-                        "id" => $like->getId(),
-                        "user_id" => $like->getUserId()
-                    ];
-                }
-                // Create an associative array with the meme's data
-                $memeData = [
-                    "id" => $meme->getId(),
-                    "url" => (TemplateTableManager::getTemplateById($meme->getTemplateId()))->getUrl(),
-                    "user_id" => $meme->getUserId(),
-                    "nb_likes" => $likeData,
-                    "creation_date" => $meme->getCreationDate(),
-                    "text_blocks" => TextBlockTableManager::getTextBlockByMemeId($meme->getId()),
-                    "result_img" => $meme->getResultImg(),
-                ];
-                // Add the meme's data to the memes array
-                $memesArray[] = $memeData;
-            }
-        } catch (\Exception $e) {
-            // If there's an error while retrieving the meme's data, throw a BadRequestException
-            throw new BadRequestException('Failed to get meme from the database', 500);
-        }
-        // Build a success response with the memes array
-        $response = ApiResponseBuilder::buildSuccessResponse(["memes" => $memesArray]);
-        // Encode the response as JSON and output it
+        usort($memes, function ($a, $b) {
+            return $b->getCreationDate() <=> $a->getCreationDate();
+        });
+
+        $response = ApiResponseBuilder::buildSuccessResponse(["memes" => $memes]);
         echo json_encode($response);
     }
 
@@ -119,29 +85,24 @@ class MemeController
      */
     public function addMeme()
     {
-        // Retrieve the JSON request body
         $requestBody = RequestHandler::getJsonRequestBody();
-        // Check if the user is not logged in
         if (!isset($_SESSION['user_id'])) {
             throw new NotLoggedInException('User not logged in');
         }
-        // Check if the request body is empty or doesn't contain necessary keys
         if (empty($requestBody) || !isset($requestBody['template_id']) || !isset($requestBody['text_blocks']) || !isset($requestBody['result_img'])) {
             throw new BadRequestException('Invalid request body', 400);
         }
-        // Try to add the meme to the database
+
         $meme = MemeTableManager::addMeme($requestBody['template_id'], "", $_SESSION['user_id'], $requestBody['result_img']);
-        // Check if the meme was not added successfully
         if (empty($meme)) {
             throw new BadRequestException('Failed to add meme to the database', 500);
         }
-        // Add the text blocks
+
         foreach ($requestBody['text_blocks'] as $textBlock) {
             $textBlock = TextBlockTableManager::addTextBlock($textBlock['text'], $textBlock['x'], $textBlock['y'], $textBlock['font_size'], $meme->getId());
         }
-        // Build a success response with the new meme's data
+
         $response = ApiResponseBuilder::buildSuccessResponse();
-        // Encode the response as JSON and output it
         echo json_encode($response);
     }
 
@@ -155,31 +116,25 @@ class MemeController
      */
     public function modifyMeme($id)
     {
-        // Retrieve the JSON request body
         $requestBody = RequestHandler::getJsonRequestBody();
-        // Check if the user is not logged in
         if (!isset($_SESSION['user_id'])) {
             throw new NotLoggedInException('User not logged in');
         }
-        // Check if the request body is empty or doesn't contain necessary keys
         if (empty($requestBody) ||  !isset($requestBody['result_img']) || !isset($requestBody['text_blocks'])) {
             throw new BadRequestException('Invalid request body', 400);
         }
-        // Delete the existing text blocks associated with the meme
+
         TextBlockTableManager::deleteTextBlockByMemeId($id);
-        // Add new text block to the meme
         foreach ($requestBody['text_blocks'] as $textBlock) {
             $textBlock = TextBlockTableManager::addTextBlock($textBlock['text'], $textBlock['x'], $textBlock['y'], $textBlock['font_size'], $id);
         }
-        // Update the meme's result image
+
         $meme = MemeTableManager::updateMemeResultImg($id, $requestBody['result_img']);
-        // Check if the meme was not updated successfully
         if (empty($meme)) {
             throw new BadRequestException('Failed to modify meme to the database', 500);
         }
-        // Build a success response
+
         $response = ApiResponseBuilder::buildSuccessResponse();
-        // Encode the response as JSON and output it
         echo json_encode($response);
     }
 
@@ -193,19 +148,15 @@ class MemeController
      */
     public function likeMeme($id)
     {
-        // Check if the user is not logged in
         if (!isset($_SESSION['user_id'])) {
             throw new NotLoggedInException('User not logged in');
         }
-        // Try to add a like to the meme in the database
         $like = LikeTableManager::addLike($id, $_SESSION['user_id']);
-        // Check if the like was not added successfully
         if (empty($like)) {
             throw new BadRequestException('Failed to add like to the database', 500);
         }
-        // Build a success response with the new like's data
+
         $response = ApiResponseBuilder::buildSuccessResponse(["like" => $like]);
-        // Encode the response as JSON and output it
         echo json_encode($response);
     }
 
@@ -219,19 +170,15 @@ class MemeController
      */
     public function dislikeMeme($id)
     {
-        // Check if the user is not logged in
         if (!isset($_SESSION['user_id'])) {
             throw new NotLoggedInException('User not logged in');
         }
-        // Try to remove a like from the meme in the database
         $dislike = LikeTableManager::deleteLikeByMemeIdAndUserId($id, $_SESSION['user_id']);
-        // Check if the like was not removed successfully
         if (empty($dislike)) {
             throw new BadRequestException('Failed to remove like from the database', 500);
         }
-        // Build a success response
+
         $response = ApiResponseBuilder::buildSuccessResponse([]);
-        // Encode the response as JSON and output it
         echo json_encode($response);
     }
 
@@ -245,25 +192,19 @@ class MemeController
      */
     public function reportMeme($id)
     {
-        // Retrieve the JSON request body
         $requestBody = RequestHandler::getJsonRequestBody();
-        // Check if the user is not logged in
         if (!isset($_SESSION['user_id'])) {
             throw new NotLoggedInException('User not logged in');
         }
-        // Check if the request body is empty or doesn't contain necessary keys
         if (empty($requestBody) || !isset($requestBody['report_reason'])) {
             throw new BadRequestException('Invalid request body', 400);
         }
-        // Try to add the report to the database
         $report = ReportTableManager::addReport($requestBody['report_reason'], $id, $_SESSION['user_id']);
-        // Check if the report was not added successfully
         if (empty($report)) {
             throw new BadRequestException('Failed to report meme to the database', 500);
         }
-        // Build a success response with the new report's data
+
         $response = ApiResponseBuilder::buildSuccessResponse(["report" => $report]);
-        // Encode the response as JSON and output it
         echo json_encode($response);
     }
 
@@ -275,11 +216,8 @@ class MemeController
      */
     public function deleteMeme($id)
     {
-        // Delete the meme from the database
         MemeTableManager::deleteMeme($id);
-        // Build a success response
         $response = ApiResponseBuilder::buildSuccessResponse([]);
-        // Encode the response as JSON and output it
         echo json_encode($response);
     }
 }

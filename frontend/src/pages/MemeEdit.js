@@ -47,7 +47,7 @@ export default function MemeEdit() {
     } else {
       fetchTemplates();
     }
-  }, [setBrowse, setMemes, setCurrMeme, id, user, navigate]);
+  }, [setBrowse, setMemes, setCurrMeme, id, user, navigate, template]);
 
   return (
     <div className="flex flex-col justify-between bg-palenight">

@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import ReportButton from "../components/ReportButton";
 import LikeButton from "../components/LikeButton";
-import ShareButton from "../components/ShareButton";
 import { FaEdit, FaTrash } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
 import MemeImg from "./MemeImg";

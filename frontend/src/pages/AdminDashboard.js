@@ -14,7 +14,7 @@ const AdminDashboard = () => {
   const [openView, setOpenView] = useState(false);
   const [debugBtnVisible, setDebugBtnVisible] = useState(false);
 
-  const { toast } = useContext(AppContext);
+  const { toast, user } = useContext(AppContext);
 
   const fetchReports = useCallback(async () => {
     try {
@@ -38,7 +38,7 @@ const AdminDashboard = () => {
       // Update the admins list
       setAdmins(res?.data.data.users.filter((user) => user.role === "admin"));
       // Update the users list
-      setUsers(res?.data.data.users);
+      setUsers(res?.data.data.users.filter((el) => el.id !== user.id));
 
       // Fetch the total memes
       const resMemes = await memeApi.getAllMemes();

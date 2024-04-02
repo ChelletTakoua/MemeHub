@@ -1,6 +1,9 @@
 <?php
     header('Content-Type: text/html; charset=utf-8');
-    $request = $_SESSION["requests"][0];
+
+    $index = $_GET["index"];
+
+    $request = $_SESSION["requests"][$index];
     $currentRoute = $request["routing"]["matched_route"];
     $routes = $request["routing"]["matching_logs"];
     $actualPath = $request["request"]["url"];
@@ -9,7 +12,7 @@
 <!DOCTYPE html>
 <html lang="">
 <head>
-    <title>Debug Louey</title>
+    <title> Request <?= $index ?> Details </title>
     <link href="../index.css" rel="stylesheet">
 </head>
 <body>

@@ -152,7 +152,7 @@ class BlockedMemeTableManager extends TableManager
         DatabaseQuery::executeQuery("insert","blocked_memes",["meme_id"=>$meme_id,"admin_id"=>$admin_id,"report_id"=>$report_id]);
         $blockedMeme = DatabaseQuery::executeQuery("select","blocked_memes",[],
             ["meme_id"=>$meme_id,"admin_id"=>$admin_id,"report_id"=>$report_id]);
-        var_dump($blockedMeme);
+
         $id = $blockedMeme[0]["id"];
         return new BlockedMeme($id,$meme_id,$admin_id,$report_id);
     }

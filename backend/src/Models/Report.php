@@ -2,17 +2,18 @@
 namespace Models;
 use Utils\Proxy;
 class Report extends Model {
-    private $status;
-    private $reason;
+    private string $status;
+    private string $reason;
     private $report_date;
-    private $meme;
-    private $user;
+    private $meme_id;
+    private Proxy $user;
+
 
     public function __construct($id, $reason, $report_date, $meme_id, $user_id, $status) {
         parent::__construct($id);
         $this->reason = $reason;
         $this->report_date = $report_date;
-        $this->meme = new Proxy($meme_id, 'Meme');
+        $this->meme_id = $meme_id;
         $this->user= new Proxy($user_id, 'User');
         $this->status = $status;
     }
@@ -20,13 +21,11 @@ class Report extends Model {
         return $this->user->getId();
     }
     public function getMemeId(){
-        return $this->meme->getId();
+        return $this->meme_id;
     }
-    public function getUser(){ 
+    public function getUser(): Model
+    {
         return $this->user->getInstance();
-    }
-    public function getMeme(){ 
-        return $this->meme->getInstance();
     }
 
     public function getReason() {
@@ -51,7 +50,7 @@ class Report extends Model {
             'id' => parent::getId(),
             'reason' => $this->reason,
             'report_date' => $this->report_date,
-            'meme' => $this->meme,
+            'meme' => $this->meme_id->getId(),
             'user' => $this->user,
             'status' => $this->status
         ];

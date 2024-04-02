@@ -16,6 +16,7 @@ class ReportTableManager extends TableManager
      * @return Report[]
      */
     static public function getReport(array $params = []): array{
+
         $queryObjects = DatabaseQuery::executeQuery("select", "reports", [], $params);
         $reports = [];
         foreach ($queryObjects as $queryObject) {

@@ -18,5 +18,5 @@ header('Access-Control-Allow-Credentials: true');
 // if the response is not json, just overwrite the content type in the controller
 //  ex: header('Content-Type: text/html');
 //      header('Content-Type: application/pdf');
-//header('Content-Type: application/json');
+header('Content-Type: application/json');
 

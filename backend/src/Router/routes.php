@@ -49,6 +49,7 @@ $router->delete('/user/profile', "UserController@deleteProfile", ['user', 'admin
 $router->get('/memes', "MemeController@getAllMemes", ['guest','user', 'admin']);
 $router->get('/memes/:id', "MemeController@getMemeById", ['user', 'admin']);
 $router->get('/memes/user/:id', "MemeController@getUserMemes", ['guest','user', 'admin']);
+$router->get('/memes/:id/likes', "MemeController@getMemeNbLikes", ['guest','user', 'admin']);
 $router->post('/memes', "MemeController@addMeme", ['user', 'admin']);
 $router->post('/memes/:id/modify', "MemeController@modifyMeme", ['user', 'admin']); // modify meme (title, template, ...)
 $router->post('/memes/:id/like', "MemeController@likeMeme", ['user', 'admin']);

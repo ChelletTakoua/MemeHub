@@ -210,4 +210,11 @@ class MemeController
         $response = ApiResponseBuilder::buildSuccessResponse([]);
         echo json_encode($response);
     }
+
+    public function getMemeNbLikes($id){
+        $nbLikes = MemeTableManager::getMemeNbLikes($id);
+        $isLiked = Auth::isLoggedIn() && LikeTableManager::likeExistsByMemeIdAndUserId($this->getId(), Auth::GetActiveUserId());
+        $response = ApiResponseBuilder::buildSuccessResponse(["nbLikes" => $nbLikes , "liked" => $isLiked ]);
+        echo json_encode($response);
+    }
 }

@@ -191,20 +191,29 @@ class MemeTableManager extends TableManager
         return self::getMeme(["nb_likes" => $nb_likes]);
     }
 
+    static public function getMemeNbLikes(int $meme_id): int
+    {
+        $meme = self::getMemeById($meme_id);
+        if ($meme) {
+            return $meme->getNbLikes();
+        }
+        return 0;
+    }
+
     //--------verify existence methods----------------
     /**
      * Checks if a meme exists in the database by its ID.
      *
-     *
      * @param int $id The ID of the meme to check.
+     * @param bool $blocked Whether to include blocked memes. Default is false.
      * @return bool True if the meme exists, false otherwise.
      */
-    static public function memeExists(int $id): bool
+    static public function memeExists(int $id,bool $blocked=false): bool
     {
         // Call the getMemeById method with the given ID
         // If the returned meme is not empty, return true
         // Otherwise, return false
-        return !empty(self::getMemeById($id));
+        return !empty(self::getMemeById($id,$blocked));
     }
 
     /**

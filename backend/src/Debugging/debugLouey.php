@@ -81,6 +81,24 @@
             }
         ?>
 
+    <?php
+        //create a table for every method (Get/ Post) and display the parameters
+    ?>
+    <h2>Request Parameters :</h2>
+    <div class="table-container">
+        <table border="1">
+            <tr class="table-head ">
+                <th>Parameter</th>
+                <th class='value-cell '>Value</th>
+            </tr>
+            <?php
+            foreach ($query["parameters"] as $key => $value) {
+                echo("<tr> <td>" . $key . "</td> <td class='value-cell'>" . $value . "</td> </tr>");
+            }
+            ?>
+        </table>
+    </div>
+
     <h2>Request Headers :</h2>
     <div class="table-container">
         <table border="1">

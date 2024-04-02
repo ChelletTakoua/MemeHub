@@ -14,7 +14,7 @@ $index = 0;
 <body>
 <div class="container">
 
-<h2>Routes</h2>
+<h2>Routes :</h2>
 <div class="table-container">
 
 <table border='1'>
@@ -30,7 +30,13 @@ $index = 0;
             <tr>
                 <td class ="method"><?= $method ?></td>
                 <td class="path"><?= $route->getPath() ?></td>
-                <td class = "callable"><?= $route->getCallable() ?></td>
+                <td><?php 
+                if($route->getCallable()=="Closure") {
+                    echo(str_replace("Closure", "<span class='closure'>Closure</span>", $route->getCallable()));
+                }
+                    else{
+                        echo(str_replace("@", "<span class='callable'>@</span>", $route->getCallable()));
+                     } ?></td>
                 <td class ="path"><?= implode(", ", $route->getRoles()) ?></td>
             </tr>
         <?php endforeach; ?>
@@ -39,7 +45,7 @@ $index = 0;
 </div>
 
 <!-- historique -->
-<h2>History </h2>
+<h2>History :</h2>
 <div class="table-container">
 
 <table border='1'>

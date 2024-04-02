@@ -1,5 +1,7 @@
 <?php
-
+/**
+ * This file is used to autoload classes
+ */
 function load($className){
     $className = str_replace("\\", "/", $className);
     $file = __DIR__ . "/$className.php";

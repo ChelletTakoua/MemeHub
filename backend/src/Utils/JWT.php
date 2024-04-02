@@ -7,6 +7,12 @@ use Exceptions\HttpExceptions\InvalidTokenException;
 
 class JWT
 {
+    /**
+     * Encode a payload into a JWT token
+     * @param array $payload The payload to encode
+     * @param string $secretKey The secret key to use to encode the JWT
+     * @return string The JWT token
+     */
     public static function encode($payload, $secretKey): string
     {
         $header = json_encode(['typ' => 'JWT', 'alg' => 'HS256']);
@@ -20,7 +26,13 @@ class JWT
 
         return $base64UrlHeader . "." . $base64UrlPayload . "." . $base64UrlSignature;
     }
-
+    /**
+     * Decode a JWT token
+     * @param string $jwt The JWT token to decode
+     * @param string $secretKey The secret key to use to decode the JWT
+     * @return array The decoded payload
+     * @throws InvalidTokenException
+     */
     public static function decode($jwt, $secretKey)
     {
         [$header, $payload, $signature] = explode('.', $jwt);

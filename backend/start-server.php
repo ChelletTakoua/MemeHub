@@ -29,7 +29,11 @@ function updateDevMode($argv)
     }
 }
 
-
+/**
+ * Connects to the database.
+ *
+ * @return void
+ */
 function connectToDatabase(){
         try {
         $db = Database\DatabaseConnection::getInstance();

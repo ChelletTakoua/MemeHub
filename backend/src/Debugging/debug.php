@@ -42,6 +42,7 @@ function save_response() {
     $response = [
         'headers' => get_headers_assoc(),
         'body' => ob_get_contents(),
+        'status_code' => http_response_code(),
         'timestamp' => time()
     ];
     $_SESSION['requests'][$last_request_key]['response'] = $response;

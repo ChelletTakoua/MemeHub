@@ -1,21 +1,25 @@
+<?php
+    header('Content-Type: text/html; charset=utf-8');
+    $request = $_SESSION["requests"][0];
+    $currentRoute = $request["routing"]["matched_route"];
+    $routes = $request["routing"]["matching_logs"];
+    $actualPath = $request["request"]["url"];
+?>
+
 <!DOCTYPE html>
 <html lang="">
 <head>
     <title>Debug Louey</title>
-    <link href="debugging.css" rel="stylesheet">
+    <link href="../index.css" rel="stylesheet">
 </head>
 <body>
 <div class="container">
     <h2>Routes :</h2>
     <div class="route-info">
         <h4 class="path-box">
-            <?php
 
-            echo("<span class='underline-text'> Matched Route :</span>   ");
-            $request = $_SESSION["requests"][0];
-            $currentRoute = $request["routing"]["matched_route"];
-            $routes = $request["routing"]["matching_logs"];
-            $actualPath = $request["request"]["url"];
+            <span class='underline-text'> Matched Route :</span>
+            <?php
             if(empty($currentRoute)){
                 echo("<span class='path text-gray'>No route found</span>");
             }else{

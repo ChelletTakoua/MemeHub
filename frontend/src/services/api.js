@@ -35,10 +35,17 @@ export const userApi = {
   editUserProfile: (userData) =>
     base.post(USER_API_ROUTES["EDIT_PROFILE"], userData),
   deleteUserProfile: () => base.delete(USER_API_ROUTES["DELETE_PROFILE"]),
-  sendVerifEmail: (username) => base.post(USER_API_ROUTES["SEND_VERIF_EMAIL"].replace(":username", username)),
+  sendVerifEmail: (username) =>
+    base.post(
+      USER_API_ROUTES["SEND_VERIF_EMAIL"].replace(":username", username)
+    ),
   verifyEmail: (token) => base.post(USER_API_ROUTES["VERIFY_EMAIL"], { token }),
-  forgotPassword: (username) => base.post(USER_API_ROUTES["FORGOT_PASSWORD"].replace(":username", username)),
-  resetPassword: (token,password) => base.post(USER_API_ROUTES["RESET_PASSWORD"], { token, password }),
+  forgotPassword: (username) =>
+    base.post(
+      USER_API_ROUTES["FORGOT_PASSWORD"].replace(":username", username)
+    ),
+  resetPassword: (token, password) =>
+    base.post(USER_API_ROUTES["RESET_PASSWORD"], { token, password }),
 };
 
 /*
@@ -97,4 +104,6 @@ export const adminApi = {
     base.delete(ADMIN_API_ROUTES["DELETE_REPORT"].replace(":id", reportId)),
   deleteMeme: (memeId) =>
     base.delete(ADMIN_API_ROUTES["DELETE_MEME"].replace(":id", memeId)),
+  getDebugModeStatus: () => base.get(ADMIN_API_ROUTES["DEBUG_MODE_STATUS"]),
+  debugModePage: `${base.getUri()}/admin/requestDetails`,
 };

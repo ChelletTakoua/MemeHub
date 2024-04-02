@@ -39,6 +39,7 @@ const ADMIN_API_ROUTES = {
   IGNORE_REPORT: "/admin/reports/:id/ignore",
   DELETE_REPORT: "/admin/reports/:id/delete",
   DELETE_MEME: "/admin/memes/:id/delete",
+  DEBUG_MODE_STATUS: "/admin/devmode",
 };
 
 const API_ROUTES = {

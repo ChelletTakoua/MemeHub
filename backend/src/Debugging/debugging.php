@@ -2,7 +2,7 @@
 header('Content-Type: text/html; charset=utf-8');
 global $router;
 $requests = $_SESSION['requests'];
-$index = 1;
+$index = 0;
 
 ?>
 <!DOCTYPE html>
@@ -12,9 +12,13 @@ $index = 1;
     <link href="../index.css" rel="stylesheet">
 </head>
 <body>
-<h1>Routes</h1>
+<div class="container">
+
+<h2>Routes</h2>
+<div class="table-container">
+
 <table border='1'>
-    <tr>
+<tr class="table-head">
         <th>Method</th>
         <th>Path</th>
         <th>Callable</th>
@@ -24,45 +28,61 @@ $index = 1;
     <?php foreach ($router->routes as $method => $routes): ?>
         <?php foreach ($routes as $route): ?>
             <tr>
-                <td><?= $method ?></td>
-                <td><?= $route->getPath() ?></td>
-                <td><?= $route->getCallable() ?></td>
-                <td><?= implode(", ", $route->getRoles()) ?></td>
+                <td class ="method"><?= $method ?></td>
+                <td class="path"><?= $route->getPath() ?></td>
+                <td class = "callable"><?= $route->getCallable() ?></td>
+                <td class ="path"><?= implode(", ", $route->getRoles()) ?></td>
             </tr>
         <?php endforeach; ?>
     <?php endforeach; ?>
 </table>
-
+</div>
 
 <!-- historique -->
-<h1>Historique</h1>
+<h2>History </h2>
+<div class="table-container">
+
 <table border='1'>
-    <tr>
-        <th>Index</th>
+<tr class="table-head">
+        <th>#</th>
         <th>Method</th>
-        <th>Url</th>
+        <th>Path</th>
         <th>Date</th>
         <th>Status code</th>
         <th> </th>
     </tr>
 
-    <?php foreach ($requests as $rq): ?>
+    <?php  $totalRequests = count($requests);
+    foreach ($requests as $index => $rq): 
+        // Skip the last iteration
+        if ($index === $totalRequests - 1) {
+            continue;
+        }
+    ?>
         
-            <tr>
-                <td><?= $index ++ ?></td>
-                <td><?= $rq['request']['method'] ?></td>
-                <td><?= $rq['request']['url'] ?></td>
-                <td><?= $rq['request']['timestamp'] ?></td>
-                <td><?= $rq['response']['status_code'] ?></td>
-                <td>
+        <tr >
+                <td><?= ++$index ?></td>
+                <td class ="method"><?= $rq['request']['method'] ?></td>
+                <td class ="path"><?= $rq['request']['url'] ?></td>
+                <td class ="path"><?php
+
+                        $timestamp = $rq['request']['timestamp'];
+                        $date = date('Y-m-d H:i:s', $timestamp);
+                        echo $date;
+                        ?>
+                </td>
+                <td class ="path"><?= $rq['response']['status_code'] ?></td>
+                <td class = "path">
                 <?php
-// Assuming $index is already set to the desired value
-echo "<a href='/admin/requestDetails?index=" . $index . "'><button>Details</button></a>";
-?>
+
+                    echo "<a href='/admin/requestDetails?index=" . $index . "'><button>Details</button></a>";
+                ?>
                 </td>
             </tr>
         
     <?php endforeach; ?>
 </table>
+</div>
+</div>
 </body>
 </html>

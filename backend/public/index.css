@@ -1,124 +1,137 @@
 body {
-    font-family: Arial, sans-serif;
-    margin: 0;
-    padding: 0;
-    background-color: #f0f0f0;
+  font-family: Arial, sans-serif;
+  margin: 0;
+  padding: 0;
+  background-color: #f0f0f0;
 }
 
 .container {
-    width: 80%;
-    margin: 0 auto;
-    padding: 20px;
-    background-color: #fff;
-    box-shadow: 0px 0px 10px rgba(0,0,0,0.1);
+  width: 80%;
+  margin: 0 auto;
+  padding: 20px;
+  background-color: #fff;
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
 }
 
 h2 {
-    color: #333;
-    margin-bottom: 20px;
+  color: #333;
+  margin-bottom: 20px;
 }
 
-.route-info, .table-container {
-    margin-bottom: 30px;
-    background-color: #e6e6e6;
-    padding: 10px;
-    border-radius: 5px;
+.route-info,
+.table-container {
+  margin-bottom: 30px;
+  background-color: #e6e6e6;
+  padding: 10px;
+  border-radius: 5px;
 }
 
 table {
-    width: 100%;
-    border-collapse: collapse;
+  width: 100%;
+  border-collapse: collapse;
 }
 
 table td {
-    padding: 10px;
-    border: 1px solid #ddd;
+  padding: 10px;
+  border: 1px solid #ddd;
 }
 
 table th {
-    padding: 10px;
-    border: 1px solid #ddd;
-    font-size: 1.3em;
-    text-align: left;
-    color: #ddd;
+  padding: 10px;
+  border: 1px solid #ddd;
+  font-size: 1.3em;
+  text-align: left;
+  color: #ddd;
 }
 
-
-
 table tr:nth-child(even) {
-    background-color: #f9f9f9;
+  background-color: #f9f9f9;
 }
 
 .path-box {
-    padding: 10px;
-    background-color: #ffffff;
-    border-radius: 5px;
-    margin-bottom: 10px;
-    display: inline-block;
-    font-size: 1.2em;
+  padding: 10px;
+  background-color: #ffffff;
+  border-radius: 5px;
+  margin-bottom: 10px;
+  display: inline-block;
+  font-size: 1.2em;
 }
 
 .underline-text {
-    text-decoration: underline;
+  text-decoration: underline;
 }
 
 .path {
-    font-family: monospace;
-    font-size: 1.3em;
+  font-family: monospace;
+  font-size: 1.3em;
 }
 
 .text-gray {
-    color: gray;
+  color: gray;
 }
 
 .not-matched {
-    font-family: "Agency FB", sans-serif;
-    font-size: 1.2em;
-    color: red;
-    text-decoration: line-through;
-    font-weight: bold;
+  font-family: "Agency FB", sans-serif;
+  font-size: 1.2em;
+  color: red;
+  text-decoration: line-through;
+  font-weight: bold;
 }
 
 .matched {
-    font-family: "Agency FB", sans-serif;
-    font-size: 1.2em;
-    color: #016909;
-    font-weight: bold;
+  font-family: "Agency FB", sans-serif;
+  font-size: 1.2em;
+  color: #016909;
+  font-weight: bold;
 }
 
 .not-checked {
-    font-family: "Agency FB", sans-serif;
-    font-size: 1.2em;
-    color: #808080;
-    font-weight: bold;
+  font-family: "Agency FB", sans-serif;
+  font-size: 1.2em;
+  color: #808080;
+  font-weight: bold;
 }
 
 .method {
-    font-family: monospace;
-    font-size: 1.5em;
-    font-weight: bold;
-    color: #5d5b5b;
+  font-family: monospace;
+  font-size: 1.5em;
+  font-weight: bold;
+  color: #5d5b5b;
 }
 
 .callable {
-    font-family: "Berlin Sans FB Demi", sans-serif;
-    font-size: 1.5em;
-    font-weight: bold;
-    color: #5d5b5b;
+  font-family: "Berlin Sans FB Demi", sans-serif;
+  font-size: 1.5em;
+  font-weight: bold;
+  color: #5d5b5b;
 }
 
 .closure {
-    font-family: "Comic Sans MS", sans-serif;
-    font-size: 1.1em;
-    font-weight: bold;
-    color: #5d5b5b;
+  font-family: "Comic Sans MS", sans-serif;
+  font-size: 1.1em;
+  font-weight: bold;
+  color: #5d5b5b;
 }
 
 .table-head {
-    background-color: #0c0c0c;
-    /*background-color: #383838;*/
+  background-color: #0c0c0c;
+  /*background-color: #383838;*/
 }
 
 .value-cell {
-    width: 65%;
+  width: 65%;
+}
+button {
+  background-color: #000000;
+  border: none;
+  border-radius: 5px;
+  color: white;
+  padding: 10px 20px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  font-weight: bold;
+  margin: 0 auto;
+  cursor: pointer;
 }

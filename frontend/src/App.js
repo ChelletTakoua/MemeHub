@@ -1,6 +1,5 @@
-import React, { useContext, useEffect } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { Route, Routes, useLocation } from "react-router-dom";
-import Navbar from "./components/Navbar";
 import Home from "./pages/Home";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
@@ -9,24 +8,41 @@ import MemeEdit from "./pages/MemeEdit";
 import Profile from "./pages/Profile";
 import About from "./pages/AboutUs";
 import VerifyEmail from "./pages/VerifyEmail";
+import NotFound from "./pages/NotFound";
+import Navbar from "./components/Navbar";
 import Footer from "./components/Footer";
+import Loading from "./components/Loading";
 import { AppContext } from "./context/AppContext";
 import "./App.css";
-import NotFound from "./pages/NotFound";
 
 function App() {
+  const [isLoading, setIsLoading] = useState(false);
   const { user, checkAuth } = useContext(AppContext);
 
   useEffect(() => {
-    checkAuth();
+    const init = async () => {
+      try {
+        setIsLoading(true);
+        await checkAuth();
+      } catch (error) {
+        console.error("Error checking auth:", error);
+      } finally {
+        setTimeout(() => {
+          setIsLoading(false);
+        }, 1000);
+      }
+    };
+    init();
   }, [checkAuth]);
 
   const location = useLocation();
-  const hideNavbar = (location.pathname === "/verifyEmail") || (location.pathname === "/resetPassword");
+  const hideNavbar =
+    location.pathname === "/verifyEmail" ||
+    location.pathname === "/resetPassword";
 
-  
-
-  return (
+  return isLoading ? (
+    <Loading />
+  ) : (
     <div className="app">
       {!hideNavbar && <Navbar />}
       <main className="app-main">

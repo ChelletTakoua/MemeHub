@@ -1,7 +1,8 @@
 <?php
     header('Content-Type: text/html; charset=utf-8');
+    
 
-    $index = $_GET["index"];
+    $index = $_GET["index"]-1;
 
     $request = $_SESSION["requests"][$index];
     $currentRoute = $request["routing"]["matched_route"];

@@ -82,7 +82,7 @@ $router->get('/admin/devmode', "AdminController@devMode", ['admin']);
 
 
 //These routes are for debugging purposes
-$router->get('/admin/sessionHistory', "../src/Debugging/debugging.php", ['guest'], true);
+$router->get('/admin/sessionHistory', "../src/Debugging/SessionHistory.php", ['guest'], true);
 $router->get('/admin/requestDetails', "../src/Debugging/debugLouey.php", ['guest'], true);
 
 

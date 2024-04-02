@@ -47,7 +47,7 @@ function get_headers_assoc() {
 function save_response() {
     global $last_request_key;
 
-    $body = ob_get_contents();
+    $body = json_decode( ob_get_contents(),true);
 
     $response = [
         'headers' => get_headers_assoc(),

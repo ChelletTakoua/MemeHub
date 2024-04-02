@@ -54,7 +54,6 @@ table tr:nth-child(even) {
   border-radius: 5px;
   margin-bottom: 20px;
   margin-left: 20px;
-
   display: inline-block;
   font-size: 1.2em;
 }
@@ -179,6 +178,7 @@ button {
   font-size: 1.2em;
   border-radius: 5px;
   display: inline-block;
+  overflow: auto;
 }
 
 .error {
@@ -190,8 +190,7 @@ button {
 
 .error-message {
   font-family: monospace;
-  font-size: 3em;
-  font-weight: bold;
+  font-size: 1em;
   color: red;
 }
 
@@ -202,9 +201,14 @@ button {
 
 .inline-box-error {
   margin: 0 auto;
+  width: 40%;
   background-color: #e6e6e6;
   padding: 10px;
-  font-size: 1.2em;
-  border-radius: 5px;
-  display: inline-block;
+  font-size: 1.3em;
+  border-radius: 10px;
+  border: 1px solid #808080;
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.5);
+  word-wrap: break-word;
+  overflow: auto;
+
 }

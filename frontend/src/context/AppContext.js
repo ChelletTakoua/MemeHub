@@ -8,7 +8,6 @@ const AppContext = createContext();
 
 const AppProvider = ({ children }) => {
   const [user, setUser] = useState(null);
-  const [error, setError] = useState(null);
 
   const navigate = useNavigate();
 
@@ -25,15 +24,14 @@ const AppProvider = ({ children }) => {
     try {
       await api.register({ username, email, password });
       setUser(null);
-      setError(null);
       toast.success(
         `${username} registered successfully! Please verify your email and login.`
       );
+      await userApi.sendVerifEmail(username);
       navigate("/login");
       window.scrollTo(0, 0);
     } catch (error) {
       setUser(null);
-      setError(error.response?.data.message);
       toast.error(error.response?.data.message);
     }
   };
@@ -42,13 +40,22 @@ const AppProvider = ({ children }) => {
     try {
       const res = await api.login({ username, password });
       setUser(res?.data.data.user);
-      setError(null);
       toast.success(`Welcome back, ${username}`);
       navigate("/");
     } catch (error) {
       setUser(null);
-      setError(error.response?.data.message);
-      toast.error(error.response?.data.message);
+      if (error?.response?.status === 403) {
+        try {
+          await userApi.sendVerifEmail(username);
+          toast.success(
+            "Please verify your email to login. Check your inbox and spam folder."
+          );
+        } catch (error) {
+          toast.error(error?.response?.data.message);
+        }
+      } else {
+        toast.error(error?.response?.data.message);
+      }
     }
   };
 
@@ -68,8 +75,6 @@ const AppProvider = ({ children }) => {
       value={{
         user,
         setUser,
-        error,
-        setError,
         register,
         login,
         logout,

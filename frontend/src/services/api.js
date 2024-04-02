@@ -83,7 +83,7 @@ export const adminApi = {
   getUserProfile: (userId) =>
     base.get(ADMIN_API_ROUTES["GET_USER_PROFILE"].replace(":id", userId)),
   changeUserRole: (userId, role) =>
-    base.post(ADMIN_API_ROUTES["CHANGE_USER_ROLE"].replace(":id", userId), {
+    base.put(ADMIN_API_ROUTES["CHANGE_USER_ROLE"].replace(":id", userId), {
       role,
     }),
   deleteUser: (userId) =>

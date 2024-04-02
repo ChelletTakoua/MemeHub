@@ -417,7 +417,7 @@ class MemeTableManager extends TableManager
     static public function sortMemesByDate(array $memes): array
     {
         usort($memes, function ($a, $b) {
-            return strtotime($a->getCreationDate()) <=> strtotime($b->getCreationDate());
+            return strtotime($a->getCreationDate()) - strtotime($b->getCreationDate());
         });
         return $memes;
     }

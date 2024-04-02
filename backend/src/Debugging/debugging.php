@@ -56,7 +56,7 @@ $index = 0;
         <th>Method</th>
         <th>Path</th>
         <th>Date</th>
-        <th>Time (ms)</th>
+        <th>Time</th>
         <th>Status code</th>
         <th> </th>
     </tr>
@@ -76,17 +76,17 @@ $index = 0;
                 <td class ="path"><?php
 
                         $timestamp = $rq['request']['timestamp'];
-                        $date = date('Y-m-d H:i:s', $timestamp);
+                        $date = date('Y-m-d H:i:s',floor($timestamp));
                         echo $date;
                         ?>
                 </td>
-                <td class ="path"><?php
+                <td class ="ms"><?php
 
                         $timestamp1 = $rq['request']['timestamp'];
                         $timestamp2= $rq['response']['timestamp'];
                         $time = floor(($timestamp2 - $timestamp1)*1000);
                         echo $time;
-                        ?>
+                        ?> ms</td>
                 <td class ="path"><?= displayResponseCode($rq['response']['status_code']) ?></td>
                 <td class = "path">
                 <?php

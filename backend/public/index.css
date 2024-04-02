@@ -135,9 +135,19 @@ button {
   margin: 0 auto;
   cursor: pointer;
 }
+.ms {
+  font-family: "Comic Sans MS", sans-serif;
+}
 
-
-.success { color: green; }
-.redirection { color: yellow; }
-.client-error { color: red; }
-.server-error { color: red; }
+.success {
+  color: green;
+}
+.redirection {
+  color: yellow;
+}
+.client-error {
+  color: red;
+}
+.server-error {
+  color: red;
+}

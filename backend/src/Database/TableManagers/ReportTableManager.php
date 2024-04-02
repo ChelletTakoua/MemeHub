@@ -44,7 +44,7 @@ class ReportTableManager extends TableManager
     }
 
     static public function getReportByMemeId(int $meme_id): ?array{
-        if (!MemeTableManager::memeExists($meme_id) && !BlockedMemeTableManager::blockedMemeExists($meme_id) ) {
+        if ( empty(MemeTableManager::getMemeById($meme_id,true)) ) {
             return null;
         }
         $reports = self::getReport(["meme_id" => $meme_id]);

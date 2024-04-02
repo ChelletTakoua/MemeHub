@@ -14,6 +14,7 @@ import Footer from "./components/Footer";
 import Loading from "./components/Loading";
 import { AppContext } from "./context/AppContext";
 import "./App.css";
+import ForgotPassword from "./pages/ForgotPassword";
 
 function App() {
   const [isLoading, setIsLoading] = useState(false);
@@ -52,6 +53,7 @@ function App() {
           <Route path="/" element={<Home />} />
           <Route path="/about" element={<About />} />
           <Route path="/verifyEmail" element={<VerifyEmail />} />
+          
           {!user && (
             <>
               <Route path="/login" element={<Login />} />

@@ -1,10 +1,17 @@
-export default function OptionsMenu({ memeResultImg }) {
-  function download() {
+import { useNavigate } from "react-router-dom";
+
+export default function OptionsMenu({ memeResultImg, template }) {
+  const navigate = useNavigate();
+  function handleDownload() {
     const dataUrl = `data:image/jpeg;base64,${memeResultImg}`;
     var link = document.createElement("a");
     link.download = "meme.jpeg";
     link.href = dataUrl;
     link.click();
+  }
+
+  function handleUseTemplate() {
+    navigate(`/create`, { state: { template } });
   }
 
   return (
@@ -14,12 +21,15 @@ export default function OptionsMenu({ memeResultImg }) {
       </div>
       <div className="py-1">
         <button
-          onClick={download}
+          onClick={handleDownload}
           className="block w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
         >
           download meme
         </button>
-        <button className="block w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">
+        <button
+          onClick={handleUseTemplate}
+          className="block w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+        >
           use as template
         </button>
       </div>

@@ -3,7 +3,7 @@ import { useEffect, useRef, useState } from "react";
 import { useTransition, animated } from "react-spring";
 import OptionsMenu from "./OptionsMenu";
 
-export default function OptionsButton({ memeResultImg }) {
+export default function OptionsButton({ memeResultImg, template }) {
   const [showOptions, setShowOptions] = useState(false);
   const node = useRef();
 
@@ -42,7 +42,7 @@ export default function OptionsButton({ memeResultImg }) {
       {transitions((style, item) =>
         item ? (
           <animated.div style={style}>
-            <OptionsMenu memeResultImg={memeResultImg} />
+            <OptionsMenu memeResultImg={memeResultImg} template={template} />
           </animated.div>
         ) : null
       )}

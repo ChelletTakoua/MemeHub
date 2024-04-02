@@ -24,7 +24,7 @@ export default function Navbar() {
       <div className="flex gap-4">
         {user ? (
           <>
-            <Link to="/create">
+            <Link reloadDocument to="/create">
               <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
                 <span className="flex gap-2 items-center">
                   <FaPlusCircle />

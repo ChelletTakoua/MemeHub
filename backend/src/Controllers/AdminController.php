@@ -6,6 +6,7 @@ use Database\TableManagers\MemeTableManager;
 use Database\TableManagers\UserTableManager;
 use Exceptions\HttpExceptions\BadRequestException;
 use Exceptions\HttpExceptions\NotFoundException;
+use Exceptions\HttpExceptions\UnauthorizedException;
 use Utils\ApiResponseBuilder;
 use Utils\RequestHandler;
 
@@ -108,5 +109,18 @@ class AdminController
         ApiResponseBuilder::buildSuccessResponse();
     }
 
+
+    /**
+     * This method checks if the development mode is active
+     * @throws UnauthorizedException
+     */
+    public function devMode()
+    {
+        $devMode = (include __DIR__ . '/../config/app.php')['development_mode'];
+        if (!$devMode) {
+            throw new UnauthorizedException("Dev mode is not active");
+        }
+        echo json_encode(ApiResponseBuilder::buildSuccessResponse());
+    }
 
 }

@@ -1,6 +1,8 @@
 <?php
 
 // if the development mode is not enabled, we don't need to do anything
+use Utils\RequestHandler;
+
 $appConfig = include __DIR__ . '/../config/app.php';
 
 if ( ! $appConfig['development_mode']) {
@@ -19,7 +21,7 @@ $request = [
     'get_params' => $_GET,
     'post_params' => $_POST,
     'headers' => getallheaders(),
-    'body' => file_get_contents('php://input'), //TODO: MTBH read more about this
+    'body' => RequestHandler::getJsonRequestBody(),
     'timestamp' => microtime(true)
 ];
 
@@ -45,6 +47,9 @@ function save_response() {
         'status_code' => http_response_code(),
         'timestamp' => microtime(true)
     ];
+
+
+
     $_SESSION['requests'][$last_request_key]['response'] = $response;
 
 }

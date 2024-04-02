@@ -71,7 +71,11 @@ const ProfileCard = ({ isOwner, meme, memes, setMemes }) => {
       ) : (
         <div className="px-6 py-4">
           <div className="flex items-center">
-            <LikeButton likes={meme.nb_likes} memeId={meme.id} />
+            <LikeButton
+              likes={meme.nb_likes}
+              memeId={meme.id}
+              userLikedIt={meme?.liked}
+            />
             <ReportButton onReportClick={handleReportClick} />
           </div>
           <ReportBox

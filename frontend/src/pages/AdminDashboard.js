@@ -7,6 +7,7 @@ import "react-responsive-modal/styles.css";
 const AdminDashboard = () => {
   const [selectedButton, setSelectedButton] = useState("Pending");
   const [admins, setAdmins] = useState([]);
+  const [users, setUsers] = useState([]);
   const [reports, setReports] = useState([]);
   const [stats, setStats] = useState({});
   const [viewedImg, setViewedImg] = useState("");
@@ -24,34 +25,36 @@ const AdminDashboard = () => {
       toast.error("Failed to fetch reports");
     }
   }, [toast]);
+  const fetchUsersAndStats = useCallback(async () => {
+    try {
+      const res = await adminApi.getAllUsers();
+      // Update the totalUsers stat
+      setStats((prev) => {
+        return {
+          ...prev,
+          totalUsers: res?.data.data.users.length,
+        };
+      });
+      // Update the admins list
+      setAdmins(res?.data.data.users.filter((user) => user.role === "admin"));
+      // Update the users list
+      setUsers(res?.data.data.users);
+
+      // Fetch the total memes
+      const resMemes = await memeApi.getAllMemes();
+      setStats((prev) => {
+        return {
+          ...prev,
+          totalMemes: resMemes?.data.data.memes.length,
+        };
+      });
+    } catch (error) {
+      console.error("Error fetching data:", error);
+      toast.error("Failed to fetch admins and stats");
+    }
+  }, [toast]);
 
   useEffect(() => {
-    const fetchAdminsAndStats = async () => {
-      try {
-        const res = await adminApi.getAllUsers();
-        // Update the totalUsers stat
-        setStats((prev) => {
-          return {
-            ...prev,
-            totalUsers: res?.data.data.users.length,
-          };
-        });
-        // Update the admins list
-        setAdmins(res?.data.data.users.filter((user) => user.role === "admin"));
-
-        // Fetch the total memes
-        const resMemes = await memeApi.getAllMemes();
-        setStats((prev) => {
-          return {
-            ...prev,
-            totalMemes: resMemes?.data.data.memes.length,
-          };
-        });
-      } catch (error) {
-        console.error("Error fetching data:", error);
-        toast.error("Failed to fetch admins and stats");
-      }
-    };
     const fetchDebugModeStatus = async () => {
       try {
         const res = await adminApi.getDebugModeStatus();
@@ -61,10 +64,11 @@ const AdminDashboard = () => {
         toast.error("Failed to fetch debug mode status");
       }
     };
+
     fetchReports();
-    fetchAdminsAndStats();
+    fetchUsersAndStats();
     fetchDebugModeStatus();
-  }, [toast, fetchReports]);
+  }, [toast, fetchReports, fetchUsersAndStats]);
 
   const handleIgnore = async (reportId) => {
     try {
@@ -95,6 +99,16 @@ const AdminDashboard = () => {
     }
   };
 
+  const handleChangeRole = async (userId, newRole) => {
+    try {
+      await adminApi.changeUserRole(userId, newRole);
+      toast.success("User role changed successfully");
+      await fetchUsersAndStats();
+    } catch (error) {
+      toast.error("Failed to change user role");
+    }
+  };
+
   return (
     <div className="p-4 relative">
       <main className="container mx-auto flex-grow p-4">
@@ -122,7 +136,46 @@ const AdminDashboard = () => {
           </div>
         </section>
         <section className="mb-8">
-          <h2 className="text-xl font-semibold mb-2">User Reports</h2>
+          <h2 className="text-xl font-semibold mb-2">User Profiles</h2>
+          <div className="bg-white p-4 shadow-lg rounded-lg">
+            <p>Here you can view user profiles and change roles.</p>
+            <div className="overflow-x-auto mt-6">
+              <table className="w-full whitespace-nowrap">
+                <thead>
+                  <tr className="text-xs font-semibold tracking-wide text-left text-gray-500 uppercase border-b bg-gray-50">
+                    <th className="px-4 py-3">User ID</th>
+                    <th className="px-4 py-3">Username</th>
+                    <th className="px-4 py-3">Role</th>
+                    <th className="px-4 py-3">Actions</th>
+                  </tr>
+                </thead>
+                <tbody className="bg-white divide-y">
+                  {users.map((user) => (
+                    <tr className="text-gray-700" key={user.id}>
+                      <td className="px-4 py-3">{user.id}</td>
+                      <td className="px-4 py-3">{user.username}</td>
+                      <td className="px-4 py-3">{user.role}</td>
+                      <td className="px-4 py-3">
+                        <button
+                          className="text-blue-600 hover:text-blue-900 mr-2"
+                          onClick={() => {
+                            const newRole =
+                              user.role === "user" ? "admin" : "user";
+                            handleChangeRole(user.id, newRole);
+                          }}
+                        >
+                          Change Role
+                        </button>
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </section>
+        <section className="mb-8">
+          <h2 className="text-xl font-semibold mb-2">User reports</h2>
           <div className="bg-white p-4 shadow-lg rounded-lg">
             <p>Here you can view and manage user reports.</p>
             <div className="mb-4 flex justify-end">
@@ -162,7 +215,7 @@ const AdminDashboard = () => {
                 <thead>
                   <tr className="text-xs font-semibold tracking-wide text-left text-gray-500 uppercase border-b bg-gray-50">
                     <th className="px-4 py-3">Report ID</th>
-                    <th className="px-4 py-3">User Name</th>
+                    <th className="px-4 py-3">Username</th>
                     <th className="px-4 py-3">Report Details</th>
                     <th className="px-4 py-3">Actions</th>
                   </tr>

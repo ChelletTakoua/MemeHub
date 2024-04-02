@@ -72,7 +72,11 @@ export default function Card({ meme }) {
 
         <div className={`px-6 py-4`}>
           <div className="flex items-center">
-            <LikeButton memeId={meme?.id} likes={meme?.nb_likes} />
+            <LikeButton
+              memeId={meme?.id}
+              likes={meme?.nb_likes}
+              userLikedIt={meme.liked}
+            />
             {user && <ReportButton onReportClick={handleReportClick} />}
           </div>
           <ReportBox

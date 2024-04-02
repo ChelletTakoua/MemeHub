@@ -17,6 +17,7 @@ import "./App.css";
 
 function App() {
   const [isLoading, setIsLoading] = useState(false);
+  const [loaded, setLoaded] = useState(false);
   const { user, checkAuth } = useContext(AppContext);
 
   const location = useLocation();
@@ -27,6 +28,7 @@ function App() {
   useEffect(() => {
     const init = async () => {
       try {
+        setLoaded(true);
         setIsLoading(true);
         await checkAuth();
       } catch (error) {
@@ -37,8 +39,8 @@ function App() {
         }, 1000);
       }
     };
-    !hideNavbar && init();
-  }, [checkAuth, hideNavbar]);
+    !loaded && !hideNavbar && init();
+  }, [checkAuth, loaded, hideNavbar]);
 
   return isLoading ? (
     <Loading />

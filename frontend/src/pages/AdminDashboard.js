@@ -12,7 +12,7 @@ const AdminDashboard = () => {
   const [stats, setStats] = useState({});
   const [viewedImg, setViewedImg] = useState("");
   const [openView, setOpenView] = useState(false);
-  const [debugBtnVisible, setDebugBtnVisible] = useState(false);
+  const [backendDevMode, setBackendDevMode] = useState(false);
 
   const { toast, user } = useContext(AppContext);
 
@@ -55,19 +55,19 @@ const AdminDashboard = () => {
   }, [toast, user]);
 
   useEffect(() => {
-    const fetchDebugModeStatus = async () => {
+    const fetchDevModeStatus = async () => {
       try {
         const res = await adminApi.getDebugModeStatus();
-        setDebugBtnVisible(res.status === 200);
+        setBackendDevMode(res.data.data.devMode);
       } catch (error) {
         console.error("Error fetching data:", error);
-        toast.error("Failed to fetch debug mode status");
+        toast.error("Failed to fetch development mode status");
       }
     };
 
     fetchReports();
     fetchUsersAndStats();
-    fetchDebugModeStatus();
+    fetchDevModeStatus();
   }, [toast, fetchReports, fetchUsersAndStats]);
 
   const handleIgnore = async (reportId) => {
@@ -109,20 +109,29 @@ const AdminDashboard = () => {
     }
   };
 
+  const handleOpenDebugging = () => {
+    if(backendDevMode){
+      window.location.href = adminApi.debugModePage;
+    }else{
+      toast.error("Development mode is disabled. Start the backend server in development mode or enable it manually in the backend config files.");
+    }
+  };
+
   return (
     <div className="p-4 relative">
       <main className="container mx-auto flex-grow p-4">
         <h1 className="text-2xl font-bold mb-4">
           Welcome to the Admin Dashboard
         </h1>
-        {debugBtnVisible && (
           <button
-            className="absolute top-8 right-8 px-4 py-2 bg-gray-900 text-white rounded"
-            onClick={() => (window.location.href = adminApi.debugModePage)}
+            className={`absolute top-8 right-8 px-4 py-2 text-white rounded ${
+              backendDevMode ? "bg-gray-900" : "bg-gray-300"
+            }`}
+            onClick={handleOpenDebugging}
           >
             Debugging
           </button>
-        )}
+      
 
         <section className="mb-8">
           <h2 className="text-xl font-semibold mb-2">Admin Profiles</h2>

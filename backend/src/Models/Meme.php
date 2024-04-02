@@ -101,6 +101,7 @@ class Meme extends Model{
             "template" => $this->template,
             "user_id" => $this->getUserId(),
             "nb_likes" => $this->nb_likes,
+            "liked" =>  LikeTableManager::likeExistsByMemeIdAndUserId($this->getId(), $this->getUserId()),
             "liked" => Auth::isLoggedIn() && LikeTableManager::likeExistsByMemeIdAndUserId($this->getId(), Auth::GetActiveUserId()),
             "creation_date" => $this->getCreationDate(),
             "text_blocks" => TextBlockTableManager::getTextBlockByMemeId($this->getId()),

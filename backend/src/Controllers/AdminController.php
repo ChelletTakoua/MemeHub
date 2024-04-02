@@ -113,10 +113,8 @@ class AdminController
     public function devMode()
     {
         $devMode = (include __DIR__ . '/../config/app.php')['development_mode'];
-        if (!$devMode) {
-            throw new UnauthorizedException("Dev mode is not active");
-        }
-        echo json_encode(ApiResponseBuilder::buildSuccessResponse());
+        $response = ApiResponseBuilder::buildSuccessResponse(["devMode"=>$devMode]);
+        echo json_encode($response);
     }
 
 }

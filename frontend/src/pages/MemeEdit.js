@@ -43,6 +43,8 @@ export default function MemeEdit() {
       fetchMeme(id);
     } else if (template) {
       setBrowse(false);
+      template.template_id = template.id; //@yassine zedt el zouz ostra hedhom, ken yab3ath fl addMeme b id fi3oudh template_id
+      delete template.id;
       setCurrMeme(template);
     } else {
       fetchTemplates();

@@ -102,5 +102,5 @@ export const adminApi = {
   deleteMeme: (memeId) =>
     base.delete(ADMIN_API_ROUTES["DELETE_MEME"].replace(":id", memeId)),
   getDebugModeStatus: () => base.get(ADMIN_API_ROUTES["DEBUG_MODE_STATUS"]),
-  debugModePage: `${base.getUri()}/admin/requestDetails`,
+  debugModePage: `${base.getUri()}/admin/sessionHistory`,
 };

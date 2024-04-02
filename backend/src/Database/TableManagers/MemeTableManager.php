@@ -416,12 +416,9 @@ class MemeTableManager extends TableManager
      */
     static public function sortMemesByDate(array $memes): array
     {
-        // usort sorts an array using a user-defined comparison function
-        usort($memes, function ($meme1, $meme2) {
-            // strcmp compares two strings. Here it's used to compare the creation dates of two memes
-            return strcmp($meme1->creation_date, $meme2->creation_date);
+        usort($memes, function ($a, $b) {
+            return strtotime($a->getCreationDate()) <=> strtotime($b->getCreationDate());
         });
-        // Return the sorted array of memes
         return $memes;
     }
 }

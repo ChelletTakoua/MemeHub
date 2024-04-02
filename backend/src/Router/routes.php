@@ -77,9 +77,11 @@ $router->post('/admin/reports/:id/ignore', "ReportController@ignoreReport", ['ad
 $router->post('/admin/reports/:id/delete', "ReportController@deleteReport", ['admin']); // delete report
 
 
-// a route to return all the routes (with all the details) and another route to print them in a beautiful way
+//check if devmode is active
+$router->get('/admin/devmode', "AdminController@devMode", ['admin']);
 
 
+//These routes are for debugging purposes
 $router->get('/admin/sessionHistory', "../src/Debugging/debugging.php", ['guest'], true);
 $router->get('/admin/requestDetails', "../src/Debugging/debugLouey.php", ['guest'], true);
 

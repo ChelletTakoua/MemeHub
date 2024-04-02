@@ -12,13 +12,13 @@ class Meme extends Model{
     private $nb_likes;
     private $result_img;
 
-    public function __construct($id, $template_id, $custom_title, $user_id, $creation_date,$result_img) {
+    public function __construct($id, $template_id, $custom_title, $user_id, $creation_date,$result_img,$nb_likes) {
         parent::__construct($id);
         $this->template = new Proxy($template_id, 'Template');
         $this->custom_title = $custom_title;
         $this->user = new Proxy($user_id, 'User');
         $this->creation_date = $creation_date;
-        $this->nb_likes = 0;
+        $this->nb_likes = $nb_likes;
         $this->result_img = $result_img;
     }
     public function getUserId(){

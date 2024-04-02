@@ -102,7 +102,7 @@
 
     <?php
         //-----------------Response-----------------
-        $response["body"] = json_encode(json_decode($response["body"]), JSON_PRETTY_PRINT);
+        $response["body"] = json_encode($response["body"], JSON_PRETTY_PRINT);
     ?>
     <h1 class="underline-text">Response :</h1>
     <h2>Response Headers :</h2>

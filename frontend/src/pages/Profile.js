@@ -121,7 +121,7 @@ const Profile = () => {
   };
 
   return (
-    <div className="bg-palenight">
+    <div className="grow bg-palenight">
       <main className="container mx-auto py-8">
         <div className="flex space-x-8">
           <div className="w-1/4">
@@ -129,7 +129,9 @@ const Profile = () => {
               type="file"
               onChange={handleImageUpload}
               disabled={!isOwner}
-              className={`${isOwner ? "" : "hidden"} mb-4 w-full px-3 py-2 text-white bg-gray-800 rounded shadow-lg 
+              className={`${
+                isOwner ? "" : "hidden"
+              } mb-4 w-full px-3 py-2 text-white bg-gray-800 rounded shadow-lg 
                         active:text-gray-500 cursor-pointer hover:bg-gray-700 hover:text-gray-200 hover:shadow-md hover:active:bg-gray-800 hover:active:text-white hover:active:shadow-lg hover:active:cursor-pointer hover:active:transition-all`}
             />
             <img
@@ -183,7 +185,7 @@ const Profile = () => {
               <div className="grid grid-cols-3 gap-4 mt-2">
                 {memes.length === 0 && ( // If there are no memes //TODO: make this better
                   <div className="flex flex-col items-center justify-center gap-4">
-                  <div className="text-black">No memes to show.</div>
+                    <div className="text-black">No memes to show.</div>
                     <Link to="/create">
                       <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
                         <span className="flex gap-2 items-center">

@@ -17,9 +17,8 @@ const Home = () => {
     fetchMemes();
   }, []);
 
-
   return (
-    <div className="bg-palenight">
+    <div className="grow bg-palenight">
       <header className="text-center py-20 bg-gradient-to-r from-greens-200 to-palenight shadow-2xl text-white">
         <h1 className="text-5xl mb-5 animate-ping-once ">
           Welcome to MemeHub!

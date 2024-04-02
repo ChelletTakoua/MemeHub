@@ -114,7 +114,7 @@
         </table>
     </div>
     <h2>Request Body :</h2>
-    <div class="inline-box">
+    <div class="body-container inline-box">
         <pre><?= $query["body"] ?></pre>
     </div>
 

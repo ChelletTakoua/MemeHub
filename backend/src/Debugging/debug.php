@@ -20,7 +20,7 @@ $request = [
     'post_params' => $_POST,
     'headers' => getallheaders(),
     'body' => file_get_contents('php://input'), //TODO: MTBH read more about this
-    'timestamp' => time()
+    'timestamp' => microtime(true)
 ];
 
 
@@ -43,7 +43,7 @@ function save_response() {
         'headers' => get_headers_assoc(),
         'body' => ob_get_contents(),
         'status_code' => http_response_code(),
-        'timestamp' => time()
+        'timestamp' => microtime(true)
     ];
     $_SESSION['requests'][$last_request_key]['response'] = $response;
 

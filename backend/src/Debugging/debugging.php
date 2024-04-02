@@ -48,6 +48,7 @@ $index = 0;
         <th>Method</th>
         <th>Path</th>
         <th>Date</th>
+        <th>Time (ms)</th>
         <th>Status code</th>
         <th> </th>
     </tr>
@@ -71,6 +72,13 @@ $index = 0;
                         echo $date;
                         ?>
                 </td>
+                <td class ="path"><?php
+
+                        $timestamp1 = $rq['request']['timestamp'];
+                        $timestamp2= $rq['response']['timestamp'];
+                        $time = floor(($timestamp2 - $timestamp1)*1000);
+                        echo $time;
+                        ?>
                 <td class ="path"><?= $rq['response']['status_code'] ?></td>
                 <td class = "path">
                 <?php

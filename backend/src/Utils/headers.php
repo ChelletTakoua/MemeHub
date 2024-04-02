@@ -19,4 +19,6 @@ header('Access-Control-Allow-Credentials: true');
 //  ex: header('Content-Type: text/html');
 //      header('Content-Type: application/pdf');
 header('Content-Type: application/json');
+//set the default timezone to Tunis
+date_default_timezone_set('Africa/Tunis');
 

@@ -50,7 +50,7 @@ class Report extends Model {
             'id' => parent::getId(),
             'reason' => $this->reason,
             'report_date' => $this->report_date,
-            'meme' => $this->meme_id->getId(),
+            'meme_id' => $this->meme_id,
             'user' => $this->user,
             'status' => $this->status
         ];

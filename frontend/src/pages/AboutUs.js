@@ -17,7 +17,7 @@ const About = () => {
           If you have any questions or inquiries, please send us an email.
         </p>
         <form
-          action="mailto:chadhagrami1@gmail.com"
+          action="mailto:chellettakoua@gmail.com"
           method="post"
           encType="text/plain"
         >

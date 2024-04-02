@@ -52,7 +52,7 @@ const AdminDashboard = () => {
       console.error("Error fetching data:", error);
       toast.error("Failed to fetch admins and stats");
     }
-  }, [toast]);
+  }, [toast, user]);
 
   useEffect(() => {
     const fetchDebugModeStatus = async () => {

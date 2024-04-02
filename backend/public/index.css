@@ -137,6 +137,9 @@ button {
   margin: 0 auto;
   cursor: pointer;
 }
+.ms {
+  font-family: "Comic Sans MS", sans-serif;
+}
 
 
 
@@ -163,4 +166,8 @@ button {
   font-weight: bold;
   padding: 0;
   margin: 0;
+}
+
+.ms {
+  font-family: "Comic Sans MS", sans-serif;
 }

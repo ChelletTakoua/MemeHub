@@ -16,7 +16,7 @@ $index = 0;
 <body>
 <div class="container">
 
-<h2>Routes</h2>
+<h2>Routes :</h2>
 <div class="table-container">
 
 <table border='1'>
@@ -32,7 +32,13 @@ $index = 0;
             <tr>
                 <td class ="method"><?= $method ?></td>
                 <td class="path"><?= $route->getPath() ?></td>
-                <td class = "callable"><?= $route->getCallable() ?></td>
+                <td><?php 
+                if($route->getCallable()=="Closure") {
+                    echo(str_replace("Closure", "<span class='closure'>Closure</span>", $route->getCallable()));
+                }
+                    else{
+                        echo(str_replace("@", "<span class='callable'>@</span>", $route->getCallable()));
+                     } ?></td>
                 <td class ="path"><?= implode(", ", $route->getRoles()) ?></td>
             </tr>
         <?php endforeach; ?>
@@ -41,7 +47,7 @@ $index = 0;
 </div>
 
 <!-- historique -->
-<h2>History </h2>
+<h2>History :</h2>
 <div class="table-container">
 
 <table border='1'>
@@ -50,7 +56,7 @@ $index = 0;
         <th>Method</th>
         <th>Path</th>
         <th>Date</th>
-        <th>Time (ms)</th>
+        <th>Time</th>
         <th>Status code</th>
         <th> </th>
     </tr>
@@ -70,17 +76,17 @@ $index = 0;
                 <td class ="path"><?php
 
                         $timestamp = $rq['request']['timestamp'];
-                        $date = date('Y-m-d H:i:s', $timestamp);
+                        $date = date('Y-m-d H:i:s',floor($timestamp));
                         echo $date;
                         ?>
                 </td>
-                <td class ="path"><?php
+                <td class ="ms"><?php
 
                         $timestamp1 = $rq['request']['timestamp'];
                         $timestamp2= $rq['response']['timestamp'];
                         $time = floor(($timestamp2 - $timestamp1)*1000);
                         echo $time;
-                        ?>
+                        ?> ms</td>
                 <td class ="path"><?= displayResponseCode($rq['response']['status_code']) ?></td>
                 <td class = "path">
                 <?php

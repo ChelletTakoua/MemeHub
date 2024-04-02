@@ -1,6 +1,10 @@
 <?php
 
 
+ini_set('display_errors', 'Off');
+ini_set('error_reporting', E_ALL);
+
+
 function logError($e,$red=true)
 {
     // Log the error message, file, line number, class, method, and stack trace

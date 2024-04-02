@@ -54,37 +54,40 @@
 <body>
 <?php
     //-----------------Request-----------------
-    //make the request headers and body more readable
-    $query["headers"] = array_change_key_case($query["headers"], CASE_LOWER);
-    $query["headers"] = array_change_key_case($query["headers"], CASE_LOWER);
     $query["body"] = json_encode(json_decode($query["body"]), JSON_PRETTY_PRINT);
-    $query["body"] = str_replace("\n", "<br>", $query["body"]);
 
-    //make the url / method / status and timestamp in a box like the path box in the routes , make the status and timestamp to the right and the others to the left and make status green with an ok next to it if it's a success and red if it's an error and display the error next to it
 ?>
 <div class="container">
-    <h2>Request :</h2>
+    <h1 class="underline-text">Request :</h1>
 <div class="table-container">
     <div class="info-container">
 
         <div class="left-info">
-                <h4 class="path-box"><span class='underline-text'>Method: </span><span class='method'><?= $query["method"] ?></span></h4>
+                <h4 class="path-box"><span class='underline-text'>Method:</span> <span class='method'><?= $query["method"] ?> </span></h4>
                 <h4 class="path-box"><span class="underline-text">URL:</span> <span class="path text-gray"><?= $query["url"] ?></span></h4>
         </div>
         <div class="right-info">
             <h4 class="right-info path-box status-text"><?= displayResponseCode($response["status_code"]) ?></h4>
-            <h4 class="right-info path-box path"><?= date('Y-m-d H:i:s', $response["timestamp"]) ?></h4>
+            <h4 class="right-info path-box path timestamp"><?= date('Y-m-d H:i:s', $response["timestamp"]) ?></h4>
         </div>
 
     </div>
 
+
 </div>
+    <div class="inline-box-error">
+        <?php
+            //if(!empty($response["error_message"])){
+                echo("<h4 class='error underline-text'>Error message :</h4>");
+                echo("<h5 class='error-message path-box'>fsdnpihpggp".$response["error_message"]."</h5>");
+            //}
+        ?>
+    </div>
 
     <h2>Request Headers :</h2>
     <div class="table-container">
         <table border="1">
-            <tr class="table-head
-            ">
+            <tr class="table-head">
                 <th>Header</th>
                 <th>Value</th>
             </tr>
@@ -99,6 +102,12 @@
     <div class="body-container">
         <pre><?= $query["body"] ?></pre>
     </div>
+
+    <?php
+        //-----------------Response-----------------
+        $response["body"] = json_encode(json_decode($response["body"]), JSON_PRETTY_PRINT);
+    ?>
+    <h1 class="underline-text">Response :</h1>
     <h2>Response Headers :</h2>
     <div class="table-container">
         <table border="1">
@@ -114,14 +123,14 @@
         </table>
     </div>
     <h2>Response Body :</h2>
-    <div class="body-container">
+    <div class="body-container inline-box">
         <pre><?= $response["body"] ?></pre>
     </div>
 
 
     <!-----------------Matching Routes----------------->
 
-    <h2>Routes :</h2>
+    <h1 class="underline-text">Routes :</h1>
     <div class="route-info">
         <h4 class="path-box">
 

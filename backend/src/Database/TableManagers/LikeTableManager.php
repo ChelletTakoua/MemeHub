@@ -3,6 +3,7 @@
 namespace Database\TableManagers;
 
 use Database\DatabaseQuery;
+use Exceptions\HttpExceptions\MethodNotAllowedException;
 use Models\Like;
 
 class LikeTableManager extends TableManager
@@ -136,7 +137,7 @@ class LikeTableManager extends TableManager
     static public function addLike(int $meme_id, int $user_id): ?Like{
 
         if( self::likeExistsByMemeIdAndUserId($meme_id, $user_id)){
-            return null;
+            throw new MethodNotAllowedException('Meme already liked');
         }
         $queryObject = DatabaseQuery::executeQuery("insert","likes",["meme_id" => $meme_id ,"user_id" =>$user_id ]);
         $like = self::getLikeByMemeIdAndUserId($meme_id, $user_id);

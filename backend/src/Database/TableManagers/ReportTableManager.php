@@ -3,6 +3,8 @@
 namespace Database\TableManagers;
 
 use Database\DatabaseQuery;
+use Exceptions\HttpExceptions\HttpException;
+use Exceptions\HttpExceptions\MethodNotAllowedException;
 use Models\Report;
 use Models\User;
 
@@ -103,16 +105,21 @@ class ReportTableManager extends TableManager
      */
     static public function addReport(string $reason, int $meme_id, int $user_id): ?Report{
 
+
+
         if( empty( MemeTableManager::memeExists($meme_id) && empty( BlockedMemeTableManager::blockedMemeExists($meme_id) ) )
             || empty( UserTableManager::verifyExistenceById($user_id) )
             || !empty(self::getReportByMemeIdAndUserId($meme_id, $user_id) ))
         {
-            return null ;
+            throw new MethodNotAllowedException("Meme not found or already reported by user or user not found");
         }
-
         DatabaseQuery::executeQuery("insert", "reports", ["reason" => $reason, "meme_id" => $meme_id, "user_id" => $user_id]);
         $id = DatabaseQuery::getLastInsertId();
-        return self::getReportById($id);
+        $rep =  self::getReportById($id);
+        if($rep == null){
+            throw new HttpException("Report not found after creation");
+        }
+        return $rep;
 
     }
 

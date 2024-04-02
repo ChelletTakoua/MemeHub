@@ -65,7 +65,7 @@
         </div>
         <div class="right-info">
             <h4 class="right-info path-box status-text"><?= displayResponseCode($response["status_code"]) ?></h4>
-            <h4 class="right-info path-box path timestamp"><?= date('Y-m-d H:i:s', $response["timestamp"]) ?></h4>
+            <h4 class="right-info path-box path timestamp"><?= date('Y-m-d H:i:s', floor($response["timestamp"])) ?></h4>
         </div>
 
     </div>

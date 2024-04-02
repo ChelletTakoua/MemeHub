@@ -8,6 +8,7 @@ use Database\TableManagers\LikeTableManager;
 use Database\TableManagers\ReportTableManager;
 use Database\TableManagers\TemplateTableManager;
 use Database\TableManagers\TextBlockTableManager;
+use Exceptions\HttpExceptions\MethodNotAllowedException;
 use Utils\RequestHandler;
 use Utils\ApiResponseBuilder;
 use Exceptions\HttpExceptions\NotFoundException;
@@ -149,10 +150,9 @@ class MemeController
      */
     public function likeMeme($id)
     {
-        Auth::requireLogin();
         $like = LikeTableManager::addLike($id, Auth::getActiveUserId());
         if (empty($like)) {
-            throw new BadRequestException('Failed to add like to the database', 500);
+            throw new MethodNotAllowedException('Meme already liked');
         }
 
         $response = ApiResponseBuilder::buildSuccessResponse(["like" => $like]);
@@ -169,14 +169,10 @@ class MemeController
      */
     public function dislikeMeme($id)
     {
-        if (!isset($_SESSION['user_id'])) {
-            throw new NotLoggedInException('User not logged in');
-        }
         $dislike = LikeTableManager::deleteLikeByMemeIdAndUserId($id, $_SESSION['user_id']);
         if (empty($dislike)) {
-            throw new BadRequestException('Failed to remove like from the database', 500);
+            throw new MethodNotAllowedException('Meme not liked');
         }
-
         $response = ApiResponseBuilder::buildSuccessResponse([]);
         echo json_encode($response);
     }
@@ -192,16 +188,11 @@ class MemeController
     public function reportMeme($id)
     {
         $requestBody = RequestHandler::getJsonRequestBody();
-        if (!isset($_SESSION['user_id'])) {
-            throw new NotLoggedInException('User not logged in');
-        }
+
         if (empty($requestBody) || !isset($requestBody['report_reason'])) {
             throw new BadRequestException('Invalid request body', 400);
         }
         $report = ReportTableManager::addReport($requestBody['report_reason'], $id, $_SESSION['user_id']);
-        if (empty($report)) {
-            throw new BadRequestException('Failed to report meme to the database', 500);
-        }
 
         $response = ApiResponseBuilder::buildSuccessResponse(["report" => $report]);
         echo json_encode($response);

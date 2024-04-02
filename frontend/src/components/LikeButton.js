@@ -12,9 +12,9 @@ export default function LikeButton({ memeId, likes, userLikedIt = false }) {
 
   const handleClick = async () => {
     if (!liked) {
-      await memeApi.likeMeme(memeId);
+      await memeApi.likeMeme(memeId); // @yassine sallemi chnia hedha xd, wini el catch! tarja3lek erreur 405 in case of already liked + message d'erreur bien sur
     } else {
-      await memeApi.dislikeMeme(memeId);
+      await memeApi.dislikeMeme(memeId); // @yassine sallemi chnia hedha xd, wini el catch! tarja3lek erreur 405 in case of meme not liked
     }
     setNbLikes((nbLikes) => (liked ? nbLikes - 1 : nbLikes + 1));
     setLiked((liked) => !liked);

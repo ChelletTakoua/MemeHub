@@ -115,15 +115,16 @@ table tr:nth-child(even) {
 }
 
 .table-head {
-  background-color: #0c0c0c;
-  /*background-color: #383838;*/
+  /*background-color: #0c0c0c;*/
+  background-color: #383838;
 }
+
 
 .value-cell {
   width: 65%;
 }
 button {
-  background-color: #000000;
+  background-color: #818181;
   border: none;
   border-radius: 5px;
   color: white;

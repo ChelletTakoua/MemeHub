@@ -1,5 +1,6 @@
 <?php
 namespace Models;
+use Authentication\Auth;
 use Database\TableManagers\LikeTableManager;
 use Database\TableManagers\TemplateTableManager;
 use Database\TableManagers\TextBlockTableManager;
@@ -100,7 +101,7 @@ class Meme extends Model{
             "template" => $this->template,
             "user_id" => $this->getUserId(),
             "nb_likes" => $this->nb_likes,
-            "liked" => LikeTableManager::likeExistsByMemeIdAndUserId($this->getId(), $this->user->getId()),
+            "liked" => Auth::isLoggedIn() && LikeTableManager::likeExistsByMemeIdAndUserId($this->getId(), Auth::GetActiveUserId()),
             "creation_date" => $this->getCreationDate(),
             "text_blocks" => TextBlockTableManager::getTextBlockByMemeId($this->getId()),
             "result_img" => $this->getResultImg(),

@@ -76,7 +76,7 @@ class Proxy implements JsonSerializable
      * This method returns the class name of the instance
      * @return string the class name of the instance
      */
-    public function jsonSerialize()
+    public function jsonSerialize(): array
     {
         return $this->getInstance()->jsonSerialize();
     }

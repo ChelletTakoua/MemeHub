@@ -27,7 +27,10 @@ $request = [
 
 $last_request_key = array_push($_SESSION['requests'], ['request' => $request,'routing'=>null,'response'=>null]) - 1;
 
-
+/**
+ * Get the headers as an associative array
+ * @return array
+ */
 function get_headers_assoc() {
     $headers = [];
     foreach (headers_list() as $header) {
@@ -36,7 +39,11 @@ function get_headers_assoc() {
     }
     return $headers;
 }
-
+/**
+ * Save the response in the session
+ * @return void
+ 
+ */
 function save_response() {
     global $last_request_key;
 
@@ -59,6 +66,10 @@ function save_response() {
     $_SESSION['requests'][$last_request_key]['response'] = $response;
 
 }
+/**
+ * Save the routing in the session
+ * @return void
+ */
 function save_routing() {
     global $last_request_key;
     global $router;

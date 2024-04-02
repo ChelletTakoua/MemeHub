@@ -4,11 +4,17 @@ namespace Database;
 
 class ModelTableMapper
 {
+
     private static $mappings = [];
 
      const MODEL_NAMESPACE = 'Models\\';
      const TABLE_MANAGER_NAMESPACE = 'Database\\TableManagers\\';
-
+    /**
+     * Register a mapping between a model class and a table manager class and the database table name
+     * @param string $modelClass the model class
+     * @param string $tableManagerClass the table manager class
+     * @param string $tableName the name of the table in the database
+     */
     public static function registerMapping(string $modelClass, string $tableManagerClass, string $tableName)
     {
         $modelClass = self::addModelNamespace($modelClass);
@@ -16,24 +22,43 @@ class ModelTableMapper
         self::$mappings[$modelClass] = ['tableManager' => $tableManagerClass, 'tableName' => $tableName];
         self::$mappings[$tableManagerClass] = ['model' => $modelClass, 'tableName' => $tableName];
     }
-
+    /**
+     * Get the table manager class for a model class
+     * @param string $modelClass the model class
+     * @return string the table manager class
+     */
     public static function getTableManagerClassByModel(string $modelClass): string
     {
         $modelClass = self::addModelNamespace($modelClass);
         return self::$mappings[$modelClass]['tableManager'] ?? '';
     }
+    /**
+     * Get the table name for a model class
+     * @param string $modelClass the model class
+     * @return string the model class
+     */
 
     public static function getTableNameByModel(string $modelClass): string
     {
         $modelClass = self::addModelNamespace($modelClass);
         return self::$mappings[$modelClass]['tableName']  ?? '';
     }
+    /**
+     * Get the model class for a table manager class
+     * @param string $tableManagerClass the table manager class
+     * @return string the model class
+     */
 
     public static function getModelClassByTableManager(string $tableManagerClass): string
     {
         $tableManagerClass = self::addTableManagerNamespace($tableManagerClass);
         return self::$mappings[$tableManagerClass]['model'] ?? '';
     }
+    /**
+     * Get the table name for a table manager class
+     * @param string $tableManagerClass the table manager class
+     * @return string the table name
+     */
     public static function getTableNameByTableManager(string $tableManagerClass): string
     {
         $tableManagerClass = self::addTableManagerNamespace($tableManagerClass);

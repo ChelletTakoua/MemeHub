@@ -1,6 +1,10 @@
 <?php
 
-
+/**
+ * Display the response status code in a colored box
+ * @param int $code the response status code
+ * @return string the response status code in a colored box
+ */
 
 
 function displayResponseCode($code)

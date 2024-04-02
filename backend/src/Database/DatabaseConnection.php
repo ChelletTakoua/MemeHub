@@ -1,18 +1,22 @@
 <?php
 
 namespace Database;
-// this is not tested. @MariemElFouzi
 use PDO;
 
 class DatabaseConnection
 {
     private static $connection;
-
+    /**
+     * DatabaseConnection constructor.
+     */
     private function __construct()
     {
         // Private constructor to prevent instantiation
     }
-
+    /**
+     * Get the database connection
+     * @return PDO
+     */
     public static function getInstance()
     {
         if (self::$connection === null) {

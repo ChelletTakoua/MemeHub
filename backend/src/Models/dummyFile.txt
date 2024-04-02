@@ -1,4 +1,0 @@
-The Models folder contains classes that represent data structures and business logic, like database entities.
-(MVC architecture)
-
-This file is only created so that the folder is created in the repository. It may be removed in the next commit.

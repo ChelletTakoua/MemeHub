@@ -3,11 +3,15 @@
 
 ini_set('display_errors', 'Off');
 ini_set('error_reporting', E_ALL);
-
+/**
+ * Log the error message, file, line number, class, method, and stack trace
+ * @param Exception $e the exception to log
+ * @param bool $red whether to color the error message red
+ * @return void
+ */
 
 function logError($e,$red=true)
 {
-    // Log the error message, file, line number, class, method, and stack trace
     $logMessage = sprintf(
         ( $red ? "\e[0;31m" : "" ) . "Error: %s in %s on line %d\n%s\n%s::%s\nStack trace:\n%s\n\nLink to code: vscode://file/%s:%d" . ( $red ? "\033[0m" : "" ),
         $e->getMessage(),
@@ -22,7 +26,11 @@ function logError($e,$red=true)
     );
     error_log($logMessage);
 }
-
+/**
+ * Handle the error by logging it, setting the response code, and sending a JSON response
+ * @param Exception $e the exception to handle
+ * @return void
+ */
 function errorHandler($e)
 {
 

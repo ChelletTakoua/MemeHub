@@ -16,7 +16,6 @@ class BlockedMemeTableManager extends TableManager
      */
     static public function getBlockedMeme(array $params=[]): array
     {
-
         $queryObjects = DatabaseQuery::executeQuery("select","blocked_memes",[],$params);
         $blockedMemes = [];
         foreach ($queryObjects as $queryObject ) {
@@ -26,7 +25,6 @@ class BlockedMemeTableManager extends TableManager
                                 $queryObject['report_id']);
         }
         return $blockedMemes;
-
     }
     // specific get methods
 
@@ -54,7 +52,7 @@ class BlockedMemeTableManager extends TableManager
      */
     static public function getBlockedMemeByMemeId(int $meme_id):   array
     {
-        if(!MemeTableManager::memeExists($meme_id)){
+        if( empty(MemeTableManager::getMemeById($meme_id,true)) ){
             return [];
         }
         $blockedMemes = self::getBlockedMeme(["meme_id" => $meme_id]);
@@ -154,6 +152,7 @@ class BlockedMemeTableManager extends TableManager
         DatabaseQuery::executeQuery("insert","blocked_memes",["meme_id"=>$meme_id,"admin_id"=>$admin_id,"report_id"=>$report_id]);
         $blockedMeme = DatabaseQuery::executeQuery("select","blocked_memes",[],
             ["meme_id"=>$meme_id,"admin_id"=>$admin_id,"report_id"=>$report_id]);
+        var_dump($blockedMeme);
         $id = $blockedMeme[0]["id"];
         return new BlockedMeme($id,$meme_id,$admin_id,$report_id);
     }

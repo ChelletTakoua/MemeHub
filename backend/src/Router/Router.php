@@ -9,7 +9,7 @@ use Exceptions\HttpExceptions\RouterException;
 class Router
 {
 
-    private static $devMode = false; // TODO: store this in a config file instead of hardcoding it
+    private bool $devMode;
 
     public $url;
     public $routes = []; // liste des routes
@@ -19,6 +19,8 @@ class Router
     public function __construct()
     {
         $this->url = explode("?",$_SERVER['REQUEST_URI'])[0];
+        $this->devMode = (include __DIR__ . '/../config/app.php')['development_mode'];
+
     }
 
 
@@ -32,7 +34,7 @@ class Router
      */
     public function get($path, $callable, $roles = [], $developmentMode = false)
     {
-        if($developmentMode && !self::$devMode) return;
+        if($developmentMode && !$this->devMode) return;
 
         $route = new Route($path, $callable, $roles);
         $this->routes["GET"][] = $route;
@@ -50,7 +52,7 @@ class Router
      */
     public function post($path, $callable, $roles = [], $developmentMode = false)
     {
-        if($developmentMode && !self::$devMode) return;
+        if($developmentMode && !$this->devMode) return;
 
         $route = new Route($path, $callable, $roles);
         $this->routes["POST"][] = $route;
@@ -67,7 +69,7 @@ class Router
      */
     public function put($path, $callable, $roles = [], $developmentMode = false)
     {
-        if($developmentMode && !self::$devMode) return;
+        if($developmentMode && !$this->devMode) return;
 
         $route = new Route($path, $callable, $roles);
         $this->routes["PUT"][] = $route;
@@ -84,7 +86,7 @@ class Router
      */
     public function delete(string $path, callable|string $callable, array $roles = [], bool $developmentMode = false)
     {
-        if($developmentMode && !self::$devMode) return;
+        if($developmentMode && !$this->devMode) return;
 
         $route = new Route($path, $callable, $roles);
         $this->routes["DELETE"][] = $route;
@@ -100,7 +102,7 @@ class Router
      */
     public function options($path, $callable, $roles = [], $developmentMode = false)
     {
-        if($developmentMode && !self::$devMode) return;
+        if($developmentMode && !$this->devMode) return;
 
         $route = new Route($path, $callable, $roles);
         $this->routes["OPTIONS"][] = $route;

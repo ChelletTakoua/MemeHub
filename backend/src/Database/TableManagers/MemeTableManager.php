@@ -32,13 +32,35 @@ class MemeTableManager extends TableManager
         return $memes;
     }
 
+    static public function getAllMemes(array $params=[]): array
+    {
+        $queryObjects =  DatabaseQuery::executeQuery("select","memes",[],$params);
+
+        $memes = [];
+
+        foreach ($queryObjects as $queryObject ) {
+            $memes[] = new Meme($queryObject['id'],
+                $queryObject['template_id'],
+                $queryObject['custom_title'],
+                $queryObject['user_id'],
+                $queryObject['creation_date'],
+                $queryObject['result_img']);
+        }
+        return $memes;
+    }
+
     // specific get methods
-    static public function getMemeById(int $id): ?Meme
+    static public function getMemeById(int $id,bool $blocked = false): ?Meme
     {
         if($id < 0){
             return null;
         }
-        $memes = self::getMeme(["id" => $id]);
+
+        if($blocked){
+            $memes = self::getAllMemes(["id" => $id]);
+        }else{
+            $memes = self::getMeme(["id" => $id]);
+        }
         if(!empty($memes)){
             return $memes[0];
         }
@@ -196,7 +218,7 @@ class MemeTableManager extends TableManager
 
     public static function retrieve($id): ?Meme
     {
-        return self::getMemeById($id);
+        return self::getMemeById($id,true);
     }
     
 

@@ -98,6 +98,7 @@ class DatabaseQuery
 
 
         $statement = $connection->prepare($query);
+        //echo $query;
         $statement->execute(array_merge($attributes, $conditions));
         return $statement->fetchAll(PDO::FETCH_ASSOC);
     }

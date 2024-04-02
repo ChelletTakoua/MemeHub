@@ -203,7 +203,7 @@ class Auth
 
 
         if (self::$activeUser === null) {
-            throw new \Exception("User with ID $userId not found");
+            throw new NotFoundException("User not found");
         }
 
         return self::$activeUser;

@@ -42,7 +42,6 @@ class Proxy implements JsonSerializable
      * This method returns the instance of the class with the id given in the constructor
      * @param bool $force_reload if true, the instance will be reloaded from the database even if it was already loaded
      * @return Model the instance of the class
-     * @throws \Exception
      */
     public function getInstance(bool $force_reload = false) : Model
     {

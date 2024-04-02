@@ -66,9 +66,9 @@ $router->get('/admin/templates/url/:url', "TemplateController@getTemplateByUrl",
 $router->get('/admin', "AdminController@getAdminDashboard", ['admin']); // get admin dashboard
 $router->get('/admin/users', "AdminController@getAllUsers", ['admin']); // get all users
 $router->get('/admin/users/:id', "AdminController@getUserProfile", ['admin']); // get user by id
-$router->post('/admin/users/:id/role', "AdminController@changeUserRole", ['admin']); // change user role
-$router->post('/admin/users/:id/delete', "AdminController@deleteUser", ['admin']); // delete user
-$router->post('/admin/memes/:id/delete', "AdminController@deleteMeme", ['admin']); // delete meme
+$router->put('/admin/users/:id/role', "AdminController@changeUserRole", ['admin']); // change user role
+$router->delete('/admin/users/:id/delete', "AdminController@deleteUser", ['admin']); // delete user
+$router->delete('/admin/memes/:id/delete', "AdminController@deleteMeme", ['admin']); // delete meme
 
 
 $router->get('/admin/reports', "ReportController@getAllReports", ['admin']); // get all reports
@@ -77,7 +77,7 @@ $router->post('/admin/reports/:id/ignore', "ReportController@ignoreReport", ['ad
 $router->post('/admin/reports/:id/delete', "ReportController@deleteReport", ['admin']); // delete report
 
 
-//check if devmode is active
+//checks if devMode is active
 $router->get('/admin/devmode', "AdminController@devMode", ['admin']);
 
 
@@ -87,7 +87,10 @@ $router->get('/admin/requestDetails', "../src/Debugging/debugLouey.php", ['guest
 
 
 
-
+$router->get('/code/:code', function($code){
+    http_response_code($code);
+    echo "response code: $code";
+}, ['guest']);
 
 
 

@@ -31,7 +31,8 @@ class MemeTableManager extends TableManager
                 $queryObject['custom_title'],
                 $queryObject['user_id'],
                 $queryObject['creation_date'],
-                $queryObject['result_img']
+                $queryObject['result_img'],
+                $queryObject['nb_likes']
             );
         }
         // Return the array of Meme objects
@@ -61,7 +62,8 @@ class MemeTableManager extends TableManager
                 $queryObject['custom_title'],
                 $queryObject['user_id'],
                 $queryObject['creation_date'],
-                $queryObject['result_img']
+                $queryObject['result_img'],
+                $queryObject['nb_likes']
             );
         }
         // Return the array of Meme objects

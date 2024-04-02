@@ -69,25 +69,21 @@ class AdminController
     public function changeUserRole($id)
     {
         $request = RequestHandler::getJsonRequestBody();
+        if(empty($request) || !isset($request['role'])) {
+            throw new BadRequestException("Role not found in request body");
+        }
         // Check if the request body is not empty and contains 'role'
-        if(!empty($request) && isset($request['role'])) {
-                if($request['role'] == "admin" || $request['role'] == "user") {
-                    $role = $request['role'];
-                    $user = UserTableManager::getUserById($id);
-                    if ($user) {
-                        UserTableManager::updateRole($id, $role);
-                        ApiResponseBuilder::buildSuccessResponse();
-                    } else {
-                        throw new NotFoundException("User not found");
-                    }
-                }
-                else {
-                    throw new BadRequestException("Role not found in request body");
-                }
+        if($request["admin"]!="admin" && $request["admin"]!="user"){
+            throw new BadRequestException("Role not found in request body");
         }
-        else {
-            throw new NotFoundException("Role not found in request body");
+        $role = $request['role'];
+        $user = UserTableManager::getUserById($id);
+        if (!$user) {
+            throw new NotFoundException("User not found");
         }
+        UserTableManager::updateRole($id, $role);
+        ApiResponseBuilder::buildSuccessResponse();
+
 
     }
 

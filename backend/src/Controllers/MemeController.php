@@ -2,6 +2,7 @@
 
 namespace Controllers;
 
+use Authentication\Auth;
 use Database\TableManagers\MemeTableManager;
 use Database\TableManagers\LikeTableManager;
 use Database\TableManagers\ReportTableManager;
@@ -148,10 +149,8 @@ class MemeController
      */
     public function likeMeme($id)
     {
-        if (!isset($_SESSION['user_id'])) {
-            throw new NotLoggedInException('User not logged in');
-        }
-        $like = LikeTableManager::addLike($id, $_SESSION['user_id']);
+        Auth::requireLogin();
+        $like = LikeTableManager::addLike($id, Auth::getActiveUserId());
         if (empty($like)) {
             throw new BadRequestException('Failed to add like to the database', 500);
         }

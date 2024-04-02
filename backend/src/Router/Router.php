@@ -6,6 +6,9 @@ use Authentication\Auth;
 use Exceptions\HttpExceptions\RouterException;
 
 
+/**
+ * The Router class is responsible for managing the routes of the application. It allows to add routes with different methods (GET, POST, PUT, DELETE, OPTIONS) and matches the current url with the routes and execute the callable function of the matched route.
+ */
 class Router
 {
 

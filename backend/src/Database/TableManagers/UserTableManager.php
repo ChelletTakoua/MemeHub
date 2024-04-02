@@ -224,7 +224,7 @@ class UserTableManager extends TableManager
     // specific update methods
     static public function updateRole($id,$role){
 
-        if ($id > 0 && empty($role) ) {
+        if ($id > 0 && !empty($role) ) {
             self::updateUser(["role" => $role], ["id" => $id]);
         }
 

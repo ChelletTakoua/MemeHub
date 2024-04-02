@@ -23,7 +23,9 @@ use Utils\ApiResponseBuilder;
 class TestController
 {
 
-    //use this method if you want to test some code, call it with route /test
+    /**
+     * use this method if you want to test some code, call it with route /test
+     */
     public function testMethod()
     {
         Auth::login("Louey","adslo123098",false);

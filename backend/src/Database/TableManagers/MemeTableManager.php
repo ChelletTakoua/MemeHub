@@ -388,11 +388,8 @@ class MemeTableManager extends TableManager
         DatabaseQuery::executeQuery("delete", "memes", [], ["id" => $id]);
     }
 
-    //--------save and retrieve methods----------------
-    public function save($model)
-    {
-        echo "MemeTableManager save method called";
-    }
+    //--------retrieve method----------------
+   
 
     /**
      * Retrieves a Meme model from the database.

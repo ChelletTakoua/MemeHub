@@ -45,14 +45,22 @@ class Auth
 
     }
 
-
+/**
+ * sets the user id of the active user in the session
+ * @param string $userId The id of the user.
+ *@return void
+ */
 
     private static function setSessionUserId($userId): void
     {
         $_SESSION['user_id'] = $userId;
         self::$activeUser = null;
     }
-
+/**
+ * sets the active user in the session
+ * @param User $user The user.
+ * @return void
+ */
     private static function setSessionUser($user): void
     {
         $_SESSION['user_id'] = $user->getId();
@@ -122,20 +130,29 @@ class Auth
         self::forceReloadActiveUser();
         return true;
     }
-
+/**
+ * this function is used to check if a user is logged in
+ * @return bool
+ * 
+ */
 
     public static function isLoggedIn(): bool
     {
         // Check if a user is logged in 
         return isset($_SESSION['user_id']);
     }
-
+    /**
+     * this function is used to check if a specific user is logged in
+     * @param int $userId The id of the user.
+     * @return bool
+     */
     public static function isSpecificUserLoggedIn($userId): bool
     {
         return isset($_SESSION['user_id']) && $_SESSION['user_id'] == $userId;
     }
 
     /**
+     * this function throw an exception if there is no user logged in
      * @throws NotLoggedInException
      */
     public static function requireLogin(){
@@ -145,10 +162,11 @@ class Auth
     }
 
     /**
+     * this function throw an exception if the user logged in is not the admin 
      * @throws UnauthorizedException
      */
     public static function requireAdminAccess(){
-        if(!self::isLoggedIn() || $_SESSION['user_id'] !== 1){
+        if(!self::isLoggedIn() || self::getActiveUser()->getRole() != 'admin'){
             throw new UnauthorizedException();
         }
     }

@@ -26,6 +26,11 @@ class TemplateTableManager extends TableManager
     }
 
     // specific get methods
+    /**
+     * Get template from database based on id
+     * @param int $id
+     * @return Template|null
+     */
     static public function getTemplateById(int $id): ?Template{
         if( $id>0) {
             $templates = self::getTemplate(["id" => $id]);
@@ -35,6 +40,11 @@ class TemplateTableManager extends TableManager
         }
         return null;
     }
+    /**
+     * Get template from database based on URL
+     * @param string $URL
+     * @return Template|null
+     */
 
     static public function getTemplateByURL(string $URL): ?Template{
         if( !empty($URL) ){
@@ -47,7 +57,13 @@ class TemplateTableManager extends TableManager
         return null;
 
     }
-
+    /**
+     * 
+     * Get template from database based on title
+     * @param string $title
+     * @return Template|null
+     * 
+     */
     static public function getTemplateByTitle(string $title): ?array{
         if( empty($title) ){
             return null;
@@ -61,10 +77,20 @@ class TemplateTableManager extends TableManager
     }
 
     //--------verify existence methods----------------
+    /**
+     * Check if a template exists in the database based on the given id
+     * @param int $id
+     * @return bool
+     */
     static public function templateExists(int $id): bool{
         return !empty( self::getTemplateById($id) ) ;
     }
 
+    /**
+     * Check if a template exists in the database based on the given URL
+     * @param string $URL
+     * @return bool
+     */
     static public function templateExistsByURL(string $URL): bool{
         return !empty( self::getTemplateByURL($URL) ) ;
     }
@@ -91,6 +117,12 @@ class TemplateTableManager extends TableManager
 
     //--------update methods----------------
     // general update method
+    /**
+     * Update templates in database based on parameters given in $params and $conditions preformatted as associative arrays
+     * @param array $params
+     * @param array $conditions
+     * @return void
+     */
     static public function updateTemplate(array $params = [] , array $conditions = []): void{
         if( !empty($params) && !empty($conditions) )
             DatabaseQuery::executeQuery("update","templates",$params,$conditions);
@@ -98,12 +130,24 @@ class TemplateTableManager extends TableManager
     }
 
     // specific update methods
+    /**
+     * Update template title in database based on id and title given as parameters
+     * @param int $id
+     * @param string $title
+     * @return void
+     */
     static public function updateTemplateTitle(int $id, string $title): void{
         if( empty($title) || $id<1){
             return;
         }
         self::updateTemplate(["title" => $title], ["id" => $id]);
     }
+    /**
+     * Update template URL in database based on id and URL given as parameters
+     * @param int $id
+     * @param string $URL
+     * @return void
+     */
 
     static public function updateTemplateURL(string $id, string $URL): void{
         if( empty($URL) || $id<1){
@@ -113,12 +157,22 @@ class TemplateTableManager extends TableManager
     }
 
     //--------delete methods----------------
+    /**
+     * Delete templates from database based id given as parameter
+     * @param int $id 
+     * @return void
+     */
     static public function deleteTemplateById(int $id): void{
         if( $id<1 ){
             return;
         }
         DatabaseQuery::executeQuery("delete","templates",[],["id" => $id]);
     }
+    /**
+     * Delete templates from database based on URL given as parameter
+     * @param string $URL
+     * @return void
+     */
 
     static public function deleteTemplateByURL(string $URL): void{
         if( empty($URL) ){
@@ -127,12 +181,12 @@ class TemplateTableManager extends TableManager
         DatabaseQuery::executeQuery("delete","templates",[],["URL" => $URL]);
     }
 
-    //--------save and retrieve methods----------------
-    public function save($model)
-    {
-        echo "TemplateTableManager save method called";
-    }
-
+    //--------retrieve method----------------
+   /**
+    * Retrieve template from database based on id
+    * @param int $id
+    * @return Template|null
+    */
     public static function retrieve($id): ?Template
     {
         return self::getTemplateById($id);

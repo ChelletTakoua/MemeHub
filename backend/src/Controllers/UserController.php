@@ -28,7 +28,7 @@ class UserController
      * @throws HttpException If an error occurs during the process.
      */
     public function forgotPassword(string $username):void {
-        try {
+        
             $user = UserTableManager::getUserByUsername($username);
             if ($user == null) {
                 throw new NotFoundException("User not found");
@@ -36,9 +36,7 @@ class UserController
             Mail::sendPasswordResetMail($user);
             $response = ApiResponseBuilder::buildSuccessResponse();
             echo json_encode($response);
-        }catch (Exception $e) {
-            throw new HttpException;
-        }
+        
     }
 
     /**
@@ -125,6 +123,9 @@ class UserController
     }
 
     /**
+     * This function is used to get the profile of a user returns the object user
+     * @param $id The id of the user
+     * @return void
      * @throws NotFoundException
      */
     public function getUserProfile($id) {
@@ -142,6 +143,9 @@ class UserController
     }
 
     /**
+     * This function is used to modify the password of a user
+     * It takes a password from the request body
+     * @return void
      * @throws BadRequestException
      * @throws NotLoggedInException
      */
@@ -165,6 +169,9 @@ class UserController
     }
 
     /**
+     * This function is used to edit the profile of a user returns the object user
+     * It takes a username, email and profile_pic from the request body
+     * @return void
      * @throws BadRequestException
      * @throws NotLoggedInException
      */
@@ -197,7 +204,11 @@ class UserController
             throw new BadRequestException("A parameter must be provided");
         }
     }
-
+/**
+ * This function is used to delete the active user
+ * @return void
+ * @throws NotLoggedInException
+ */
     public function deleteProfile() {
         // get the id of active user
         $id = Auth::getActiveUserId();

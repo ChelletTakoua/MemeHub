@@ -278,7 +278,12 @@ class UserTableManager extends TableManager
         self::deleteUser(["reg_date"=>$reg_date]);
     }
 
-    //--------save/retrieve method----------------
+    //--------retrieve method----------------
+    /**
+     * Retrieve user from database based on id
+     * @param int $id
+     * @return User|null
+     */
     public static function retrieve($id): ?User
     {
         return self::getUserById($id);
@@ -294,11 +299,6 @@ class UserTableManager extends TableManager
     public static function updateIsVerified(int $userId,bool $isVerified = true)
     {
         self::updateUser(["is_verified" => $isVerified], ["id" => $userId]);
-    }
-
-    public function save($model) //todo: to move if not used
-    {
-        echo "UserTableManager save method called";
     }
 
 }

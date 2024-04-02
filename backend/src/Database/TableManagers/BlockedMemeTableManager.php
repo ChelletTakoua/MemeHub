@@ -223,12 +223,12 @@ class BlockedMemeTableManager extends TableManager
     }
 
 
-    //--------save/retrieve methods----------------
-    public function save($model)
-    {
-        echo "BlockedMemesTableManager save method called";
-    }
-
+    //--------retrieve method----------------
+    /**
+     * Retrieve blocked meme from database based on id
+     * @param int $id
+     * @return BlockedMeme|null
+     */
     public static function retrieve($id): ?BlockedMeme
     {
         return self::getBlockedMemeById($id);

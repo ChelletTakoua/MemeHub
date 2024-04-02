@@ -195,12 +195,12 @@ class LikeTableManager extends TableManager
         return self::deleteLike(["meme_id" => $meme_id, "user_id" => $user_id]);
 
     }
-    //--------save/retrive methods----------------
-    public function save($model)
-    {
-        echo "LikeTableManager save method called";
-    }
-
+    //--------retrive method----------------
+    /**
+     * Retrieve like from database based on id
+     * @param int $id
+     * @return Like|null
+     */
     public static function retrieve($id) : ?Like
     {
         return self::getLikeById($id);

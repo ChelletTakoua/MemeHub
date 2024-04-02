@@ -1,7 +1,7 @@
 import { useState, useEffect, useContext } from "react";
 import Browse from "../components/Browse";
 import Meme from "../components/Meme";
-import { useNavigate, useParams } from "react-router-dom";
+import { useLocation, useNavigate, useParams } from "react-router-dom";
 import { memeApi, templateApi } from "../services/api";
 import { AppContext } from "../context/AppContext";
 
@@ -10,6 +10,7 @@ export default function MemeEdit() {
   const [memes, setMemes] = useState([]);
   const [currMeme, setCurrMeme] = useState({});
   const navigate = useNavigate();
+  const template = useLocation().state?.template;
 
   const { id } = useParams("id");
   const { user } = useContext(AppContext);
@@ -40,10 +41,13 @@ export default function MemeEdit() {
     if (id) {
       setBrowse(false);
       fetchMeme(id);
+    } else if (template) {
+      setBrowse(false);
+      setCurrMeme(template);
     } else {
       fetchTemplates();
     }
-  }, [setBrowse, setMemes, setCurrMeme, id, user, navigate]);
+  }, [setBrowse, setMemes, setCurrMeme, id, user, navigate, template]);
 
   return (
     <div className="flex flex-col justify-between bg-palenight">

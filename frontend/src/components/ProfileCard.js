@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import ReportButton from "../components/ReportButton";
 import LikeButton from "../components/LikeButton";
-import ShareButton from "../components/ShareButton";
 import { FaEdit, FaTrash } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
 import MemeImg from "./MemeImg";
@@ -73,7 +72,6 @@ const ProfileCard = ({ isOwner, meme, memes, setMemes }) => {
         <div className="px-6 py-4">
           <div className="flex items-center">
             <LikeButton likes={meme.nb_likes} memeId={meme.id} />
-            <ShareButton />
             <ReportButton onReportClick={handleReportClick} />
           </div>
           <ReportBox

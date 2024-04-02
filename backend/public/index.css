@@ -135,3 +135,9 @@ button {
   margin: 0 auto;
   cursor: pointer;
 }
+
+
+.success { color: green; }
+.redirection { color: yellow; }
+.client-error { color: red; }
+.server-error { color: red; }

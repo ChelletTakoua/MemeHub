@@ -1,5 +1,7 @@
 <?php
 header('Content-Type: text/html; charset=utf-8');
+include 'response_code.php';
+
 global $router;
 $requests = $_SESSION['requests'];
 $index = 0;
@@ -85,7 +87,7 @@ $index = 0;
                         $time = floor(($timestamp2 - $timestamp1)*1000);
                         echo $time;
                         ?>
-                <td class ="path"><?= $rq['response']['status_code'] ?></td>
+                <td class ="path"><?= displayResponseCode($rq['response']['status_code']) ?></td>
                 <td class = "path">
                 <?php
 

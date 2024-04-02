@@ -1,8 +1,7 @@
 <?php
 
-// if the development mode is not enabled, we don't need to do anything
-use Utils\RequestHandler;
 
+// if the development mode is not enabled, we don't need to do anything
 $appConfig = include __DIR__ . '/../config/app.php';
 
 if ( ! $appConfig['development_mode']) {
@@ -13,7 +12,7 @@ if ( ! $appConfig['development_mode']) {
 if (!isset($_SESSION['requests'])) {
     $_SESSION['requests'] = [];
 }
-
+ob_start();
 
 $request = [
     'method' => $_SERVER['REQUEST_METHOD'],
@@ -21,7 +20,7 @@ $request = [
     'get_params' => $_GET,
     'post_params' => $_POST,
     'headers' => getallheaders(),
-    'body' => RequestHandler::getJsonRequestBody(),
+    'body' => file_get_contents('php://input'), //TODO: MTBH read more about this
     'timestamp' => microtime(true)
 ];
 
@@ -41,12 +40,19 @@ function get_headers_assoc() {
 function save_response() {
     global $last_request_key;
 
+    $body = ob_get_contents();
+
     $response = [
         'headers' => get_headers_assoc(),
-        'body' => ob_get_contents(),
+        'body' => $body,
         'status_code' => http_response_code(),
         'timestamp' => microtime(true)
     ];
+    
+
+    if(isset($body) && isset($body['message']) && isset($body["status"]) && $body["status"] == "error"){
+        $response["error_message"] = $body['message'];
+    }
 
 
 
@@ -56,8 +62,6 @@ function save_response() {
 function save_routing() {
     global $last_request_key;
     global $router;
-
-    //var_dump($router->getRouteMatchingLogs());
 
     $routing = [
         'matched_route' => $router->getMatchedRoute()?->jsonSerialize(),

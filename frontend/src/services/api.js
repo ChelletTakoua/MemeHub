@@ -54,6 +54,9 @@ export const memeApi = {
     base.get(MEME_API_ROUTES["GET_MEME_BY_ID"].replace(":id", memeId)),
   getUserMemes: (userId) =>
     base.get(MEME_API_ROUTES["GET_USER_MEMES"].replace(":id", userId)),
+  getMemeLikes: (memeId) => 
+    base.get(MEME_API_ROUTES["GET_MEME_LIKES"].replace(":id", memeId)),
+
   addMeme: (memeData) => base.post(MEME_API_ROUTES["ADD_MEME"], memeData),
   modifyMeme: (memeId, memeData) =>
     base.post(MEME_API_ROUTES["MODIFY_MEME"].replace(":id", memeId), memeData),
@@ -61,6 +64,7 @@ export const memeApi = {
     base.post(MEME_API_ROUTES["LIKE_MEME"].replace(":id", memeId)),
   dislikeMeme: (memeId) =>
     base.post(MEME_API_ROUTES["DISLIKE_MEME"].replace(":id", memeId)),
+
   reportMeme: (memeId, reportData) =>
     base.post(
       MEME_API_ROUTES["REPORT_MEME"].replace(":id", memeId),

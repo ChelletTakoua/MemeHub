@@ -211,9 +211,9 @@ class MemeController
         echo json_encode($response);
     }
 
-    public function getMemeNbLikes($id){
-        $nbLikes = MemeTableManager::getMemeNbLikes($id);
-        $isLiked = Auth::isLoggedIn() && LikeTableManager::likeExistsByMemeIdAndUserId($this->getId(), Auth::GetActiveUserId());
+    public function getMemeNbLikes($meme_id){
+        $nbLikes = MemeTableManager::getMemeNbLikes($meme_id);
+        $isLiked = Auth::isLoggedIn() && LikeTableManager::likeExistsByMemeIdAndUserId($meme_id, Auth::GetActiveUserId());
         $response = ApiResponseBuilder::buildSuccessResponse(["nbLikes" => $nbLikes , "liked" => $isLiked ]);
         echo json_encode($response);
     }

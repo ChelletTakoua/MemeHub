@@ -73,8 +73,8 @@ class AdminController
             throw new BadRequestException("Role not found in request body");
         }
         // Check if the request body is not empty and contains 'role'
-        if($request["admin"]!="admin" && $request["admin"]!="user"){
-            throw new BadRequestException("Role not found in request body");
+        if($request["role"]!="admin" && $request["role"]!="user"){
+            throw new BadRequestException("Invalid role, must be 'admin' or 'user'");
         }
         $role = $request['role'];
         $user = UserTableManager::getUserById($id);

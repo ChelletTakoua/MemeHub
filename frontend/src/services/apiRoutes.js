@@ -16,6 +16,7 @@ const MEME_API_ROUTES = {
   GET_ALL_MEMES: "/memes",
   GET_MEME_BY_ID: "/memes/:id",
   GET_USER_MEMES: "/memes/user/:id",
+  GET_MEME_LIKES: "/memes/:id/likes",
   ADD_MEME: "/memes",
   MODIFY_MEME: "/memes/:id/modify",
   LIKE_MEME: "/memes/:id/like",

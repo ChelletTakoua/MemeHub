@@ -59,6 +59,9 @@ class ReportController
         if ($report) {
             //update the report status to resolved
             ReportTableManager::updateReportStatus($id, "ignored");
+            if(BlockedMemeTableManager::blockedMemeExistsByReportId($id)){
+                BlockedMemeTableManager::deleteBlockedMemeByReportId($id);
+            }
             // Build a success response
             $response = ApiResponseBuilder::buildSuccessResponse();
             echo json_encode($response);

@@ -1,6 +1,7 @@
 <?php
 
 namespace Authentication;
+
 use Exceptions\HttpExceptions\LoginFailedException;
 use Exceptions\HttpExceptions\NotLoggedInException;
 use Exceptions\HttpExceptions\UnauthorizedException;
@@ -13,54 +14,56 @@ use Exceptions\HttpExceptions\NotFoundException;
 class Auth
 {
     private static $activeUser;
-    
+
     /**
-    * Logs in a user.
-    *
-    * This function attempts to log in a user using the provided username and password. If the user is found in the database and the password is correct, the user is logged in and returned. If not, a LoginFailedException is thrown.
-    *
-    * @param string $username The username of the user.
-    * @param string $password The password of the user.
-    * @return User The logged-in user.
-    * @throws LoginFailedException If the password is incorrect or the user is not found.
-    */
+     * Logs in a user.
+     *
+     * This function attempts to log in a user using the provided username and password. If the user is found in the database and the password is correct, the user is logged in and returned. If not, a LoginFailedException is thrown.
+     *
+     * @param string $username The username of the user.
+     * @param string $password The password of the user.
+     * @return User The logged-in user.
+     * @throws LoginFailedException If the password is incorrect or the user is not found.
+     */
     public static function login(string $username, string $password, $requirePassword = true): User
     {
-
+        // Retrieve the user from the database using the username
         $user = UserTableManager::getUserByUsername($username);
-
-        if(empty($user)){
+        // If the user does not exist, throw a LoginFailedException
+        if (empty($user)) {
             throw new LoginFailedException("User not found");
         }
-        if ( $requirePassword && !password_verify($password, $user->getPassword())) {
+        // If the password is required and does not match the user's password, throw a LoginFailedException
+        if ($requirePassword && !password_verify($password, $user->getPassword())) {
             throw new LoginFailedException("Incorrect password");
         }
+        // If the user is not verified, throw a LoginFailedException
         if (!$user->getIsVerified()) {
             throw new LoginFailedException("User not verified", 403);
         }
-
+        // If the login is successful, set the session user to the logged in user
         self::setSessionUser($user);
+        // Return the logged in user
         return $user;
-
-
     }
 
-/**
- * sets the user id of the active user in the session
- * @param string $userId The id of the user.
- *@return void
- */
+
+    /**
+     * sets the user id of the active user in the session
+     * @param string $userId The id of the user.
+     *@return void
+     */
 
     private static function setSessionUserId($userId): void
     {
         $_SESSION['user_id'] = $userId;
         self::$activeUser = null;
     }
-/**
- * sets the active user in the session
- * @param User $user The user.
- * @return void
- */
+    /**
+     * sets the active user in the session
+     * @param User $user The user.
+     * @return void
+     */
     private static function setSessionUser($user): void
     {
         $_SESSION['user_id'] = $user->getId();
@@ -68,10 +71,10 @@ class Auth
     }
 
     /**
-    * Logs out the current user.
-    *
-    * This function destroys the session and terminates the script execution.
-    */
+     * Logs out the current user.
+     *
+     * This function destroys the session and terminates the script execution.
+     */
     public static function logout()
     {
         // Destroy the session to log out the user
@@ -81,18 +84,18 @@ class Auth
     }
 
     /**
-    * Registers a new user.
-    *
-    * This function checks if the provided username and email are unique. If either is already in use, a UserRegistrationException is thrown.
-    * If both are unique, the password is hashed and the new user is added to the database. If the user is successfully added, the function returns true.
-    * If the user could not be added, a UserRegistrationException is thrown.
-    *
-    * @param string $username The desired username of the new user.
-    * @param string $password The desired password of the new user.
-    * @param string $email The desired email of the new user.
-    * @return bool True if the user was successfully registered.
-    * @throws UserRegistrationException If the username or email is already in use, or if the user could not be added to the database.
-    */
+     * Registers a new user.
+     *
+     * This function checks if the provided username and email are unique. If either is already in use, a UserRegistrationException is thrown.
+     * If both are unique, the password is hashed and the new user is added to the database. If the user is successfully added, the function returns true.
+     * If the user could not be added, a UserRegistrationException is thrown.
+     *
+     * @param string $username The desired username of the new user.
+     * @param string $password The desired password of the new user.
+     * @param string $email The desired email of the new user.
+     * @return bool True if the user was successfully registered.
+     * @throws UserRegistrationException If the username or email is already in use, or if the user could not be added to the database.
+     */
     public static function register(string $username, string $password, string $email): bool
     {
         // Check if the username already exists in the database
@@ -123,19 +126,19 @@ class Auth
      * @param $password
      * @return bool
      */
-    public static function modifyPassword($userId,$password): bool
+    public static function modifyPassword($userId, $password): bool
     {
         $hashedPassword = password_hash($password, PASSWORD_DEFAULT);
         UserTableManager::updatePassword($userId, $hashedPassword);
         self::forceReloadActiveUser();
         return true;
     }
-/**
- * this function is used to check if a user is logged in
- * @return bool
- * 
- */
 
+    /**
+     * this function is used to check if a user is logged in
+     * @return bool
+     * 
+     */
     public static function isLoggedIn(): bool
     {
         // Check if a user is logged in 
@@ -155,8 +158,9 @@ class Auth
      * this function throw an exception if there is no user logged in
      * @throws NotLoggedInException
      */
-    public static function requireLogin(){
-        if(!self::isLoggedIn()){
+    public static function requireLogin()
+    {
+        if (!self::isLoggedIn()) {
             throw new NotLoggedInException();
         }
     }
@@ -165,8 +169,9 @@ class Auth
      * this function throw an exception if the user logged in is not the admin 
      * @throws UnauthorizedException
      */
-    public static function requireAdminAccess(){
-        if(!self::isLoggedIn() || self::getActiveUser()->getRole() != 'admin'){
+    public static function requireAdminAccess()
+    {
+        if (!self::isLoggedIn() || self::getActiveUser()->getRole() != 'admin') {
             throw new UnauthorizedException();
         }
     }
@@ -193,19 +198,19 @@ class Auth
         if (self::$activeUser !== null) {
             return self::$activeUser;
         }
+        // If no user is logged in, throw a NotLoggedInException
         if (!self::isLoggedIn()) {
             throw new NotLoggedInException();
         }
-
+        // Retrieve the user ID from the session
         $userId = $_SESSION['user_id'];
-
+        // Retrieve the user from the database using the user ID
         self::$activeUser = UserTableManager::getUserById($userId);
-
-
+        // If the user is not found in the database, throw a NotFoundException
         if (self::$activeUser === null) {
             throw new NotFoundException("User not found");
         }
-
+        // Return the active user
         return self::$activeUser;
     }
 

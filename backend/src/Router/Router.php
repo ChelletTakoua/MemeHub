@@ -2,6 +2,7 @@
 
 
 namespace Router;
+
 use Authentication\Auth;
 use Exceptions\HttpExceptions\RouterException;
 
@@ -21,9 +22,8 @@ class Router
 
     public function __construct()
     {
-        $this->url = explode("?",$_SERVER['REQUEST_URI'])[0];
+        $this->url = explode("?", $_SERVER['REQUEST_URI'])[0];
         $this->devMode = (include __DIR__ . '/../config/app.php')['development_mode'];
-
     }
 
 
@@ -37,7 +37,7 @@ class Router
      */
     public function get($path, $callable, $roles = [], $developmentMode = false)
     {
-        if($developmentMode && !$this->devMode) return;
+        if ($developmentMode && !$this->devMode) return;
 
         $route = new Route($path, $callable, $roles);
         $this->routes["GET"][] = $route;
@@ -55,7 +55,7 @@ class Router
      */
     public function post($path, $callable, $roles = [], $developmentMode = false)
     {
-        if($developmentMode && !$this->devMode) return;
+        if ($developmentMode && !$this->devMode) return;
 
         $route = new Route($path, $callable, $roles);
         $this->routes["POST"][] = $route;
@@ -72,7 +72,7 @@ class Router
      */
     public function put($path, $callable, $roles = [], $developmentMode = false)
     {
-        if($developmentMode && !$this->devMode) return;
+        if ($developmentMode && !$this->devMode) return;
 
         $route = new Route($path, $callable, $roles);
         $this->routes["PUT"][] = $route;
@@ -89,7 +89,7 @@ class Router
      */
     public function delete(string $path, callable|string $callable, array $roles = [], bool $developmentMode = false)
     {
-        if($developmentMode && !$this->devMode) return;
+        if ($developmentMode && !$this->devMode) return;
 
         $route = new Route($path, $callable, $roles);
         $this->routes["DELETE"][] = $route;
@@ -105,25 +105,39 @@ class Router
      */
     public function options($path, $callable, $roles = [], $developmentMode = false)
     {
-        if($developmentMode && !$this->devMode) return;
+        if ($developmentMode && !$this->devMode) return;
 
         $route = new Route($path, $callable, $roles);
         $this->routes["OPTIONS"][] = $route;
     }
 
 
+    /**
+     * Runs the router.
+     *
+     * @throws RouterException If there are no routes for the current request method or if no route matches the current URL.
+     * @return mixed The result of the route's callable, if a route matches the current URL.
+     */
     public function run()
     {
+        // Check if there are any routes for the current request method
         if (!isset($this->routes[$_SERVER['REQUEST_METHOD']])) {
+            // If there are no routes for the current request method, throw a RouterException
             throw new RouterException("REQUEST_METHOD $_SERVER[REQUEST_METHOD] not supported");
         }
+        // Iterate over each route for the current request method
         foreach ($this->routes[$_SERVER['REQUEST_METHOD']] as $route) {
+            // If the route matches the current URL
             if ($route->match($this->url)) {
+                // Set the matched route to this route
                 $this->matchedRoute = $route;
+                // Validate access to the route
                 $route->validateAccess();
+                // Call the route's callable and return the result
                 return $route->call();
             }
         }
+        // If no route matches the current URL, throw a RouterException
         throw new RouterException("No matching routes for $this->url");
     }
 
@@ -140,7 +154,8 @@ class Router
      * A function that prints all the routes in a readable and beautiful html way
      * @return void
      */
-    public function printRoutes(){
+    public function printRoutes()
+    {
         echo "<h1>Routes</h1>";
         echo "<table border='1'>";
         echo "<tr><th>Method</th><th>Path</th><th>Callable</th><th>Roles</th></tr>";
@@ -149,9 +164,9 @@ class Router
             foreach ($routes as $route) {
                 echo "<tr>";
                 echo "<td>$method</td>";
-                echo "<td>". $route->getPath()  ."</td>";
-                echo "<td>". $route->getCallable() ."</td>";
-                echo "<td>".implode(", ", $route->getRoles())."</td>";
+                echo "<td>" . $route->getPath()  . "</td>";
+                echo "<td>" . $route->getCallable() . "</td>";
+                echo "<td>" . implode(", ", $route->getRoles()) . "</td>";
                 echo "</tr>";
             }
         }
@@ -174,9 +189,5 @@ class Router
             $logs[] = $route->JsonSerialize();
         }
         return $logs;
-
-
     }
-
-
 }

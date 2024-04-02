@@ -79,16 +79,11 @@ $router->post('/admin/reports/:id/delete', "ReportController@deleteReport", ['ad
 
 // a route to return all the routes (with all the details) and another route to print them in a beautiful way
 
-$router->get('/routes', function () use ($router) {
-    echo json_encode($router->getRoutes());
-}, ['admin']);
 
-$router->get('/admin/routes', "../src/Debugging/debugging.php", ['guest'], true);
+$router->get('/admin/sessionHistory', "../src/Debugging/debugging.php", ['guest'], true);
+$router->get('/admin/requestDetails', "../src/Debugging/debugLouey.php", ['guest'], true);
 
 
-$router->get('admin/routes', function () use ($router) {
-    $router->printRoutes();
-}, ['admin']);
 
 
 

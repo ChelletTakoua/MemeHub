@@ -116,6 +116,7 @@ table tr:nth-child(even) {
 
 .table-head {
     background-color: #0c0c0c;
+    /*background-color: #383838;*/
 }
 
 .value-cell {

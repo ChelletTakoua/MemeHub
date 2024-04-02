@@ -5,6 +5,7 @@ namespace Controllers;
 use Authentication\AuthKeyGenerator;
 use Exceptions\HttpExceptions\BadRequestException;
 use Authentication\Auth;
+use Exceptions\HttpExceptions\InvalidTokenException;
 use Exceptions\HttpExceptions\LoginFailedException;
 use Utils\ApiResponseBuilder;
 use Utils\RequestHandler;
@@ -99,7 +100,8 @@ class AuthController
     /**
      * Verifies the JWK token and returns the user object.
      * @return void
-     * InvalidTokenException
+     * @throws BadRequestException If the token is not provided in the request body.
+     * @throws InvalidTokenException If the token is invalid.
      */
     public function verifyToken()
     {

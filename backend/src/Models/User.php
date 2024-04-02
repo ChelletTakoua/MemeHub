@@ -56,7 +56,6 @@ class User extends Model{
         return [
             'id' => parent::getId(),
             'username' => $this->username,
-            'password' => $this->password,
             'email' => $this->email,
             'reg_dat' => $this->reg_dat,
             'role' => $this->role,

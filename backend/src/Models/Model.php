@@ -7,22 +7,25 @@ use Database\TableManagers\TableManager;
 use JsonSerializable;
 
 
-//TODO: make all Models extend this class
-// implement the method jsonSerialize
-// this method should return the json object to return to the client (example in user)
-// .
-// The foreign keys should be implemented as Proxies
+
 
 
 abstract class Model implements JsonSerializable
 {
 
     private $id;
-
+    /**
+     * Create a new instance of the model
+     * @param int $id
+     */
     public function __construct($id)
     {
         $this->id = $id;
     }
+    /**
+    * get the id of the model
+    * @return int
+     */
 
     public function getId()
     {
@@ -44,19 +47,8 @@ abstract class Model implements JsonSerializable
 
 
 
-    //TODO: to remove if not needed
-    /**
-     * this method saves the model to the database
-     * @return void
-     *
-     */
-    public function save()
-    {
-        // save the model to the database
-        $tableManager = $this->getTableManager();
-        $tableManager->save($this);
-
-    }
+    
+    
 
 
 

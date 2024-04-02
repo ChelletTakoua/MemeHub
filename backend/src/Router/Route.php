@@ -82,6 +82,12 @@ class Route implements JsonSerializable {
 
     }
 
+    /**
+     * Call the route
+     * @return mixed
+     * @throws \Exception
+     */
+
     public function call(){
 
         // if $callable is a php file, then include it
@@ -104,9 +110,13 @@ class Route implements JsonSerializable {
             return call_user_func_array($this->callable, $this->matches);
         }
     }
-
+    /**
+     * Validate the access to the route
+     * @throws NotLoggedInException
+     * @throws UnauthorizedException
+     */
     public function validateAccess() {
-        //return; // TODO: to remove this line (it's just for testing purposes to allow all requests to pass through)
+        
         if(in_array('guest', $this->roles)){
             return;
         }
@@ -121,6 +131,10 @@ class Route implements JsonSerializable {
         }
     }
 
+    /**
+     * This method returns the associative array of the matches, the keys are the names of the parameters read from the path and the values are the values of the matches
+     * @return array
+     */
 
     public function jsonSerialize(): array
     {

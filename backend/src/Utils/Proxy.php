@@ -23,11 +23,22 @@ class Proxy implements JsonSerializable
     private $isLoaded = false;
 
     const MODEL_NAMESPACE = 'Models\\';
+
+    /**
+     * Create a new instance of Proxy
+     * @param int $id the id of the instance
+     * @param string $className the name of the class of the instance
+     */
     public function __construct($id, $className)
     {
         $this->id = $id;
         $this->className = self::MODEL_NAMESPACE . $className;
     }
+
+    /**
+     * This method retrieves the instance of the class with the id given in the constructor
+     * @throws \Exception if the instance is not found
+     */
 
     private function retrieve()
     {
@@ -50,6 +61,10 @@ class Proxy implements JsonSerializable
         }
         return $this->instance;
     }
+    /**
+     * This method returns the id of the instance
+     * @return int the id of the instance
+     */
 
     public function getId()
     {
@@ -57,6 +72,10 @@ class Proxy implements JsonSerializable
     }
 
 
+    /**
+     * This method returns the class name of the instance
+     * @return string the class name of the instance
+     */
     public function jsonSerialize()
     {
         return $this->getInstance()->jsonSerialize();

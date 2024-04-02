@@ -44,7 +44,7 @@ class TextBlock extends Model{
     public function getMeme(){ 
         return $this->meme->getInstance();
     }
-    public function jsonSerialize()
+    public function jsonSerialize(): array
     {
         return [
             'id' => parent::getId(),

@@ -20,7 +20,7 @@ class Template extends Model {
         return $this->title;
     }
     
-    public function jsonSerialize()
+    public function jsonSerialize(): array
     {
         return [
             'id' => parent::getId(),

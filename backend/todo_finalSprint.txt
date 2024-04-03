@@ -1,3 +1,0 @@
-
-- Documentation for all the project (readme files and comments in the code)
-    - for the project

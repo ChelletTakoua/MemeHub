@@ -95,33 +95,26 @@ class Route implements JsonSerializable
 
     public function call()
     {
-        // If $callable is a string and contains '.php', it is considered as a PHP file
-        if (is_string($this->callable) && str_contains($this->callable, '.php')) {
-            // If the file does not exist, throw an exception
+        if (is_string($this->callable) && str_contains($this->callable, '.php')) { // php file
             if (!file_exists($this->callable)) {
                 throw new \Exception("File not found: $this->callable");
             }
-            // Include the PHP file
             include $this->callable;
             return null;
         }
-        // If $callable is a string and contains '@', it is considered as a controller method
-        if (is_string($this->callable) && strpos($this->callable, '@') !== false) {
-            // Split the controller and method name
+
+        if (is_string($this->callable) && str_contains($this->callable, '@')) { // controller
             $params = explode('@', $this->callable);
-            // Create a new instance of the controller
             $controller = "Controllers\\" . $params[0];
             $controller = new $controller();
-            // Call the controller method with the matches as arguments
             return call_user_func_array([$controller, $params[1]], $this->matches);
-        } else {
-            // If $callable is not a PHP file or a controller method, call it as a function with the matches as arguments
-            return call_user_func_array($this->callable, $this->matches);
         }
+
+        return call_user_func_array($this->callable, $this->matches); // closure
     }
 
     /**
-     * Validate the access to the route
+     * Validate the access to the route. I access is not permitted, an exception is thrown
      * @throws NotLoggedInException
      * @throws UnauthorizedException
      */
@@ -146,7 +139,6 @@ class Route implements JsonSerializable
      * This method returns the associative array of the matches, the keys are the names of the parameters read from the path and the values are the values of the matches
      * @return array
      */
-
     public function jsonSerialize(): array
     {
         return [
@@ -166,25 +158,18 @@ class Route implements JsonSerializable
 
     public function getMatchesAssoc(): array
     {
-        // If the route's matching status is not 'matched', return an empty array
         if ($this->matchingStatus !== 'matched') return [];
-        // Initialize an associative array to store the matches
+
         $matchesAssoc = [];
-        // Split the path into segments
         $path = explode('/', $this->path);
-        // Initialize a counter to keep track of the current match
+
         $i = 0;
-        // Iterate over each segment in the path
         foreach ($path as $key => $value) {
-            // If the segment starts with ':', it is a parameter
             if (str_starts_with($value, ':')) {
-                // Add the parameter to the matches associative array, using the parameter name as the key and the corresponding match as the value
                 $matchesAssoc[substr($value, 1)] = $this->matches[$i];
-                // Increment the counter
                 $i++;
             }
         }
-        // Return the matches associative array
         return $matchesAssoc;
     }
 }

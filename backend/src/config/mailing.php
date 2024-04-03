@@ -7,4 +7,5 @@ return [
     'Password' => 'wqvbhyxgjvrhwkzp',
     'SMTPSecure'=>'tls',
     'Port' => '587',
+    'From' => 'chellettakoua@gmail.com',
 ];

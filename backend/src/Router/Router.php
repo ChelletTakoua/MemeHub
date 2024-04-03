@@ -120,24 +120,17 @@ class Router
      */
     public function run()
     {
-        // Check if there are any routes for the current request method
         if (!isset($this->routes[$_SERVER['REQUEST_METHOD']])) {
-            // If there are no routes for the current request method, throw a RouterException
             throw new RouterException("REQUEST_METHOD $_SERVER[REQUEST_METHOD] not supported");
         }
-        // Iterate over each route for the current request method
+
         foreach ($this->routes[$_SERVER['REQUEST_METHOD']] as $route) {
-            // If the route matches the current URL
             if ($route->match($this->url)) {
-                // Set the matched route to this route
                 $this->matchedRoute = $route;
-                // Validate access to the route
                 $route->validateAccess();
-                // Call the route's callable and return the result
                 return $route->call();
             }
         }
-        // If no route matches the current URL, throw a RouterException
         throw new RouterException("No matching routes for $this->url");
     }
 
@@ -173,6 +166,7 @@ class Router
         echo "</table>";
     }
 
+
     public function getMatchedRoute()
     {
         return $this->matchedRoute;
@@ -181,6 +175,7 @@ class Router
 
     /**
      * This function returns an array of all the routes and a log for each route ("not matched" or "matched" or "not checked")
+     * @return array
      */
     public function getRouteMatchingLogs()
     {

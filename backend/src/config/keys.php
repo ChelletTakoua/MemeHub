@@ -1,6 +1,5 @@
 <?php
 
 return [
-    'secret_key' => 'your_secret_key_here',
-    //'api_key' => 'your_api_key_here',
+    'secret_key' => 'csWTeds7ESjMFnlORbLX2qMPIKcFbT8JguaFWmvK0Rz/5ZI4e0Y1wqbp2BLii6hN',
 ];

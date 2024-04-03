@@ -36,7 +36,7 @@ class Mail{
             $mail->Password=$config['Password'];
             $mail->SMTPSecure=$config['SMTPSecure'];
             $mail->Port=$config['Port'];
-            $mail->setFrom('chellettakoua@gmail.com');
+            $mail->setFrom($config['From']);
 
             $mail->addAddress($to);
             $mail->Subject=$subject;
@@ -80,8 +80,11 @@ class Mail{
      */
     static public function sendAccountCreatedMail(User $user): void{
 
-        $link = "http://localhost:3000/verifyEmail?token=".AuthKeyGenerator::encodeJWK($user, 3600);
+        $frontConfig = include __DIR__ . '/../config/frontend.php';
+        $host = $frontConfig['frontend_host'];
+        $port = $frontConfig['frontend_port'];
 
+        $link = "http://$host:$port/verifyEmail?token=" .AuthKeyGenerator::encodeJWK($user, 3600);
 
         Self::sendMailFile($user->getEmail(), "Welcome to Memehub !", 'account-created.html', [
             "username" => $user->getUsername(),
@@ -98,9 +101,11 @@ class Mail{
      */
     static public function sendPasswordResetMail(User $user): void {
 
-        //hedha howa el link (to nzidou nchoufou fl front kifeh bch naamlou bedhabt)
-        // probably bch nfetchiw el 'localhost:3000' mn fichier config ( same thing fl fonction lo5ra)
-        $link = "http://localhost:3000/resetPassword?token=".AuthKeyGenerator::encodeJWK($user, 3600);
+        $frontConfig = include __DIR__ . '/../config/frontend.php';
+        $host = $frontConfig['frontend_host'];
+        $port = $frontConfig['frontend_port'];
+
+        $link = "http://$host:$port/resetPassword?token=".AuthKeyGenerator::encodeJWK($user, 3600);
 
         Self::sendMailFile($user->getEmail(), "password reset", 'password-reset.html', [
             "username" => $user->getUsername(),

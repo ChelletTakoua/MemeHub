@@ -20,6 +20,7 @@ export default function Browse({ memes, setCurrMeme, setBrowse }) {
   function changePage(newPage) {
     if (newPage > pages || newPage <= 0) return;
     setCurrPage(() => newPage);
+    window.scrollTo(0, 0);
   }
 
   function renderMeme(meme) {

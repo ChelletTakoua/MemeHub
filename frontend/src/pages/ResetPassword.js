@@ -2,16 +2,9 @@ import React from "react";
 
 const ResetPassword = () => {
   return (
-    <div className="bg-palenight min-h-screen flex flex-col items-center justify-center text-white">
-      <div className="bg-gray-800 shadow-md rounded-lg px-12 pt-8 pb-8 my-2 mx-8">
-        <div className="px-12 py-6 mb-6">
-          <p className="text-lg font-semibold">
-            Forgot your password? Reset it from here
-          </p>
-        </div>
-      </div>
-      <div className="bg-gray-800 shadow-md rounded-lg px-12 pt-8 pb-8 my-2 mx-8">
-        <h1 className="mb-6 font-bold text-4xl text-center">Reset Password</h1>
+    <div className="grow flex justify-center items-center bg-palenight text-white">
+      <div className="bg-gray-800 shadow-md rounded-lg px-24 pt-8 pb-8 my-2 mx-8 w-1/2">
+        <h1 className="mb-6 font-bold text-4xl ">Reset Password</h1>
         <form className="mb-4">
           <div className="mb-6">
             <label

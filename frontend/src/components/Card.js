@@ -1,6 +1,7 @@
 import OptionsButton from "./OptionsButton";
 import ReportButton from "./ReportButton";
 import LikeButton from "./LikeButton";
+import ShareButton from "./ShareButton";
 import { useContext, useEffect, useState } from "react";
 import MemeImg from "./MemeImg";
 import Moment from "react-moment";
@@ -77,6 +78,7 @@ export default function Card({ meme }) {
               likes={meme?.nb_likes}
               userLikedIt={meme.liked}
             />
+            <ShareButton />
             {user && <ReportButton onReportClick={handleReportClick} />}
           </div>
           <ReportBox

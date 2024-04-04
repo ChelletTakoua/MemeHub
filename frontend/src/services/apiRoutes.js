@@ -10,6 +10,7 @@ const USER_API_ROUTES = {
   VERIFY_EMAIL: "/verifyEmail",
   FORGOT_PASSWORD: "/forgotPassword/:username",
   RESET_PASSWORD: "/resetPassword",
+  VERIFY_TOKEN: "/verifyToken",
 };
 
 const MEME_API_ROUTES = {

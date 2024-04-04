@@ -1,117 +1,58 @@
-/*import trollFace from "../images/troll_face.png";
 import React, { useContext, useState } from "react";
-import { Link } from "react-router-dom";
 import { AppContext } from "../context/AppContext";
+import { userApi } from "../services/api";
 
-const Login = () => {
+const ForgotPassword = () => {
   const [username, setUsername] = useState("");
-
-  const { login, toast } = useContext(AppContext);
+  const { toast } = useContext(AppContext);
 
   const handleUsernameChange = (e) => {
     setUsername(e.target.value);
   };
 
-  const validateForm = () => {
-    if (username === "") {
-      toast.error("Username is required.");
-      return false;
-    } return true;
-  };
-
-  const handleSubmit = async (event) => {
-    event.preventDefault();
-    if (validateForm()) {
-      await login(username, password);
+  const handleResetPassword = async (e) => {
+    e.preventDefault();
+    if (username === "") return toast.error("Please enter your username");
+    try {
+      await userApi.forgotPassword(username);
+      toast.success("Password reset link sent to your email");
+    } catch (error) {
+      toast.error(error.response.data.message);
     }
   };
-
   return (
-    <section className="bg-palenight">
-      <div className="flex flex-col items-center justify-center px-6 py-8 mx-auto md:h-screen lg:py-0">
-        <Link
-          to="/"
-          className="flex items-center mb-6 text-2xl font-semibold text-white"
-        >
-          <img className="w-8 h-8 mr-2" src={trollFace} alt="Troll Face" />
-          MemeHub
-        </Link>
-        <div className="w-full rounded-lg shadow border md:mt-0 sm:max-w-md xl:p-0 bg-gray-800 border-gray-700">
-          <div className="p-6 space-y-4 md:space-y-6 sm:p-8">
-            <h1 className="text-xl font-bold leading-tight tracking-tight md:text-2xl text-white">
-              Sign in to your account
-            </h1>
-            <form
-              className="space-y-4 md:space-y-6"
-              action="#"
-              onSubmit={handleSubmit}
+    <div className="grow flex justify-center items-center bg-palenight text-white">
+      <div className="bg-gray-800 shadow-md rounded-lg px-24 pt-8 pb-8 my-2 mx-8 w-1/2">
+        <h1 className="mb-6 font-bold text-4xl ">Reset Password</h1>
+        <form className="mb-4" onSubmit={handleResetPassword}>
+          <div className="mb-6">
+            <label
+              className="block text-gray-300 text-sm font-bold mb-2"
+              htmlFor="username"
             >
-              <div>
-                <label
-                  htmlFor="username"
-                  className="block mb-2 text-sm font-medium text-white"
-                >
-                  Username
-                </label>
-                <input
-                  type="text"
-                  name="username"
-                  id="username"
-                  className="border sm:text-sm rounded-lg block w-full p-2.5 bg-gray-700 border-gray-600 placeholder-gray-400 text-white focus:ring-blue-500 focus:border-blue-500"
-                  placeholder="Username"
-                  value={username}
-                  onChange={handleUsernameChange}
-                />
-              </div>
-              <div>
-                <label
-                  htmlFor="password"
-                  className="block mb-2 text-sm font-medium text-white"
-                >
-                  Password
-                </label>
-                <input
-                  type="password"
-                  name="password"
-                  id="password"
-                  placeholder="••••••••"
-                  className=" border  sm:text-sm rounded-lg block w-full p-2.5 bg-gray-700 border-gray-600 placeholder-gray-400 text-white focus:ring-blue-500 focus:border-blue-500"
-                  value={password}
-                  onChange={handlePasswordChange}
-                />
-              </div>
-
-              <button
-                type="submit"
-                className="w-full text-white focus:ring-4 focus:outline-none font-medium rounded-lg text-sm px-5 py-2.5 text-center bg-primary-600 hover:bg-primary-700 focus:ring-primary-800"
-              >
-                Sign in
-              </button>
-              <p className="text-sm font-light text-gray-400">
-                Don't have an account yet?
-                <Link
-                  to="/register"
-                  className="hover:underline text-primary-400"
-                >
-                  <span className="font-medium"> Sign up here</span>
-                </Link>
-              </p>
-              <p>
-                <Link
-                  to="/forgotPassword"
-                  className="hover:underline text-primary-400"
-                >
-                  <span className="font-medium">Forgot your password?</span>
-                </Link>
-
-              </p>
-            </form>
+              Username
+            </label>
+            <input
+              className="shadow appearance-none border rounded w-full py-3 px-3 text-gray-900 leading-tight focus:outline-none focus:shadow-outline"
+              id="username"
+              type="text"
+              placeholder="Enter your username"
+              onChange={handleUsernameChange}
+            />
           </div>
-        </div>
+          <div className="flex items-center justify-center">
+            <button
+              className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-3 px-6 rounded focus:outline-none focus:shadow-outline"
+              type="submit"
+              onClick={handleResetPassword}
+            >
+              Reset Password
+            </button>
+          </div>
+        </form>
       </div>
-    </section>
+    </div>
   );
 };
 
-export default Login;
-*/
+export default ForgotPassword;

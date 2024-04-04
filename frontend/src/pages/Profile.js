@@ -180,9 +180,9 @@ const Profile = () => {
             )}
           </div>
           <div className="w-3/4">
-            <div className="w-3/4">
+            <div className="w-11/12">
               <h3 className="text-xl font-bold mt-4 text-white">My Memes</h3>
-              <div className="grid grid-cols-3 gap-4 mt-2">
+              <div className="grid grid-cols-3 gap-6 mt-2">
                 {memes.length === 0 && ( // If there are no memes //TODO: make this better
                   <div className="flex flex-col items-center justify-center gap-4">
                     <div className="text-black">No memes to show.</div>

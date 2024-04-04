@@ -69,9 +69,10 @@ export default function Card({ meme }) {
         <MemeImg
           key={meme?.id}
           image={`data:image/jpeg;base64,${meme?.result_img}`}
+          page="home"
         />
 
-        <div className={`px-6 py-4`}>
+        <div className="px-6 pb-4 pt-8">
           <div className="flex items-center">
             <LikeButton
               memeId={meme?.id}

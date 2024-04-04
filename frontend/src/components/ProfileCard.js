@@ -45,24 +45,27 @@ const ProfileCard = ({ isOwner, meme, memes, setMemes }) => {
     navigate(`/meme/${meme?.id}`);
   };
   return (
-    <div className="bg-white rounded-lg shadow-md flex flex-col justify-between ">
-      <MemeImg
-        key={meme?.id}
-        onClick={toggleImageSize}
-        image={`data:image/jpeg;base64,${meme?.result_img}`}
-      />
+    <div className="bg-slate-400 rounded-lg shadow-md flex flex-col justify-between">
+      <div className="h-full flex justify-center py-2 px-4 ">
+        <MemeImg
+          key={meme?.id}
+          onClick={toggleImageSize}
+          image={`data:image/jpeg;base64,${meme?.result_img}`}
+          page={"profile"}
+        />
+      </div>
       {isOwner ? (
-        <div className="flex justify-between px-12 py-4 ">
+        <div className="bg-slate-300 flex justify-between px-12 py-4 rounded-lg">
           <button
             onClick={deleteMeme}
-            className="text-red-500"
+            className="text-red-500 bg-slate-400 px-4 py-2 rounded-lg"
             title="Delete Meme"
           >
             <FaTrash />
           </button>
           <button
             onClick={modifyMeme}
-            className="text-blue-500"
+            className="text-blue-500 bg-slate-400 px-4 py-2 rounded-lg"
             title="Modify Meme"
           >
             <FaEdit />

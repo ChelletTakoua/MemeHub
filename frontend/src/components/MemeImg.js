@@ -5,22 +5,17 @@ export default function MemeImg({
   inputBoxes = null,
   setInputBoxes = null,
   onClick = null,
-  page = null,
 }) {
   return (
     <div
       id="meme"
-      className={
-        page === "home"
-          ? "flex-1 relative"
-          : "flex-1 relative flex flex-col items-center justify-center rounded-lg"
-      }
+      className="flex-1 relative flex flex-col items-center justify-center rounded-lg"
     >
       <img
         id="drag-bounds"
         src={image}
         alt="Meme"
-        className={page === "home" ? "w-full" : "w-full rounded-lg"}
+        className="w-full rounded-lg"
         onClick={onClick}
       />
 

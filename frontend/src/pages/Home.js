@@ -28,9 +28,11 @@ const Home = () => {
         </p>
       </header>
       <BackToTop />
-      {memes?.map((meme) => (
-        <Card key={meme.id} meme={meme} />
-      ))}
+      <div className="grid grid-cols-2 mt-10 gap-y-12 gap-x-24  w-2/3 m-auto">
+        {memes?.map((meme) => (
+          <Card key={meme.id} meme={meme} />
+        ))}
+      </div>
       <br />
       <br />
     </div>

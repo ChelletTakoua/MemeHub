@@ -7,7 +7,7 @@ const About = () => {
         <h1 className="mb-4 font-bold text-3xl justify-center">About Us</h1>
         <p className="mb-8">
           A meme generator and sharing platform where users can create and share
-          memes. Users can react to and comment on posts, making it a fun and
+          memes. Users can react to posts, making it a fun and
           interactive community for meme lovers.
         </p>
       </div>

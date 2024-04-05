@@ -18,7 +18,7 @@ const DraggableText = ({ inputBox, setInputBoxes = null }) => {
       onStop={handleStopDrag}
     >
       <div
-        className={`bottom-80 left-1/3 cursor-grab meme-text text-${inputBox.font_size} font-mono text-white w-fit relative`}
+        className={`h-0 bottom-80 left-1/3 cursor-grab meme-text text-${inputBox.font_size} font-mono text-white w-fit relative`}
       >
         {inputBox.text}
       </div>

@@ -1,7 +1,5 @@
 import React, { useState, useContext } from "react";
-import { Link } from "react-router-dom";
-import trollFace from "../images/troll_face.png";
-import Capture from "../images/Capture.PNG";
+import register_meme from "../images/register_meme.jpg";
 import { AppContext } from "../context/AppContext";
 
 const Register = () => {
@@ -59,30 +57,27 @@ const Register = () => {
   };
 
   return (
-    <section className="bg-palenight">
-      <div className="min-h-screen ">
-        <div className="flex flex-col items-center justify-center px-6 py-3 mx-auto md:h-screen lg:py-0">
-          <Link
-            to="/"
-            className="flex items-center mb-6 text-2xl font-semibold text-white"
+    <section className="flex items-center justify-center grow bg-palenight">
+      <div className="flex items-center justify-center w-10/12 bg-gray-800 rounded-xl shadow overflow-hidden">
+        <div className="w-1/2 flex flex-col items-center justify-center p-8 bg-no-repeat bg-cover bg-center">
+          <img
+            className="rounded-xl w-11/12 object-cover"
+            src={register_meme}
+            alt="Welcome"
+          />
+        </div>
+        <div className="w-1/2 px-6">
+          <h2 className="text-3xl text-gray-300 mb-4">Register</h2>
+          <p className="mb-4 text-gray-300">
+            Create your account. It’s free and only take a minute
+          </p>
+          <form
+            className="space-y-4 md:space-y-6"
+            action="#"
+            onSubmit={handleSubmit}
           >
-            <img className="w-8 h-8 mr-2" src={trollFace} alt="Troll Face" />
-            MemeHub
-          </Link>
-          <div className="flex flex-col lg:flex-row w-10/12 lg:w-8/12 bg-gray-800 rounded-xl mx-auto shadow-lg overflow-hidden">
-            <div className="w-full lg:w-1/2 flex flex-col items-center justify-center p-12 bg-no-repeat bg-cover bg-center">
-              <img className="w-full h-full" src={Capture} alt="Spongebob" />
-            </div>
-            <div className="w-full lg:w-1/2 py-16 px-12">
-              <h2 className="text-3xl text-gray-300 mb-4">Register</h2>
-              <p className="mb-4 text-gray-300">
-                Create your account. It’s free and only take a minute
-              </p>
-              <form
-                className="space-y-4 md:space-y-6"
-                action="#"
-                onSubmit={handleSubmit}
-              >
+            <div className="flex justify-between gap-4">
+              <div className="w-full flex flex-col gap-4">
                 <div>
                   <label
                     htmlFor="username"
@@ -117,6 +112,8 @@ const Register = () => {
                     value={email}
                   />
                 </div>
+              </div>
+              <div className="w-full flex flex-col gap-4">
                 <div>
                   <label
                     htmlFor="password"
@@ -151,25 +148,25 @@ const Register = () => {
                     onChange={handlePasswordConfirmChange}
                   />
                 </div>
-                <div className="mt-5 flex">
-                  <input
-                    type="checkbox"
-                    className="border border-gray-400"
-                    required
-                  />
-                  <span className="text-gray-500 ml-3">
-                    I accept the terms of use and privacy policy
-                  </span>
-                </div>
-                <button
-                  type="submit"
-                  className="w-full text-white focus:ring-4 focus:outline-none font-medium rounded-lg text-sm px-5 py-2.5 text-center bg-primary-600 hover:bg-primary-700 focus:ring-primary-800"
-                >
-                  Register Now
-                </button>
-              </form>
+              </div>
             </div>
-          </div>
+            <div className="mt-5 flex">
+              <input
+                type="checkbox"
+                className="border border-gray-400"
+                required
+              />
+              <span className="text-gray-500 ml-3">
+                I accept the terms of use and privacy policy
+              </span>
+            </div>
+            <button
+              type="submit"
+              className="w-full text-white focus:ring-4 focus:outline-none font-medium rounded-lg text-sm px-5 py-2.5 text-center bg-primary-600 hover:bg-primary-700 focus:ring-primary-800"
+            >
+              Register Now
+            </button>
+          </form>
         </div>
       </div>
     </section>

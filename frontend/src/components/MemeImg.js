@@ -7,11 +7,15 @@ export default function MemeImg({
   onClick = null,
 }) {
   return (
-    <div id="meme" className="relative flex-1">
+    <div
+      id="meme"
+      className="flex-1 relative flex flex-col items-center justify-center rounded-lg"
+    >
       <img
+        id="drag-bounds"
         src={image}
         alt="Meme"
-        className="w-full aspect-square"
+        className="w-full rounded-lg"
         onClick={onClick}
       />
 

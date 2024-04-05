@@ -9,10 +9,6 @@ import {
   ADMIN_API_ROUTES,
 } from "./apiRoutes";
 
-// Mathabbattech fehom edhekom houma bedhabt walle el routes
-// elli bch t3addi fehom body wala haja ziid 3ala rohek
-// hattithom fi nafs el fichier bo5ol w barra ken thb nfar9ohom ama hakka netsawer yekfi
-
 const base = axios.create({
   baseURL: BASE_URL,
   withCredentials: true,
@@ -46,6 +42,7 @@ export const userApi = {
     ),
   resetPassword: (token, password) =>
     base.post(USER_API_ROUTES["RESET_PASSWORD"], { token, password }),
+  verifyToken: (token) => base.post(USER_API_ROUTES["VERIFY_TOKEN"], { token }),
 };
 
 export const memeApi = {
@@ -54,7 +51,7 @@ export const memeApi = {
     base.get(MEME_API_ROUTES["GET_MEME_BY_ID"].replace(":id", memeId)),
   getUserMemes: (userId) =>
     base.get(MEME_API_ROUTES["GET_USER_MEMES"].replace(":id", userId)),
-  getMemeLikes: (memeId) => 
+  getMemeLikes: (memeId) =>
     base.get(MEME_API_ROUTES["GET_MEME_LIKES"].replace(":id", memeId)),
 
   addMeme: (memeData) => base.post(MEME_API_ROUTES["ADD_MEME"], memeData),

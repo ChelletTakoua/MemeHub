@@ -27,7 +27,7 @@ $router->post('/logout', "AuthController@logout", ['user', 'admin']);
 $router->get('/checkAuth', "AuthController@checkAuth", ['guest','user', 'admin']); // return the user object if the user is logged in (null if not)
 
 // route to verify jwk token and return the user object
-$router->get('/verifyToken', "AuthController@verifyToken", ['guest']);
+$router->post('/verifyToken', "AuthController@verifyToken", ['guest']);
 
 // routes to send email of forgot password, and route for reset password with token
 $router->post('/forgotPassword/:username', "UserController@forgotPassword", ['guest']); // send email with token

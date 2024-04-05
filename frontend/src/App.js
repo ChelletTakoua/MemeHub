@@ -14,6 +14,7 @@ import Footer from "./components/Footer";
 import Loading from "./components/Loading";
 import { AppContext } from "./context/AppContext";
 import "./App.css";
+import ResetPassword from "./pages/ResetPassword";
 import ForgotPassword from "./pages/ForgotPassword";
 
 function App() {
@@ -53,7 +54,9 @@ function App() {
           <Route path="/" element={<Home />} />
           <Route path="/about" element={<About />} />
           <Route path="/verifyEmail" element={<VerifyEmail />} />
-          
+          <Route path="/forgot" element={<ForgotPassword />} />
+          <Route path="/resetPassword" element={<ResetPassword />} />
+
           {!user && (
             <>
               <Route path="/login" element={<Login />} />

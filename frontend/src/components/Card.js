@@ -40,8 +40,8 @@ export default function Card({ meme }) {
   };
 
   return (
-    <div className="flex justify-center mt-10">
-      <div className="w-1/2 shadow-lg bg-gray-700 rounded-3xl  relative ">
+    <div className="flex justify-center">
+      <div className="flex flex-col justify-between shadow-lg bg-gray-700 rounded-3xl relative ">
         <div className="flex items-center px-6 py-4">
           <img
             onClick={handleProfileClick}
@@ -66,12 +66,14 @@ export default function Card({ meme }) {
             template={meme?.template}
           />
         </div>
-        <MemeImg
-          key={meme?.id}
-          image={`data:image/jpeg;base64,${meme?.result_img}`}
-        />
+        <div className="flex justify-center items-center py-2 px-4">
+          <MemeImg
+            key={meme?.id}
+            image={`data:image/jpeg;base64,${meme?.result_img}`}
+          />
+        </div>
 
-        <div className={`px-6 py-4`}>
+        <div className="px-6 pb-4 pt-8">
           <div className="flex items-center">
             <LikeButton
               memeId={meme?.id}

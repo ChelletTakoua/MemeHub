@@ -124,9 +124,10 @@ const Profile = () => {
     <div className="grow bg-palenight">
       <main className="container mx-auto py-8">
         <div className="flex space-x-8">
-          <div className="w-1/4">
+          <div className="w-1/4 h-full bg-white bg-opacity-5 rounded-lg shadow-2xl px-4 py-8 flex flex-col items-center">
             <input
               type="file"
+              accept="image/*"
               onChange={handleImageUpload}
               disabled={!isOwner}
               className={`${
@@ -148,41 +149,39 @@ const Profile = () => {
             ) : (
               <h2 className="text-2xl font-bold mt-4 text-white">{username}</h2>
             )}
-            <p className="text-gray-300">
+            <p className="text-gray-300 mt-4">
               Joined: <Moment fromNow>{new Date(regDate)}</Moment>
             </p>
             <p className="text-gray-300">
               Total Memes Contributed: {memes ? memes.length : 0}
             </p>
-            <div className="mt-4">
-              <h3 className="text-xl font-bold text-white">
-                Contact Information
-              </h3>
-              {isOwner ? (
-                <input
-                  type="email"
-                  value={email}
-                  onChange={handleEmailChange}
-                  className="w-full px-3 py-2 mt-4 text-white bg-gray-800 rounded shadow-lg"
-                />
-              ) : (
-                <p className="text-gray-300">Email: {email}</p>
-              )}
-            </div>
+            <h3 className="text-xl font-bold text-white mt-6">
+              Contact Information
+            </h3>
+            {isOwner ? (
+              <input
+                type="email"
+                value={email}
+                onChange={handleEmailChange}
+                className="w-full px-3 py-2 mt-4 text-white bg-gray-800 rounded shadow-lg"
+              />
+            ) : (
+              <p className="text-gray-300">Email: {email}</p>
+            )}
             {isOwner && (
               <button
                 onClick={handleSave}
                 type="submit"
-                className="px-4 py-2 ml-10 mt-20 text-white bg-blue-800 rounded shadow-lg active:text-gray-500"
+                className="px-4 py-2 mt-6 text-white bg-blue-800 rounded shadow-lg active:text-gray-500"
               >
                 Save Changes
               </button>
             )}
           </div>
-          <div className="w-3/4">
-            <div className="w-3/4">
-              <h3 className="text-xl font-bold mt-4 text-white">My Memes</h3>
-              <div className="grid grid-cols-3 gap-4 mt-2">
+          <div className="w-3/4 flex justify-center">
+            <div className="w-11/12">
+              <h2 className="text-2xl font-bold mb-8 text-white">My Memes</h2>
+              <div className="grid grid-cols-3 gap-6 mt-2">
                 {memes.length === 0 && ( // If there are no memes //TODO: make this better
                   <div className="flex flex-col items-center justify-center gap-4">
                     <div className="text-black">No memes to show.</div>

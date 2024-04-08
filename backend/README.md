@@ -24,7 +24,7 @@ Run the following command in the backend directory to start the PHP server:
     php start-server.php 
 ```
 
-if you want to run it in development mode, you can change it manually in the [`app.php`](src/Config/app.php) file or you can pass the `--dev=true` or `--dev=false` flag to the command.
+if you want to run it in development mode, you can change it manually in the [`app.php`](src/config/app.php) file or you can pass the `--dev=true` or `--dev=false` flag to the command.
 
 ```bash
     php start-server.php --dev=true  # or false
@@ -33,7 +33,7 @@ if you want to run it in development mode, you can change it manually in the [`a
 more information about the development mode can be found in the [Development Mode](#development-mode) section.
 
 This will start the PHP server on port 8000. You can access the API at `http://localhost:8000`.
-if you want to change the port, you can do so by modifying the [`app.php`](src/Config/app.php) file in the Config folder.
+if you want to change the port, you can do so by modifying the [`app.php`](src/config/app.php) file in the Config folder.
 
 ```php
     'port' => 8000,
@@ -42,7 +42,7 @@ if you want to change the port, you can do so by modifying the [`app.php`](src/C
 
 ### Database Configuration:
 
-The project uses a MySQL database to store data. You can configure the database connection by modifying the [`database.php`](src/Config/database.php) file in the [`Config`](src/Config) folder.
+The project uses a MySQL database to store data. You can configure the database connection by modifying the [`database.php`](src/config/database.php) file in the [`Config`](src/config) folder.
 Update the database host, username, password, and database name to match your database configuration.
 
 ```php
@@ -107,12 +107,12 @@ This workflow ensures that the backend of MemeHub operates smoothly, handles err
 - **[Proxy](src/Utils/Proxy.php):**  
     A proxy class that is used to fetch foreign objects from the database. It is used to avoid fetching foreign objects multiple times. 
 - **[jwt.php](src/Utils/jwt.php):**  
-    Handles JWT token generation and validation. It uses the secret key defined in the [`keys.php`](src/Config/keys.php) file. 
+    Handles JWT token generation and validation. It uses the secret key defined in the [`keys.php`](src/config/keys.php) file. 
 - **[Mail.php](src/Utils/Mail.php):**  
     Handles sending emails.
 
    
-You can configure the application by modifying the configuration files in the [Config](src/Config) folder.
+You can configure the application by modifying the configuration files in the [Config](src/config) folder.
 
 You can ignore the .txt files, we just used them to communicate with each other. We left them there just for fun.
     
@@ -125,7 +125,7 @@ This project has a development mode that can be enabled by passing the `--dev=tr
     php start-server.php --dev=true  # or false
 ```
 
-You can also enable it manually by changing the `dev` key in the [`app.php`](src/Config/app.php) file.
+You can also enable it manually by changing the `dev` key in the [`app.php`](src/config/app.php) file.
 
 ```php
     'dev' => true,
@@ -134,7 +134,7 @@ You can also enable it manually by changing the `dev` key in the [`app.php`](src
 
 In development mode, new endpoints are added to the API that will help you debug and test the application. These endpoints are not available in production mode.
 
-### Session History:
+## Session History:
 Can be accessed at `admin/sessionHistory`. 
 
 Returns a html page that shows all of the available endpoints of the API and the history of all the requests that were with the current session.

@@ -48,7 +48,7 @@ To run the MemeHub project, follow these steps:
      php start-server.php --dev=true # or false
      ```
    - The server will start on port 8000. You can access the API at `http://localhost:8000`.
-   - You can configure the database connection by modifying the [`database.php`](back-end/Config/database.php) file in the [`Config`](backend/Config) folder. Update the database host, username, password, and database name to match your database configuration.
+   - You can configure the database connection by modifying the [`database.php`](back-end/Config/database.php) file in the [`Config`](backend/src/config) folder. Update the database host, username, password, and database name to match your database configuration.
    - For more detailed instructions and information about the project workflow, refer to the [README.md](backend/README.md) file in the back end folder.
     
 

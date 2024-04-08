@@ -34,7 +34,10 @@ class UserController
                 throw new NotFoundException("User not found");
             }
             Mail::sendPasswordResetMail($user);
-            $response = ApiResponseBuilder::buildSuccessResponse();
+            $emailParts = explode('@', $user->getEmail());
+            $hiddenEmailPart = substr($emailParts[0], 0, 2) . str_repeat('*', strlen($emailParts[0]) - 2);
+            $hiddenEmail = $hiddenEmailPart . '@' . $emailParts[1];
+            $response = ApiResponseBuilder::buildSuccessResponse(["email"=>$hiddenEmail]);
             echo json_encode($response);
         
     }

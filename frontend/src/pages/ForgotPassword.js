@@ -14,8 +14,8 @@ const ForgotPassword = () => {
     e.preventDefault();
     if (username === "") return toast.error("Please enter your username");
     try {
-      await userApi.forgotPassword(username);
-      toast.success("Password reset link sent to your email");
+      const reponse = await userApi.forgotPassword(username);
+      toast.success("Password reset link sent to your email: " + reponse.data.data.email);
     } catch (error) {
       toast.error(error.response.data.message);
     }

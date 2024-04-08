@@ -3,13 +3,7 @@
 require_once 'src/Database/DatabaseConnection.php';
 
 
-/**
- * Updates the development mode in the config file.
- *
- * @param array $argv The command line arguments.
- * @return void
 
- */
 function updateDevMode($argv)
 {
     $configFile = __DIR__ . '/src/config/app.php';
@@ -29,11 +23,7 @@ function updateDevMode($argv)
     }
 }
 
-/**
- * Connects to the database.
- *
- * @return void
- */
+
 function connectToDatabase(){
         try {
         $db = Database\DatabaseConnection::getInstance();
@@ -43,7 +33,7 @@ function connectToDatabase(){
         die();
 
     }
-    echo "\nDatabase connection successful.\n\n";
+    echo "\nDatabase connection successful.\n";
 }
 
 
@@ -55,17 +45,24 @@ updateDevMode($argv);
 $appConfig = include __DIR__ . '/src/config/app.php';
 $host = $appConfig['host'];
 $port = $appConfig['port'];
+$development_mode = $appConfig['development_mode'];
+
+
+if($development_mode) {
+    echo "\033[32m\nDevelopment mode enabled.\033[0m\n\n";
+}else{
+    echo "\033[33m\nDevelopment mode disabled.\033[0m\n\n";
+}
+
 
 $loadingSymbols = ['-', '\\', '|', '/'];
 for ($i = 0; $i < 10; $i++) {
     echo "\rS   tarting PHP server " . $loadingSymbols[$i % 4] . "  ";
     usleep(250000);
 }
-
-
-
-
 echo "\033[2K\r";
+
+
 exec("php -S $host:$port -t public/");
 
 

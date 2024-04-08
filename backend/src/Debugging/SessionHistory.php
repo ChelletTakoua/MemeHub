@@ -45,7 +45,8 @@ $index = 0;
     <?php endforeach; ?>
 </table>
 </div>
-
+</div>
+<div class="container">
 <!-- historique -->
 <h2>History :</h2>
 <div class="table-container">

@@ -32,12 +32,12 @@
     $query["body"] = json_encode(json_decode($query["body"]), JSON_PRETTY_PRINT);
 
 ?>
-<div class="container">
-    <div class="backArrow">
+    <div class="backArrow backArrowContainer">
         <a href="/admin/sessionHistory">
             <i class="fas fa-arrow-left backArrow"></i>
         </a>
     </div>
+<div class="container">
     <h1 class="underline-text">Request :</h1>
 <div class="table-container">
     <div class="info-container">
@@ -123,6 +123,9 @@
         //-----------------Response-----------------
         $response["body"] = json_encode($response["body"], JSON_PRETTY_PRINT);
     ?>
+</div>
+<div class="container">
+
     <h1 class="underline-text">Response :</h1>
     <h2>Response Headers :</h2>
     <div class="table-container">
@@ -143,6 +146,8 @@
         <pre><?= $response["body"] ?></pre>
     </div>
 
+</div>
+<div class="container">
 
     <!-----------------Matching Routes----------------->
 

@@ -40,6 +40,9 @@ const ResetPassword = () => {
     if (password !== confirmPassword) {
       return toast.error("Passwords do not match");
     }
+    if(password.length < 6) {
+      return toast.error("Password must be at least 6 characters long");
+    }
     try {
       await userApi.resetPassword(token, password);
       toast.success("Password reset successfully");

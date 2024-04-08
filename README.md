@@ -1,9 +1,20 @@
 # MemeHub
 A meme generator and sharing platform where users can create and share memes. Users can react to and comment on posts, making it a fun and interactive community for meme lovers.
 
+## Requirements
 
+Before running the MemeHub project, make sure you have the following software and tools installed on your machine:
 
-##How to run the project:
+1. [Node.js](https://nodejs.org/en/download/) and [npm](https://www.npmjs.com/get-npm) (Node Package Manager) - These are required to run the front end of the project.
+
+2. [PHP](https://www.php.net/downloads.php) 8.0 or higher - This is required to run the back end of the project.
+
+3. [MariaDB](https://mariadb.org/download/) or [XAMPP](https://www.apachefriends.org/download.html) - These are required to set up and run the database for the project.
+
+4. A text editor or IDE (Integrated Development Environment) like [PhpStorm](https://www.jetbrains.com/phpstorm/download/) - This is required to view and edit the project files.
+
+Once you have all these tools installed, you can proceed with running the project as described in the [How to run the project](#how-to-run-the-project) section.
+
 ## How to run the project:
 
 To run the MemeHub project, follow these steps:
@@ -37,8 +48,8 @@ To run the MemeHub project, follow these steps:
      php start-server.php --dev=true # or false
      ```
    - The server will start on port 8000. You can access the API at `http://localhost:8000`.
-   - You can configure the database connection by modifying the [`database.php`](back-end/Config/database.php) file in the [`Config`](back-end/Config) folder. Update the database host, username, password, and database name to match your database configuration.
-   - For more detailed instructions and information about the project workflow, refer to the [README.md](back-end/README.md) file in the back end folder.
+   - You can configure the database connection by modifying the [`database.php`](back-end/Config/database.php) file in the [`Config`](backend/Config) folder. Update the database host, username, password, and database name to match your database configuration.
+   - For more detailed instructions and information about the project workflow, refer to the [README.md](backend/README.md) file in the back end folder.
     
 
 5. Once all the necessary components are running, you can access the MemeHub application in your web browser.

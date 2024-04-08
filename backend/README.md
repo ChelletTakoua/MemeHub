@@ -27,13 +27,13 @@ Run the following command in the backend directory to start the PHP server:
 if you want to run it in development mode, you can change it manually in the [`app.php`](src/Config/app.php) file or you can pass the `--dev=true` or `--dev=false` flag to the command.
 
 ```bash
-    php start-server.php --dev=true  // or false
+    php start-server.php --dev=true  # or false
 ```
 
 more information about the development mode can be found in the [Development Mode](#development-mode) section.
 
 This will start the PHP server on port 8000. You can access the API at `http://localhost:8000`.
-if you want to change the port, you can do so by modifying the app.php file in the Config folder.
+if you want to change the port, you can do so by modifying the [`app.php`](src/Config/app.php) file in the Config folder.
 
 ```php
     'port' => 8000,
@@ -107,7 +107,7 @@ This workflow ensures that the backend of MemeHub operates smoothly, handles err
 - **[Proxy](src/Utils/Proxy.php):**  
     A proxy class that is used to fetch foreign objects from the database. It is used to avoid fetching foreign objects multiple times. 
 - **[jwt.php](src/Utils/jwt.php):**  
-    Handles JWT token generation and validation. It uses the secret key defined in the [`keys.php`](src/Config/keys.php) file.
+    Handles JWT token generation and validation. It uses the secret key defined in the [`keys.php`](src/Config/keys.php) file. 
 - **[Mail.php](src/Utils/Mail.php):**  
     Handles sending emails.
 
@@ -120,11 +120,16 @@ You can ignore the .txt files, we just used them to communicate with each other.
 # Development Mode:
 This project has a development mode that can be enabled by passing the `--dev=true` flag to the start-server.php command. 
 
-```php
-    'dev' => true,
+
+```bash
+    php start-server.php --dev=true  # or false
 ```
 
 You can also enable it manually by changing the `dev` key in the [`app.php`](src/Config/app.php) file.
+
+```php
+    'dev' => true,
+```
 
 
 In development mode, new endpoints are added to the API that will help you debug and test the application. These endpoints are not available in production mode.
@@ -137,3 +142,21 @@ Returns a html page that shows all of the available endpoints of the API and the
 ### Resquest Details:
 
 You can access the details of a specific request by clicking on the request in the session history page. This will show you the details of the request including the request method, URL, request and response headers and body, body and routing information.
+
+
+## JWT Token Validation:
+
+In our application, the JWT (JSON Web Token) is used for secure transmission of information between parties as a JSON object. This information can be verified and trusted because it is digitally signed.
+
+The JWT token is used in two scenarios: email verification and password reset.
+
+
+1. **Email Verification:** When a new user registers, a JWT token is generated and sent to the user's email. This token contains the user's ID and email. The user is required to click on the verification link, which includes the JWT token, to verify their email address. The server then decodes the JWT token to retrieve the user's information and verifies the email address.
+
+2. **Password Reset:** When a user requests a password reset, a JWT token is generated and sent to the user's email. This token contains the user's ID and email. The user is required to click on the reset link, which includes the JWT token, to reset their password. The server then decodes the JWT token to retrieve the user's information and allows the user to reset their password.
+
+The [`AuthKeyGenerator`](src/Authentication/AuthKeyGenerator.php) class is responsible for encoding and decoding the JWT token. 
+
+The JWT token also contains an expiration time. If the current time is greater than the expiration time in the token, an `ExpiredTokenException` is thrown. This ensures that the token is only valid for a certain period of time.
+
+This process ensures that the user is who they claim to be and prevents unauthorized access to protected resources.

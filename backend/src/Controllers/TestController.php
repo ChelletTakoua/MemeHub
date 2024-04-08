@@ -30,7 +30,7 @@ class TestController
     {
         Auth::login("Louey","adslo123098",false);
         echo( json_encode($_SESSION["requests"][0]) );
-        include __DIR__ . '/../Debugging/debugLouey.php';
+        include __DIR__ . '/../Debugging/requestDetails.php';
     }
 
 }

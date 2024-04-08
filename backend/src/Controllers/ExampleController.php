@@ -29,7 +29,7 @@ public function referenceMethod()
 
     }
 
-    public function example($exampleParam)
+    public function exampleWithParams($exampleParam)
     {
         Auth::requireAdminAccess();
         header('Content-Type: application/json');
@@ -43,7 +43,8 @@ public function referenceMethod()
         ];
 
 
-        echo json_encode($meme);
+        $response = ApiResponseBuilder::buildSuccessResponse($meme);
+        echo json_encode($response);
 
     }
 }

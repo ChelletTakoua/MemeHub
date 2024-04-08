@@ -16,14 +16,16 @@ class Route implements JsonSerializable
     private $matches = [];
     private $params = [];
     private $roles;
+    private $developmentMode;
 
     private $matchingStatus = 'not checked';
 
-    public function __construct($path, $callable, $roles = [])
+    public function __construct($path, $callable, $roles = [], $developmentMode = false)
     {
         $this->path = trim($path, '/');
         $this->callable = $callable;
         $this->roles = $roles;
+        $this->developmentMode = $developmentMode;
     }
 
     /**
@@ -147,6 +149,7 @@ class Route implements JsonSerializable
             'callable' => $this->getCallable(),
             'matchingStatus' => $this->matchingStatus,
             'matches' => $this->getMatchesAssoc(),
+            'developmentMode' => $this->developmentMode,
         ];
     }
 

@@ -39,7 +39,7 @@ class Router
     {
         if ($developmentMode && !$this->devMode) return;
 
-        $route = new Route($path, $callable, $roles);
+        $route = new Route($path, $callable, $roles, $developmentMode);
         $this->routes["GET"][] = $route;
     }
 
@@ -57,7 +57,7 @@ class Router
     {
         if ($developmentMode && !$this->devMode) return;
 
-        $route = new Route($path, $callable, $roles);
+        $route = new Route($path, $callable, $roles, $developmentMode);
         $this->routes["POST"][] = $route;
     }
 
@@ -74,7 +74,7 @@ class Router
     {
         if ($developmentMode && !$this->devMode) return;
 
-        $route = new Route($path, $callable, $roles);
+        $route = new Route($path, $callable, $roles, $developmentMode);
         $this->routes["PUT"][] = $route;
     }
 
@@ -91,7 +91,7 @@ class Router
     {
         if ($developmentMode && !$this->devMode) return;
 
-        $route = new Route($path, $callable, $roles);
+        $route = new Route($path, $callable, $roles, $developmentMode);
         $this->routes["DELETE"][] = $route;
     }
 
@@ -107,7 +107,7 @@ class Router
     {
         if ($developmentMode && !$this->devMode) return;
 
-        $route = new Route($path, $callable, $roles);
+        $route = new Route($path, $callable, $roles, $developmentMode);
         $this->routes["OPTIONS"][] = $route;
     }
 

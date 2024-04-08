@@ -39,7 +39,7 @@ $index = 0;
                     else{
                         echo(str_replace("@", "<span class='callable'>@</span>", $route->getCallable()));
                      } ?></td>
-                <td class ="path"><?= implode(", ", $route->getRoles()) ?></td>
+                <td class ="path"><?= implode(", ", $route->getRoles()) . ($route->developmentMode?" <span class='devMode'>(dev)</span>":"") ?></td>
             </tr>
         <?php endforeach; ?>
     <?php endforeach; ?>

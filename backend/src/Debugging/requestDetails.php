@@ -1,35 +1,8 @@
 <?php
     header('Content-Type: text/html; charset=utf-8');
-
-    function displayResponseCode($code)
-    {
-        $class = '';
-        $error="";
-        if ($code >= 200 && $code < 300) {
-            $class = 'success';
-            $error="OK";
-        } elseif ($code >= 300 && $code < 400) {
-            $class = 'redirection';
-            $error="Redirection";
-        } elseif ($code >= 400 && $code < 500) {
-            $class = 'client-error';
-            $error="Client Error";
-        } elseif ($code >= 500 && $code < 600) {
-            $class = 'server-error';
-            $error="Server Error";
-        }
-        else{
-            return $code;
-        }
-
-        return "<span class='".$class."'><span class='status-point'>●</span>  ".$code."   ".$error."</span>";
-    }
-
+    include 'response_code.php';
 
     $index = $_GET["index"]-1;
-
-
-    $index = $_GET["index"];
 
     $request = $_SESSION["requests"][$index];
     // request and response stored in the session :
@@ -40,7 +13,7 @@
     $currentRoute = $request["routing"]["matched_route"];
     $routes = $request["routing"]["matching_logs"];
     $actualPath = $request["request"]["url"];
-    if(strpos($actualPath,"?") !== false){
+    if(str_contains($actualPath, "?")){
         $actualPath = substr($actualPath,0,strpos($actualPath,"?"));
     }
 ?>
@@ -50,14 +23,21 @@
 <head>
     <title> Request <?= $index ?> Details </title>
     <link href="../index.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
 </head>
 <body>
+
 <?php
     //-----------------Request-----------------
     $query["body"] = json_encode(json_decode($query["body"]), JSON_PRETTY_PRINT);
 
 ?>
 <div class="container">
+    <div class="backArrow">
+        <a href="/admin/sessionHistory">
+            <i class="fas fa-arrow-left backArrow"></i>
+        </a>
+    </div>
     <h1 class="underline-text">Request :</h1>
 <div class="table-container">
     <div class="info-container">
@@ -68,21 +48,57 @@
         </div>
         <div class="right-info">
             <h4 class="right-info path-box status-text"><?= displayResponseCode($response["status_code"]) ?></h4>
-            <h4 class="right-info path-box path timestamp"><?= date('Y-m-d H:i:s', $response["timestamp"]) ?></h4>
+            <h4 class="right-info path-box path timestamp"><?= date('Y-m-d H:i:s', floor($response["timestamp"])) ?></h4>
         </div>
 
     </div>
 
 
 </div>
-    <div class="inline-box-error">
         <?php
-            //if(!empty($response["error_message"])){
-                echo("<h4 class='error underline-text'>Error message :</h4>");
-                echo("<h5 class='error-message path-box'>fsdnpihpggp".$response["error_message"]."</h5>");
-            //}
+            if(!empty($response["error_message"])){
+                echo("<div class='inline-box-error parent-container'>");
+                echo("<span class='error underline-text'>Error message :</span>");
+                echo("<h5 class='error-message path-box'>".$response["error_message"]."</h5>");
+                echo("</div>");
+            }
         ?>
+
+    <?php
+        //create a table for every method (Get/ Post) and display the parameters
+    ?>
+    <h2>GET Parameters :</h2>
+    <div class="table-container">
+        <table border="1">
+            <tr class="table-head ">
+                <th>Parameter</th>
+                <th class='value-cell '>Value</th>
+            </tr>
+            <?php foreach ($query["get_params"] as $key => $value): ?>
+                <tr>
+                    <td><?= $key ?></td>
+                    <td class='value-cell'><?= $value ?></td>
+                </tr>
+            <?php endforeach; ?>
+        </table>
     </div>
+
+    <h2>POST Parameters :</h2>
+    <div class="table-container">
+        <table border="1">
+            <tr class="table-head ">
+                <th>Parameter</th>
+                <th class='value-cell '>Value</th>
+            </tr>
+            <?php foreach ($query["post_params"] as $key => $value): ?>
+                <tr>
+                    <td><?= $key ?></td>
+                    <td class='value-cell'><?= $value ?></td>
+                </tr>
+            <?php endforeach; ?>
+        </table>
+    </div>
+
 
     <h2>Request Headers :</h2>
     <div class="table-container">
@@ -99,13 +115,13 @@
         </table>
     </div>
     <h2>Request Body :</h2>
-    <div class="body-container">
+    <div class="body-container inline-box">
         <pre><?= $query["body"] ?></pre>
     </div>
 
     <?php
         //-----------------Response-----------------
-        $response["body"] = json_encode(json_decode($response["body"]), JSON_PRETTY_PRINT);
+        $response["body"] = json_encode($response["body"], JSON_PRETTY_PRINT);
     ?>
     <h1 class="underline-text">Response :</h1>
     <h2>Response Headers :</h2>

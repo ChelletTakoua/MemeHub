@@ -11,17 +11,20 @@ export default function LikeButton({ memeId, likes, userLikedIt = false }) {
   const { user } = useContext(AppContext);
 
   const handleClick = async () => {
+    setNbLikes((nbLikes) => (liked ? nbLikes - 1 : nbLikes + 1));
+    setLiked((liked) => !liked);
+    let rep;
     try {
       if (!liked) {
-        await memeApi.likeMeme(memeId);
+        rep = await memeApi.likeMeme(memeId);
       } else {
-        await memeApi.dislikeMeme(memeId);
+        rep = await memeApi.dislikeMeme(memeId);
       }
-      setNbLikes((nbLikes) => (liked ? nbLikes - 1 : nbLikes + 1));
-      setLiked((liked) => !liked);
     } catch (error) {
       console.error("Error:", error);
     }
+    setNbLikes((nbLikes) => rep.data.data.nbLikes);
+    setLiked((liked) => rep.data.data.liked);
   };
 
   const { scale } = useSpring({

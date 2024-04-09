@@ -22,11 +22,11 @@ A meme generator and sharing platform where users can create and share memes. Us
 
 9. Contact Us: Have questions or suggestions? Reach out to our support team via email for assistance.
 
-## Admin Dashboard
+### Admin Dashboard
 
 MemeHub's Admin Dashboard provides essential tools for streamlined platform management. Admins can oversee user management, meme moderation, role assignment, access website statistics, and utilize debugging mode for troubleshooting and smooth operation.
 
-### Requirements
+## Requirements
 
 Before running the MemeHub project, make sure you have the following software and tools installed on your machine:
 
@@ -40,7 +40,7 @@ Before running the MemeHub project, make sure you have the following software an
 
 Once you have all these tools installed, you can proceed with running the project as described in the [How to run the project](#how-to-run-the-project) section.
 
-### How to run the project:
+## How to run the project:
 
 To run the MemeHub project, follow these steps:
 
@@ -81,7 +81,7 @@ To run the MemeHub project, follow these steps:
 
 **Note:** Make sure to update any configuration files as needed for your specific setup.
 
-#### Feedback and Support
+## Feedback and Support
 
 We value your feedback and suggestions for improving MemeHub! If you have any ideas, encounter issues, or simply want to get in touch, please feel free to [reach out to us via email](mailto:chellettakoua@gmail.com) or [submit a ticket on our GitHub repository](https://github.com/ChelletTakoua/MemeHub).
 

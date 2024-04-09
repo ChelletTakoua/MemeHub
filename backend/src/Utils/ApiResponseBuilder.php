@@ -41,14 +41,19 @@ class ApiResponseBuilder
      * This method is used to build an error response
      * @param string $message The message to be returned
      * @param int $statusCode The status code to be returned
+     * @param array $data The data to be returned (not returned if empty)
      * @return array
      */
-    public static function buildErrorResponse(string $message,int  $statusCode): array
+    public static function buildErrorResponse(string $message,int  $statusCode,array $data=[]): array
     {
-        return [
+        $response = [
             'status' => 'error',
             'code' => $statusCode,
             'message' => $message
         ];
+        if (!empty($data)) {
+            $response['data'] = $data;
+        }
+        return $response;
     }
 }

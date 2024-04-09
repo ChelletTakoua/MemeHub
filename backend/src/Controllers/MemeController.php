@@ -145,17 +145,22 @@ class MemeController
      *
      * @param int $id The ID of the meme to be liked.
      * @return void This function does not return a value; it directly outputs the JSON response.
-     * @throws BadRequestException If there is an error while adding the like to the database, a BadRequestException is thrown with a 500 status code.
-     * @throws NotLoggedInException If the user is not logged in, a NotLoggedInException is thrown.
      */
     public function likeMeme($id)
     {
-        $like = LikeTableManager::addLike($id, Auth::getActiveUserId());
-        if (empty($like)) {
-            throw new MethodNotAllowedException('Meme already liked');
-        }
+        try {
+            $like = LikeTableManager::addLike($id, Auth::getActiveUserId());
+        } catch (MethodNotAllowedException $e) {}
 
-        $response = ApiResponseBuilder::buildSuccessResponse(["like" => $like]);
+        $nbLikes = MemeTableManager::getMemeNbLikes($id);
+        $isLiked = LikeTableManager::likeExistsByMemeIdAndUserId($id, Auth::GetActiveUserId());
+
+        if (empty($like)) {
+            $response = ApiResponseBuilder::buildErrorResponse('Meme already liked', 400, ["nbLikes" => $nbLikes , "liked" => $isLiked ]);
+            //throw new MethodNotAllowedException('Meme already liked',data: ["nbLikes" => $nbLikes , "liked" => $isLiked ]);
+        } else {
+            $response = ApiResponseBuilder::buildSuccessResponse(["nbLikes" => $nbLikes , "liked" => $isLiked ]);
+        }
         echo json_encode($response);
     }
 
@@ -164,16 +169,20 @@ class MemeController
      *
      * @param int $id The ID of the meme from which the like is to be removed.
      * @return void This function does not return a value; it directly outputs the JSON response.
-     * @throws BadRequestException If there is an error while removing the like from the database, a BadRequestException is thrown with a 500 status code.
-     * @throws NotLoggedInException If the user is not logged in, a NotLoggedInException is thrown.
      */
     public function dislikeMeme($id)
     {
         $dislike = LikeTableManager::deleteLikeByMemeIdAndUserId($id, $_SESSION['user_id']);
+
+        $nbLikes = MemeTableManager::getMemeNbLikes($id);
+        $isLiked = LikeTableManager::likeExistsByMemeIdAndUserId($id, Auth::GetActiveUserId());
+
         if (empty($dislike)) {
-            throw new MethodNotAllowedException('Meme not liked');
+            $response = ApiResponseBuilder::buildErrorResponse('Meme not liked', 400, ["nbLikes" => $nbLikes , "liked" => $isLiked ]);
+            //throw new MethodNotAllowedException('Meme not liked',data: ["nbLikes" => $nbLikes , "liked" => $isLiked ]);
+        }else {
+            $response = ApiResponseBuilder::buildSuccessResponse(["nbLikes" => $nbLikes, "liked" => $isLiked]);
         }
-        $response = ApiResponseBuilder::buildSuccessResponse([]);
         echo json_encode($response);
     }
 

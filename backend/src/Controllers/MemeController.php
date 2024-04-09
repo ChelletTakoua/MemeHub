@@ -150,16 +150,16 @@ class MemeController
     {
         try {
             $like = LikeTableManager::addLike($id, Auth::getActiveUserId());
-        } catch (MethodNotAllowedException $e) {}
+        } catch (MethodNotAllowedException $e) {
+        }
 
         $nbLikes = MemeTableManager::getMemeNbLikes($id);
         $isLiked = LikeTableManager::likeExistsByMemeIdAndUserId($id, Auth::GetActiveUserId());
 
         if (empty($like)) {
-            $response = ApiResponseBuilder::buildErrorResponse('Meme already liked', 400, ["nbLikes" => $nbLikes , "liked" => $isLiked ]);
-            //throw new MethodNotAllowedException('Meme already liked',data: ["nbLikes" => $nbLikes , "liked" => $isLiked ]);
+            $response = ApiResponseBuilder::buildErrorResponse('Meme already liked', 400, ["nbLikes" => $nbLikes, "liked" => $isLiked]);
         } else {
-            $response = ApiResponseBuilder::buildSuccessResponse(["nbLikes" => $nbLikes , "liked" => $isLiked ]);
+            $response = ApiResponseBuilder::buildSuccessResponse(["nbLikes" => $nbLikes, "liked" => $isLiked]);
         }
         echo json_encode($response);
     }
@@ -178,9 +178,8 @@ class MemeController
         $isLiked = LikeTableManager::likeExistsByMemeIdAndUserId($id, Auth::GetActiveUserId());
 
         if (empty($dislike)) {
-            $response = ApiResponseBuilder::buildErrorResponse('Meme not liked', 400, ["nbLikes" => $nbLikes , "liked" => $isLiked ]);
-            //throw new MethodNotAllowedException('Meme not liked',data: ["nbLikes" => $nbLikes , "liked" => $isLiked ]);
-        }else {
+            $response = ApiResponseBuilder::buildErrorResponse('Meme not liked', 400, ["nbLikes" => $nbLikes, "liked" => $isLiked]);
+        } else {
             $response = ApiResponseBuilder::buildSuccessResponse(["nbLikes" => $nbLikes, "liked" => $isLiked]);
         }
         echo json_encode($response);
@@ -220,10 +219,11 @@ class MemeController
         echo json_encode($response);
     }
 
-    public function getMemeNbLikes($meme_id){
+    public function getMemeNbLikes($meme_id)
+    {
         $nbLikes = MemeTableManager::getMemeNbLikes($meme_id);
         $isLiked = Auth::isLoggedIn() && LikeTableManager::likeExistsByMemeIdAndUserId($meme_id, Auth::GetActiveUserId());
-        $response = ApiResponseBuilder::buildSuccessResponse(["nbLikes" => $nbLikes , "liked" => $isLiked ]);
+        $response = ApiResponseBuilder::buildSuccessResponse(["nbLikes" => $nbLikes, "liked" => $isLiked]);
         echo json_encode($response);
     }
 }

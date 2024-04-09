@@ -34,22 +34,15 @@ function logError($e, $red = true)
  */
 function errorHandler($e)
 {
-    // If the exception is not an instance of HttpException, log the error and replace the exception with an InternalServerErrorException
     if (!$e instanceof \Exceptions\HttpExceptions\HttpException) {
         logError($e);
         $e = new \Exceptions\HttpExceptions\InternalServerErrorException();
     } else {
-        // If the exception is an instance of HttpException, log the error without replacing the exception
         logError($e, false);
     }
-    // Set the Content-Type header to application/json
     header('Content-Type: application/json');
-    // Build an error response using the message and HTTP response code from the exception
     $response = \Utils\ApiResponseBuilder::buildErrorResponse($e->getMessage(), $e->getHttpResponseCode());
-    // Set the HTTP response code to the response code from the exception
     http_response_code($e->getHttpResponseCode());
-    // Echo the error response as a JSON string
     echo json_encode($response);
 }
-// Set this function as the exception handler
 set_exception_handler('errorHandler');

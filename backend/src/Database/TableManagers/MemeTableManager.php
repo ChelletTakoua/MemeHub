@@ -17,14 +17,9 @@ class MemeTableManager extends TableManager
      */
     static public function getMeme(array $params = []): array
     {
-        // Execute a SELECT query on the "memes" table, excluding memes that are in the "blocked_memes" table
         $queryObjects =  DatabaseQuery::executeQuery("select", "memes", [], $params, " id NOT IN (SELECT meme_id FROM blocked_memes)");
-        // Initialize an empty array to hold the memes
         $memes = [];
-        // Loop through each object returned by the query
         foreach ($queryObjects as $queryObject) {
-            // Create a new Meme object using the data from the query object
-            // and add it to the memes array
             $memes[] = new Meme(
                 $queryObject['id'],
                 $queryObject['template_id'],
@@ -35,7 +30,6 @@ class MemeTableManager extends TableManager
                 $queryObject['nb_likes']
             );
         }
-        // Return the array of Meme objects
         return $memes;
     }
 
@@ -48,14 +42,9 @@ class MemeTableManager extends TableManager
      */
     static public function getAllMemes(array $params = []): array
     {
-        // Execute a SELECT query on the "memes" table
         $queryObjects =  DatabaseQuery::executeQuery("select", "memes", [], $params);
-        // Initialize an empty array to hold the memes
         $memes = [];
-        // Loop through each object returned by the query
         foreach ($queryObjects as $queryObject) {
-            // Create a new Meme object using the data from the query object
-            // and add it to the memes array
             $memes[] = new Meme(
                 $queryObject['id'],
                 $queryObject['template_id'],
@@ -66,7 +55,6 @@ class MemeTableManager extends TableManager
                 $queryObject['nb_likes']
             );
         }
-        // Return the array of Meme objects
         return $memes;
     }
 
@@ -81,19 +69,14 @@ class MemeTableManager extends TableManager
      */
     static public function getMemeById(int $id, bool $blocked = false): ?Meme
     {
-        // If the ID is less than 0, return null
         if ($id < 0) {
             return null;
         }
-        // If $blocked is true, retrieve all memes (including blocked ones) with the given ID
-        // Otherwise, retrieve only non-blocked memes with the given ID
         if ($blocked) {
             $memes = self::getAllMemes(["id" => $id]);
         } else {
             $memes = self::getMeme(["id" => $id]);
         }
-        // If the $memes array is not empty, return the first meme
-        // Otherwise, return null
         if (!empty($memes)) {
             return $memes[0];
         }
@@ -109,12 +92,9 @@ class MemeTableManager extends TableManager
      */
     static public function getMemeByTemplateId(int $template_id): ?array
     {
-        // Check if the template exists in the database using the templateExists method of the TemplateTableManager class
-        // If the template does not exist, return null
         if (!TemplateTableManager::templateExists($template_id)) {
             return null;
         }
-        // If the template exists, retrieve all memes that use this template by calling the getMeme method with the template ID
         return self::getMeme(["template_id" => $template_id]);
     }
 
@@ -127,12 +107,9 @@ class MemeTableManager extends TableManager
      */
     static public function getMemeByUserId(int $user_id): ?array
     {
-        // Check if the user exists in the database using the verifyExistenceById method of the UserTableManager class
-        // If the user does not exist, return null
         if (!UserTableManager::verifyExistenceById($user_id)) {
             return null;
         }
-        // If the user exists, retrieve all memes created by this user by calling the getMeme method with the user ID
         return self::getMeme(["user_id" => $user_id]);
     }
 
@@ -145,13 +122,9 @@ class MemeTableManager extends TableManager
      */
     static public function getMemeByCreationDate(string $creation_date): ?array
     {
-        // Check if the creation date string is empty or does not match the required format
-        // The required format is "YYYY-MM-DD HH:MM:SS"
-        // If the date string is empty or does not match the format, return null
         if (empty($creation_date) || !preg_match("/\d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2}/", $creation_date)) {
             return null;
         }
-        // If the date string is valid, retrieve all memes created on this date by calling the getMeme method with the creation date
         return self::getMeme(["creation_date" => $creation_date]);
     }
 
@@ -164,12 +137,9 @@ class MemeTableManager extends TableManager
      */
     static public function getMemeByCustomTitle(string $custom_title): ?array
     {
-        // Check if the custom title string is empty
-        // If the title string is empty, return null
         if (empty($custom_title)) {
             return null;
         }
-        // If the title string is not empty, retrieve all memes with this custom title by calling the getMeme method with the custom title
         return self::getMeme(["custom_title" => $custom_title]);
     }
 
@@ -182,12 +152,9 @@ class MemeTableManager extends TableManager
      */
     static public function getMemeByNbLikes(int $nb_likes): ?array
     {
-        // Check if the number of likes is less than 0
-        // If the number of likes is less than 0, return null
         if ($nb_likes < 0) {
             return null;
         }
-        // If the number of likes is not less than 0, retrieve all memes with this number of likes by calling the getMeme method with the number of likes
         return self::getMeme(["nb_likes" => $nb_likes]);
     }
 
@@ -208,12 +175,9 @@ class MemeTableManager extends TableManager
      * @param bool $blocked Whether to include blocked memes. Default is false.
      * @return bool True if the meme exists, false otherwise.
      */
-    static public function memeExists(int $id,bool $blocked=false): bool
+    static public function memeExists(int $id, bool $blocked = false): bool
     {
-        // Call the getMemeById method with the given ID
-        // If the returned meme is not empty, return true
-        // Otherwise, return false
-        return !empty(self::getMemeById($id,$blocked));
+        return !empty(self::getMemeById($id, $blocked));
     }
 
     /**
@@ -225,9 +189,6 @@ class MemeTableManager extends TableManager
      */
     static public function memeExistsByTemplateId(int $template_id): bool
     {
-        // Call the getMemeByTemplateId method with the given template ID
-        // If the returned meme is not empty, return true
-        // Otherwise, return false
         return !empty(self::getMemeByTemplateId($template_id));
     }
 
@@ -240,9 +201,6 @@ class MemeTableManager extends TableManager
      */
     static public function memeExistsByUserId(int $user_id): bool
     {
-        // Call the getMemeByUserId method with the given user ID
-        // If the returned meme is not empty, return true
-        // Otherwise, return false
         return !empty(self::getMemeByUserId($user_id));
     }
 
@@ -255,9 +213,6 @@ class MemeTableManager extends TableManager
      */
     static public function memeExistsByCustomTitle(string $custom_title): bool
     {
-        // Call the getMemeByCustomTitle method with the given custom title
-        // If the returned meme is not empty, return true
-        // Otherwise, return false
         return !empty(self::getMemeByCustomTitle($custom_title));
     }
 
@@ -273,16 +228,11 @@ class MemeTableManager extends TableManager
      */
     static public function addMeme(int $template_id, string $custom_title, int $user_id, string $result_img): ?Meme
     {
-        // Check if the user and the template exist in the database
-        // If they do not exist, return null
         if (!UserTableManager::verifyExistenceById($user_id) || !TemplateTableManager::templateExists($template_id)) {
             return null;
         }
-        // If the user and the template exist, insert a new meme into the database with the given details
         DatabaseQuery::executeQuery("insert", "memes", ["template_id" => $template_id, "custom_title" => $custom_title, "user_id" => $user_id, "result_img" => $result_img]);
-        // Get the ID of the newly inserted meme
         $id = DatabaseQuery::getLastInsertId();
-        // Return the newly created meme
         return self::getMemeById($id);
     }
 
@@ -296,14 +246,10 @@ class MemeTableManager extends TableManager
      */
     static public function updateMeme(int $id, array $attributes): ?Meme
     {
-        // Check if the meme exists in the database
-        // If it does not exist, return null
         if (!self::memeExists($id)) {
             return null;
         }
-        // If the meme exists, update it in the database with the given attributes
         DatabaseQuery::executeQuery("update", "memes", $attributes, ["id" => $id]);
-        // Return the updated meme
         return self::getMemeById($id);
     }
 
@@ -318,12 +264,9 @@ class MemeTableManager extends TableManager
      */
     static public function updateMemeTemplateId(int $id, int $template_id): ?Meme
     {
-        // Check if the template and the meme exist in the database
-        // If they do not exist, return null
         if (!TemplateTableManager::templateExists($template_id) || !self::memeExists($id)) {
             return null;
         }
-        // If they exist, update the meme in the database with the new template ID
         return self::updateMeme($id, ["template_id" => $template_id]);
     }
 
@@ -337,12 +280,9 @@ class MemeTableManager extends TableManager
      */
     static public function updateMemeCustomTitle(int $id, string $custom_title): ?Meme
     {
-        // Check if the custom title is not empty and the meme exists in the database
-        // If not, return null
         if (empty($custom_title) || !self::memeExists($id)) {
             return null;
         }
-        // If they do, update the meme in the database with the new custom title
         return self::updateMeme($id, ["custom_title" => $custom_title]);
     }
 
@@ -355,12 +295,9 @@ class MemeTableManager extends TableManager
      */
     static public function updateMemeUserId(int $id, int $user_id): ?Meme
     {
-        // Check if the user and the meme exist in the database
-        // If they do not exist, return null
         if (!UserTableManager::verifyExistenceById($user_id) || !self::memeExists($id)) {
             return null;
         }
-        // If they exist, update the meme in the database with the new user ID
         return self::updateMeme($id, ["user_id" => $user_id]);
     }
 
@@ -374,12 +311,9 @@ class MemeTableManager extends TableManager
      */
     static public function updateMemeResultImg(int $id, string $result_img): ?Meme
     {
-        // Check if the result image is not empty and the meme exists in the database
-        // If not, return null
         if (empty($result_img) || !self::memeExists($id)) {
             return null;
         }
-        // If they do, update the meme in the database with the new result image
         return self::updateMeme($id, ["result_img" => $result_img]);
     }
 
@@ -390,17 +324,14 @@ class MemeTableManager extends TableManager
      */
     static public function deleteMeme(int $id): void
     {
-        // Check if the meme exists in the database
-        // If it does not exist, return without doing anything
         if (!self::memeExists($id)) {
             return;
         }
-        // If the meme exists, delete it from the database
         DatabaseQuery::executeQuery("delete", "memes", [], ["id" => $id]);
     }
 
     //--------retrieve method----------------
-   
+
 
     /**
      * Retrieves a Meme model from the database.
@@ -411,7 +342,6 @@ class MemeTableManager extends TableManager
      */
     public static function retrieve($id): ?Meme
     {
-        // Retrieve the Meme model from the database using the given ID
         return self::getMemeById($id, true);
     }
 

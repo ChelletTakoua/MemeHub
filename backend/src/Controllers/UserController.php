@@ -27,19 +27,19 @@ class UserController
      * @return void
      * @throws HttpException If an error occurs during the process.
      */
-    public function forgotPassword(string $username):void {
-        
-            $user = UserTableManager::getUserByUsername($username);
-            if ($user == null) {
-                throw new NotFoundException("User not found");
-            }
-            Mail::sendPasswordResetMail($user);
-            $emailParts = explode('@', $user->getEmail());
-            $hiddenEmailPart = substr($emailParts[0], 0, 2) . str_repeat('*', strlen($emailParts[0]) - 2);
-            $hiddenEmail = $hiddenEmailPart . '@' . $emailParts[1];
-            $response = ApiResponseBuilder::buildSuccessResponse(["email"=>$hiddenEmail]);
-            echo json_encode($response);
-        
+    public function forgotPassword(string $username): void
+    {
+
+        $user = UserTableManager::getUserByUsername($username);
+        if ($user == null) {
+            throw new NotFoundException("User not found");
+        }
+        Mail::sendPasswordResetMail($user);
+        $emailParts = explode('@', $user->getEmail());
+        $hiddenEmailPart = substr($emailParts[0], 0, 2) . str_repeat('*', strlen($emailParts[0]) - 2);
+        $hiddenEmail = $hiddenEmailPart . '@' . $emailParts[1];
+        $response = ApiResponseBuilder::buildSuccessResponse(["email" => $hiddenEmail]);
+        echo json_encode($response);
     }
 
     /**
@@ -49,11 +49,12 @@ class UserController
      * @throws BadRequestException if the token or password is not provided
      * @throws InvalidTokenException|\Exceptions\HttpExceptions\HttpException
      */
-    public function resetPassword() {
+    public function resetPassword()
+    {
 
         $requestBody = RequestHandler::getJsonRequestBody();
 
-        if(!isset($requestBody['token'])) {
+        if (!isset($requestBody['token'])) {
             throw new BadRequestException("Token must be provided");
         }
         if (!isset($requestBody['password'])) {
@@ -70,7 +71,6 @@ class UserController
 
         $response = ApiResponseBuilder::buildSuccessResponse();
         echo json_encode($response);
-
     }
 
     /**
@@ -80,15 +80,15 @@ class UserController
      * @return void
      * @throws HttpException If an error occurs during the process.
      */
-    public function sendVerificationEmail(string $username):void{
+    public function sendVerificationEmail(string $username): void
+    {
         $user = UserTableManager::getUserByUsername($username);
         if ($user == null) {
-             throw new NotFoundException("User not found");
+            throw new NotFoundException("User not found");
         }
         Mail::sendAccountCreatedMail($user);
         $response = ApiResponseBuilder::buildSuccessResponse();
         echo json_encode($response);
-
     }
 
     /**
@@ -98,15 +98,16 @@ class UserController
      * @throws BadRequestException if the token is not provided
      * @throws InvalidTokenException|\Exceptions\HttpExceptions\HttpException if the token is invalid
      */
-    public function verifyEmail() {
+    public function verifyEmail()
+    {
 
         $requestBody = RequestHandler::getJsonRequestBody();
-        if(!isset($requestBody['token'])) {
+        if (!isset($requestBody['token'])) {
             throw new BadRequestException("Token must be provided");
         }
         $token = $requestBody['token'];
 
-        try{
+        try {
             $user = AuthKeyGenerator::getUserFromToken($token);
         } catch (ExpiredTokenException $e) {
             $user = AuthKeyGenerator::getUserFromToken($token, false);
@@ -114,8 +115,8 @@ class UserController
             throw $e;
         }
 
-        if($user->getIsVerified()) {
-            throw new BadRequestException("User already verified",402);
+        if ($user->getIsVerified()) {
+            throw new BadRequestException("User already verified", 402);
         }
         UserTableManager::updateIsVerified($user->getId());
 
@@ -131,16 +132,13 @@ class UserController
      * @return void
      * @throws NotFoundException
      */
-    public function getUserProfile($id) {
-        //get the user
-        $user=UserTableManager::getUserById($id);
+    public function getUserProfile($id)
+    {
+        $user = UserTableManager::getUserById($id);
         if ($user) {
-            // Build a success response with the user details
-            $response = ApiResponseBuilder::buildSuccessResponse(["user"=>$user]);
-            // Output the response as JSON
-            echo json_encode($response);}
-        else {
-            // Throw a NotFoundException if user profile not found
+            $response = ApiResponseBuilder::buildSuccessResponse(["user" => $user]);
+            echo json_encode($response);
+        } else {
             throw new NotFoundException("User profile not found");
         }
     }
@@ -152,21 +150,15 @@ class UserController
      * @throws BadRequestException
      * @throws NotLoggedInException
      */
-    public function modifyPassword() {
-        // Get the JSON request body
+    public function modifyPassword()
+    {
         $requestBody = RequestHandler::getJsonRequestBody();
-        // Check if the request body is not empty and contains 'password'
-        if (!empty($requestBody) && isset($requestBody['password'] ) ) {
-            //get the id and password
-
+        if (!empty($requestBody) && isset($requestBody['password'])) {
             $id = (new Auth)->getActiveUser();
             $password = $requestBody['password'];
-            //update password the user
-            UserTableManager::updatePassword($id,$password);
-            // Output a success message
+            UserTableManager::updatePassword($id, $password);
             $response = ApiResponseBuilder::buildSuccessResponse();
-        }else {
-            // Throw a BadRequestException 'password' is not provided
+        } else {
             throw new BadRequestException("Password must be provided");
         }
     }
@@ -178,45 +170,38 @@ class UserController
      * @throws BadRequestException
      * @throws NotLoggedInException
      */
-    public function editProfile() {
-        // Get the JSON request body
+    public function editProfile()
+    {
         $requestBody = RequestHandler::getJsonRequestBody();
-        // Check if the request body is not empty
-        if (!empty($requestBody) &&( isset($requestBody['username']) || isset($requestBody['email']) || isset($requestBody['profile_pic']) ) ){
-            // Extract the id from the request body
+        if (!empty($requestBody) && (isset($requestBody['username']) || isset($requestBody['email']) || isset($requestBody['profile_pic']))) {
             $id = Auth::getActiveUserId();
-            //update the user
-            if(isset($requestBody['username'])){
+            if (isset($requestBody['username'])) {
                 $username = $requestBody['username'];
-                UserTableManager::updateUsername($id,$username);
+                UserTableManager::updateUsername($id, $username);
             }
-            if(isset($requestBody['email'])){
+            if (isset($requestBody['email'])) {
                 $email = $requestBody['email'];
-                UserTableManager::updateEmail($id,$email);
+                UserTableManager::updateEmail($id, $email);
             }
-            if(isset($requestBody['profile_pic'])){
+            if (isset($requestBody['profile_pic'])) {
                 $profile_pic = $requestBody['profile_pic'];
-                UserTableManager::updateProfilePic($id,$profile_pic);
+                UserTableManager::updateProfilePic($id, $profile_pic);
             }
-            $user= (new Auth)->getActiveUser(true);
-            $response = ApiResponseBuilder::buildSuccessResponse(["user"=>$user]);
-            // Output a success message
+            $user = (new Auth)->getActiveUser(true);
+            $response = ApiResponseBuilder::buildSuccessResponse(["user" => $user]);
             echo json_encode($response);
-        }else {
-            // Throw a BadRequestException if any parameter is provided
+        } else {
             throw new BadRequestException("A parameter must be provided");
         }
     }
-/**
- * This function is used to delete the active user
- * @return void
- * @throws NotLoggedInException
- */
-    public function deleteProfile() {
-        // get the id of active user
+    /**
+     * This function is used to delete the active user
+     * @return void
+     * @throws NotLoggedInException
+     */
+    public function deleteProfile()
+    {
         $id = Auth::getActiveUserId();
-        //delete the user
         UserTableManager::deleteUserById($id);
     }
-
 }

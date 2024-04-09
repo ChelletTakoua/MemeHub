@@ -27,23 +27,17 @@ class Auth
      */
     public static function login(string $username, string $password, $requirePassword = true): User
     {
-        // Retrieve the user from the database using the username
         $user = UserTableManager::getUserByUsername($username);
-        // If the user does not exist, throw a LoginFailedException
         if (empty($user)) {
             throw new LoginFailedException("User not found");
         }
-        // If the password is required and does not match the user's password, throw a LoginFailedException
         if ($requirePassword && !password_verify($password, $user->getPassword())) {
             throw new LoginFailedException("Incorrect password");
         }
-        // If the user is not verified, throw a LoginFailedException
         if (!$user->getIsVerified()) {
             throw new LoginFailedException("User not verified", 403);
         }
-        // If the login is successful, set the session user to the logged in user
         self::setSessionUser($user);
-        // Return the logged in user
         return $user;
     }
 
@@ -77,9 +71,7 @@ class Auth
      */
     public static function logout()
     {
-        // Destroy the session to log out the user
         session_destroy();
-        // Terminate the script execution
         exit();
     }
 
@@ -98,24 +90,15 @@ class Auth
      */
     public static function register(string $username, string $password, string $email): bool
     {
-        // Check if the username already exists in the database
         if (UserTableManager::verifyExistenceByUserName($username)) {
-            // If it does, throw a UserRegistrationException with the message "Username exists"
             throw new UserRegistrationException("Username exists");
-        }
-        // Check if the email already exists in the database
-        else if (UserTableManager::verifyExistenceByEmail($email)) {
-            // If it does, throw a UserRegistrationException with the message "Email exists"
+        } else if (UserTableManager::verifyExistenceByEmail($email)) {
             throw new UserRegistrationException("Email exists");
         }
-        // Hash the password using the default algorithm
         $hashedPassword = password_hash($password, PASSWORD_DEFAULT);
-        // Attempt to add the user to the database
         if (!empty(UserTableManager::addUser($username, $email, $hashedPassword))) {
-            // If successful, return true
             return true;
         } else {
-            // If not successful, throw a UserRegistrationException with the message "Failed to register user"
             throw new UserRegistrationException("Failed to register user");
         }
     }
@@ -141,7 +124,6 @@ class Auth
      */
     public static function isLoggedIn(): bool
     {
-        // Check if a user is logged in 
         return isset($_SESSION['user_id']);
     }
     /**
@@ -194,23 +176,17 @@ class Auth
      */
     public static function getActiveUser(): User
     {
-        // If activeUser is already set, return it
         if (self::$activeUser !== null) {
             return self::$activeUser;
         }
-        // If no user is logged in, throw a NotLoggedInException
         if (!self::isLoggedIn()) {
             throw new NotLoggedInException();
         }
-        // Retrieve the user ID from the session
         $userId = $_SESSION['user_id'];
-        // Retrieve the user from the database using the user ID
         self::$activeUser = UserTableManager::getUserById($userId);
-        // If the user is not found in the database, throw a NotFoundException
         if (self::$activeUser === null) {
             throw new NotFoundException("User not found");
         }
-        // Return the active user
         return self::$activeUser;
     }
 

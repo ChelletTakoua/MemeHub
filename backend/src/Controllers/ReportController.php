@@ -29,20 +29,14 @@ class ReportController
      */
     public function resolveReport($id)
     {
-        //get the report
-        $report=ReportTableManager::getReportById($id);
+        $report = ReportTableManager::getReportById($id);
         if ($report) {
-            //update the report status to resolved
             ReportTableManager::updateReportStatus($id, "resolved");
-            
-            //block the meme
-            $meme_id= $report->getMemeId();
-            $blockedMeme= BlockedMemeTableManager::addBlockedMeme($meme_id, $report->getUserId(), $id);
-            // Build a success response
+            $meme_id = $report->getMemeId();
+            $blockedMeme = BlockedMemeTableManager::addBlockedMeme($meme_id, $report->getUserId(), $id);
             $response = ApiResponseBuilder::buildSuccessResponse();
             echo json_encode($response);
-        } 
-        else {
+        } else {
             throw new NotFoundException("Report not found");
         }
     }
@@ -54,22 +48,17 @@ class ReportController
      */
     public function ignoreReport($id)
     {
-        //get the report
-        $report=ReportTableManager::getReportById($id);
+        $report = ReportTableManager::getReportById($id);
         if ($report) {
-            //update the report status to resolved
             ReportTableManager::updateReportStatus($id, "ignored");
-            if(BlockedMemeTableManager::blockedMemeExistsByReportId($id)){
+            if (BlockedMemeTableManager::blockedMemeExistsByReportId($id)) {
                 BlockedMemeTableManager::deleteBlockedMemeByReportId($id);
             }
-            // Build a success response
             $response = ApiResponseBuilder::buildSuccessResponse();
             echo json_encode($response);
-        } 
-        else {
+        } else {
             throw new NotFoundException("Report not found");
         }
-        //ignore pending resolve
     }
 
     /**
@@ -79,19 +68,13 @@ class ReportController
      */
     public function deleteReport($id)
     {
-        //get the report
-        $report=ReportTableManager::getReportById($id);
+        $report = ReportTableManager::getReportById($id);
         if ($report) {
-            //delete the report
             ReportTableManager::deleteReport($id);
-            // Build a success response
             $response = ApiResponseBuilder::buildSuccessResponse();
             echo json_encode($response);
-        } 
-        else {
+        } else {
             throw new NotFoundException("Report not found");
         }
     }
-
-
 }

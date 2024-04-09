@@ -19,11 +19,10 @@ class AdminController
     public function getAllUsers()
     {
         $users = UserTableManager::getUser();
-        if($users) {
-            $response = ApiResponseBuilder::buildSuccessResponse(["users"=>$users]);
+        if ($users) {
+            $response = ApiResponseBuilder::buildSuccessResponse(["users" => $users]);
             echo json_encode($response);
-        }
-        else {
+        } else {
             throw new NotFoundException("No users found");
         }
     }
@@ -35,13 +34,11 @@ class AdminController
     {
         $admins = UserTableManager::getUserByRole("admin");
         if ($admins) {
-            $response = ApiResponseBuilder::buildSuccessResponse(["admins"=>$admins]);
+            $response = ApiResponseBuilder::buildSuccessResponse(["admins" => $admins]);
             echo json_encode($response);
-        }
-        else {
+        } else {
             throw new NotFoundException("No admins found");
         }
-
     }
 
     /** takes in a user id and sends the user profile in the response
@@ -51,14 +48,12 @@ class AdminController
     public function getUserProfile($id)
     {
         $user = UserTableManager::getUserById($id);
-        if($user) {
-            $response = ApiResponseBuilder::buildSuccessResponse(["user"=>$user]);
+        if ($user) {
+            $response = ApiResponseBuilder::buildSuccessResponse(["user" => $user]);
             echo json_encode($response);
-        }
-        else {
+        } else {
             throw new NotFoundException("User not found");
         }
-
     }
 
     /** takes in a user id and changes the role of the user which is specified in the body of the request
@@ -69,11 +64,10 @@ class AdminController
     public function changeUserRole($id)
     {
         $request = RequestHandler::getJsonRequestBody();
-        if(empty($request) || !isset($request['role'])) {
+        if (empty($request) || !isset($request['role'])) {
             throw new BadRequestException("Role not found in request body");
         }
-        // Check if the request body is not empty and contains 'role'
-        if($request["role"]!="admin" && $request["role"]!="user"){
+        if ($request["role"] != "admin" && $request["role"] != "user") {
             throw new BadRequestException("Invalid role, must be 'admin' or 'user'");
         }
         $role = $request['role'];
@@ -83,8 +77,6 @@ class AdminController
         }
         UserTableManager::updateRole($id, $role);
         ApiResponseBuilder::buildSuccessResponse();
-
-
     }
 
     /** takes in a user id and deletes the user
@@ -113,8 +105,7 @@ class AdminController
     public function devMode()
     {
         $devMode = (include __DIR__ . '/../config/app.php')['development_mode'];
-        $response = ApiResponseBuilder::buildSuccessResponse(["devMode"=>$devMode]);
+        $response = ApiResponseBuilder::buildSuccessResponse(["devMode" => $devMode]);
         echo json_encode($response);
     }
-
 }

@@ -25,23 +25,15 @@ class AuthController
      */
     public function login()
     {
-        // Get the JSON request body
         $requestBody = RequestHandler::getJsonRequestBody();
-        // Check if the request body is not empty and contains 'username' and 'password'
         if (!empty($requestBody) && isset($requestBody['username']) && isset($requestBody['password'])) {
-            // Extract the username and password from the request body
             $username = $requestBody['username'];
             $password = $requestBody['password'];
-            // Sanitize the username
             $username = filter_var($username, FILTER_SANITIZE_SPECIAL_CHARS);
-            // Attempt to log in the user
             $user = Auth::login($username, $password);
-            // Build a success response with the user details
             $response = ApiResponseBuilder::buildSuccessResponse(["user" => $user]);
-            // Output the response as JSON
             echo json_encode($response);
         } else {
-            // Throw a BadRequestException if 'username' and 'password' are not provided
             throw new BadRequestException("Username and password must be provided");
         }
     }
@@ -54,9 +46,7 @@ class AuthController
      */
     public function logout()
     {
-        // Call the logout method of the Auth class to log out the user
         Auth::logout();
-        // Terminate the script execution
         exit();
     }
 
@@ -73,25 +63,17 @@ class AuthController
      */
     public static function register()
     {
-        // Get the JSON request body
         $requestBody = RequestHandler::getJsonRequestBody();
-        // Check if the request body is not empty and contains 'username', 'email', and 'password'
         if (!empty($requestBody) && isset($requestBody['username']) && isset($requestBody['email']) && isset($requestBody['password'])) {
-            // Extract the username, email, and password from the request body
             $username = $requestBody['username'];
             $email = $requestBody['email'];
             $password = $requestBody['password'];
-            // Sanitize the username and email
             $username = filter_var($username, FILTER_SANITIZE_SPECIAL_CHARS);
             $email = filter_var($email, FILTER_SANITIZE_EMAIL);
-            // Register the user    
             Auth::register($username, $password, $email);
-            // Build a success response with the user details
             $response = ApiResponseBuilder::buildSuccessResponse();
-            // Output the response as JSON
             echo json_encode($response);
         } else {
-            // Throw a BadRequestException if 'username', 'email', and 'password' are not provided
             throw new BadRequestException("Username, email and password must be provided");
         }
     }
@@ -117,13 +99,12 @@ class AuthController
 
     public static function checkAuth()
     {
-        
+
         $user = null;
-        if(Auth::isLoggedIn()){
+        if (Auth::isLoggedIn()) {
             $user = Auth::getActiveUser();
         }
         $response = ApiResponseBuilder::buildSuccessResponse(["user" => $user]);
         echo json_encode($response);
     }
-    
 }

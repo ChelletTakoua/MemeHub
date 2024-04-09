@@ -8,7 +8,7 @@ class DatabaseQuery
 {
     public function __construct()
     {
-       //cstructor
+        //cstructor
     }
 
     /**
@@ -30,75 +30,74 @@ class DatabaseQuery
     {
         $connection = DatabaseConnection::getInstance();
         $query = "";
-        switch (strtoupper($queryType)){
+        switch (strtoupper($queryType)) {
             case "SELECT":
                 $query = $queryType . " * FROM " . $table;
-                if(count($conditions) > 0 || $additionalWhereCondition != ""){
+                if (count($conditions) > 0 || $additionalWhereCondition != "") {
                     $whereClause = [];
-                    foreach($conditions as $condition => $value){
+                    foreach ($conditions as $condition => $value) {
                         $whereClause[] = "$condition = :where_$condition";
                         $conditions["where_$condition"] = $value;
                         unset($conditions[$condition]);
                     }
 
-                    if($additionalWhereCondition != ""){
-                        $whereClause[]= $additionalWhereCondition;
+                    if ($additionalWhereCondition != "") {
+                        $whereClause[] = $additionalWhereCondition;
                     }
 
-                    $query .= " WHERE " . implode(" AND ", $whereClause) ;
+                    $query .= " WHERE " . implode(" AND ", $whereClause);
                 }
                 break;
 
             case "DELETE":
                 $whereClause = [];
-                foreach($conditions as $condition => $value){
+                foreach ($conditions as $condition => $value) {
                     $whereClause[] = "$condition = :where_$condition";
                     $conditions["where_$condition"] = $value;
                     unset($conditions[$condition]);
                 }
-                if($additionalWhereCondition != ""){
-                    $whereClause[]= $additionalWhereCondition;
+                if ($additionalWhereCondition != "") {
+                    $whereClause[] = $additionalWhereCondition;
                 }
                 $query = $queryType . " FROM " . $table .
-                         " WHERE " . implode(" AND ", $whereClause) . $additionalWhereCondition;
+                    " WHERE " . implode(" AND ", $whereClause) . $additionalWhereCondition;
                 break;
 
             case "INSERT":
                 $columns = [];
                 $values = [];
-                foreach($attributes as $column => $value){
+                foreach ($attributes as $column => $value) {
                     $columns[] = $column;
                     $values[] = ":$column";
                 }
                 $query = $queryType . " INTO " . $table .
-                         " (" . implode(", ", $columns) . ") VALUES (" . implode(", ", $values) . ")";
+                    " (" . implode(", ", $columns) . ") VALUES (" . implode(", ", $values) . ")";
                 break;
 
             case "UPDATE":
                 $setClause = [];
-                foreach($attributes as $column => $value){
+                foreach ($attributes as $column => $value) {
                     $setClause[] = "$column = :set_$column";
                     $attributes["set_$column"] = $value;
                     unset($attributes[$column]);
                 }
                 $whereClause = [];
-                foreach($conditions as $condition => $value){
+                foreach ($conditions as $condition => $value) {
                     $whereClause[] = "$condition = :where_$condition";
                     $conditions["where_$condition"] = $value;
                     unset($conditions[$condition]);
                 }
-                if($additionalWhereCondition != ""){
-                    $whereClause[]= $additionalWhereCondition;
+                if ($additionalWhereCondition != "") {
+                    $whereClause[] = $additionalWhereCondition;
                 }
                 $query = $queryType . " " . $table .
-                         " SET " . implode(", ", $setClause) .
-                         " WHERE " . implode(" AND ", $whereClause);
+                    " SET " . implode(", ", $setClause) .
+                    " WHERE " . implode(" AND ", $whereClause);
                 break;
         }
 
 
         $statement = $connection->prepare($query);
-        //echo $query;
         $statement->execute(array_merge($attributes, $conditions));
         return $statement->fetchAll(PDO::FETCH_ASSOC);
     }
@@ -119,5 +118,4 @@ class DatabaseQuery
         $statement = $connection->prepare("File_Load( $query )");
         $statement->execute();
     }
-
 }

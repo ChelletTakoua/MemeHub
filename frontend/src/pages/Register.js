@@ -1,6 +1,7 @@
 import React, { useState, useContext } from "react";
 import register_meme from "../images/register_meme.jpg";
 import { AppContext } from "../context/AppContext";
+import { Link } from "react-router-dom";
 
 const Register = () => {
   const [username, setUsername] = useState("");
@@ -156,9 +157,14 @@ const Register = () => {
                 className="border border-gray-400"
                 required
               />
-              <span className="text-gray-500 ml-3">
-                I accept the terms of use and privacy policy
-              </span>
+              <Link
+                to="/termsofuse"
+                className="hover:underline text-primary-400"
+              >
+                <span className="text-gray-500 ml-3">
+                  I accept the terms of use and privacy policy
+                </span>
+              </Link>
             </div>
             <button
               type="submit"

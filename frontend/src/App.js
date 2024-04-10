@@ -16,6 +16,7 @@ import { AppContext } from "./context/AppContext";
 import "./App.css";
 import ResetPassword from "./pages/ResetPassword";
 import ForgotPassword from "./pages/ForgotPassword";
+import TermsOfUse from "./pages/TermsOfUse";
 
 function App() {
   const [isLoading, setIsLoading] = useState(false);
@@ -56,6 +57,7 @@ function App() {
           <Route path="/verifyEmail" element={<VerifyEmail />} />
           <Route path="/forgot" element={<ForgotPassword />} />
           <Route path="/resetPassword" element={<ResetPassword />} />
+          <Route path="/termsofuse" element={<TermsOfUse />} />
 
           {!user && (
             <>

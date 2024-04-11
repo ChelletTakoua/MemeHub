@@ -7,7 +7,7 @@ $frontConfig = include __DIR__ . '/../config/frontend.php';
 $host = $frontConfig['frontend_host'];
 $port = $frontConfig['frontend_port'];
 
-header('Access-Control-Allow-Origin: https://'.$host);
+header('Access-Control-Allow-Origin: http://'.$host.':'.$port);
 
 // Allow the following methods from the frontend
 header('Access-Control-Allow-Methods: GET, POST, PUT, DELETE');

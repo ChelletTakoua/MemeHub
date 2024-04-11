@@ -153,22 +153,22 @@ const Register = () => {
             </div>
             <div className="mt-5 flex">
               <input
-                type="checkbox"
-                className="border border-gray-400"
-                required
+                  type="checkbox"
+                  className="border border-gray-400"
+                  required
               />
-              <Link
-                to="/termsofuse"
-                className="hover:underline text-primary-400"
-              >
-                <span className="text-gray-500 ml-3">
-                  I accept the terms of use and privacy policy
-                </span>
-              </Link>
+              <p className="text-lg font-light text-gray-400 p-2">
+                I accept the
+                <Link to="/termsofuse"
+                      className="hover:underline text-primary-400 hover:text-primary-500 transition-colors duration-200">
+                  <span className="font-medium">  terms of use and privacy policy</span>
+                <i className="fas fa-link ml-2"></i>
+                </Link>
+              </p>
             </div>
             <button
-              type="submit"
-              className="w-full text-white focus:ring-4 focus:outline-none font-medium rounded-lg text-sm px-5 py-2.5 text-center bg-primary-600 hover:bg-primary-700 focus:ring-primary-800"
+                type="submit"
+                className="w-full text-white focus:ring-4 focus:outline-none font-medium rounded-lg text-sm px-5 py-2.5 text-center bg-primary-600 hover:bg-primary-700 focus:ring-primary-800"
             >
               Register Now
             </button>

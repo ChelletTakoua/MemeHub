@@ -3,7 +3,11 @@
 
 // TODO: to read more about CORS: https://developer.mozilla.org/en-US/docs/Web/HTTP/CORS
 // Allow requests from any origin
-header('Access-Control-Allow-Origin: http://localhost:3000');
+$frontConfig = include __DIR__ . '/../config/frontend.php';
+$host = $frontConfig['frontend_host'];
+$port = $frontConfig['frontend_port'];
+
+header('Access-Control-Allow-Origin: https://'.$host);
 
 // Allow the following methods from the frontend
 header('Access-Control-Allow-Methods: GET, POST, PUT, DELETE');
